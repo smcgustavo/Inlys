@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:inlys/walletScreen.dart';
 
 class BottomNavigation extends StatefulWidget{
   const BottomNavigation({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => BottomNavigationState();
-
 }
+
 class BottomNavigationState extends State<BottomNavigation>{
 
   int _selectedIndex = 0;
   static const TextStyle style = TextStyle(color: Colors.white, fontSize: 26);
   static const List<Widget> screens = <Widget>[
-    Text("Index 0: Your Wallet", style: style,),
+    WalletScreen(),
     Text("Index 1: Profile", style: style,),
     Text("Index 2: Stocks", style: style,)
   ];
