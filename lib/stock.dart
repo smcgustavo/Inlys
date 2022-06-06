@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Stock {
-  late String _ticker;
+  late String _ticker, _name, _type;
   late double _price, _pvp, _roe;
   late AssetImage _logo;
 
   Stock(String ticker){
+    _roe = 3.14;
     _ticker = ticker;
+    _type = "Ação";
     loadData();
   }
 
   void loadData(){
     loadLogo();
+    _name = "Petrobras";
   }
 
   void loadLogo(){
@@ -23,9 +26,13 @@ class Stock {
 
   String get roe => _roe.toString();
 
+  String get name => _name;
+
   String get pvp => _pvp.toString();
 
   String get price => _price.toString();
 
-  String get ticker => _ticker;
+  String get type => _type;
+
+  String get ticker => _ticker.toString();
 }

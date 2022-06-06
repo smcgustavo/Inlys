@@ -47,6 +47,7 @@ class WalletScreenState extends State<WalletScreen>{
 class StockBlock extends StatelessWidget{
 
   const StockBlock({
+    super.key,
     required this.stock
   });
 
@@ -76,6 +77,71 @@ class StockBlock extends StatelessWidget{
                       ),
                     )
                   ),
+                ),
+                const SizedBox(width: 30),
+                Column(
+                  children: [
+                    const SizedBox(height: 15,),
+                    Text(
+                      stock.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 26
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.7),
+                            shape: BoxShape.circle
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          stock.ticker,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.7),
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(255, 255, 255, 0.7),
+                              shape: BoxShape.circle
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          stock.roe,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.7),
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(255, 255, 255, 0.7),
+                              shape: BoxShape.circle
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          stock.type,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.7),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 )
               ],
             ),
