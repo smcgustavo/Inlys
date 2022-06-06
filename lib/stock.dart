@@ -7,6 +7,7 @@ class Stock {
 
   Stock(String ticker){
     _roe = 3.14;
+    _price = 13.14;
     _ticker = ticker;
     _type = "Ação";
     loadData();
@@ -30,7 +31,9 @@ class Stock {
 
   String get pvp => _pvp.toString();
 
-  String get price => _price.toString();
+  String priceFormated(){
+    return "R\$ ${_price.toString()}";
+  }
 
   String get type => _type;
 
