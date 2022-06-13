@@ -25,7 +25,7 @@ class StockBlock extends StatelessWidget{
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
                       height: 90,
-                      width: 90,
+                      width: 100,
                       color: Colors.white.withOpacity(0.1),
                       child: Padding(
                         padding: const EdgeInsets.all(5),

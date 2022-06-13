@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'csvManager.dart';
 
 class Stock {
   late String _ticker, _name, _type;
   late double _price, _pvp, _roe;
   late AssetImage _logo;
+  static DataManager dataBase = DataManager();
 
   Stock(String ticker){
     _roe = 3.14;
-    _price = 13.14;
     _ticker = ticker;
     _type = "Ação";
+    dataBase.loadAsset();
     loadData();
+    _price = dataBase.getPriceFromTicker(_ticker);
   }
 
   void loadData(){
     loadLogo();
     _name = "Petrobras";
+
   }
 
   void loadLogo(){

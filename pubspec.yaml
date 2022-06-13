@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  csv: ^5.0.1
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.9.2
@@ -59,6 +60,8 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/stocksIcons/
+    - assets/Data/Acoes.csv
+    - assets/Data/Fiis.csv
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
