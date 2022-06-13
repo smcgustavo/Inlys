@@ -14,21 +14,18 @@ class Stock {
     _roe = 3.14;
     _ticker = ticker;
     _type = "Ação";
-    dataBase.loadAsset();
     loadData();
-    _price = dataBase.getPriceFromTicker(_ticker);
   }
 
   void loadData(){
     loadLogo();
     _name = "Petrobras";
-
+    _price = dataBase.getPriceFromTicker(_ticker);
   }
 
   void loadLogo(){
     _logo = AssetImage('assets/images/stocksIcons/${_ticker.substring(0,4)}.jpg');
   }
-
 
   AssetImage get logo => _logo;
 

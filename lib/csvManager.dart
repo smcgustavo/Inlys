@@ -4,9 +4,10 @@ import 'package:flutter/services.dart';
 
 class DataManager {
   static List<List<dynamic>> data = [];
+  late int loaded;
 
   DataManager(){
-    loadAsset();
+    loaded = 0;
   }
 
   loadAsset() async{
@@ -15,11 +16,14 @@ class DataManager {
     data = csvData;
   }
 
-  Future<String> getPriceFromTicker(String ticker){
+  Future<String> getPriceFromTicker(String ticker) async {
+    if(loaded == 0){
+      await loadAsset();
+    }
+    loaded = 1;
     Future<String> aux = Future<String>.value("R\$");
     for(int i = 0; i < data.length; i++){
       if(data[i][0] == ticker){
-        print("entrou");
         aux = Future<String>.value("R\$${data[i][1]}");
         break;
       }
