@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 
+
+
 class StockBlock extends StatelessWidget{
 
   const StockBlock({
@@ -75,7 +77,7 @@ class StockBlock extends StatelessWidget{
                         ),
                         const SizedBox(width: 5,),
                         Text(
-                          stock.priceFormated(),
+                          stock.price,
                           style: const TextStyle(
                             color: Color.fromRGBO(255, 255, 255, 0.7),
                           ),

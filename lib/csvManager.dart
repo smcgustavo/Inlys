@@ -15,12 +15,12 @@ class DataManager {
     data = csvData;
   }
 
-  double getPriceFromTicker(String ticker){
-    double aux = 0;
+  Future<double> getPriceFromTicker(String ticker){
+    Future<double> aux = Future<double>.value(0);
     for(int i = 0; i < data.length; i++){
       if(data[i][0] == ticker){
         print("entrou");
-        aux = double.parse(data[i][1].toString());
+        aux = Future<double>.value(double.parse(data[i][1].toString()));
         break;
       }
     }

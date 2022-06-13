@@ -3,7 +3,10 @@ import 'csvManager.dart';
 
 class Stock {
   late String _ticker, _name, _type;
-  late double _price, _pvp, _roe;
+  late double _pvp, _roe;
+  late Future<double> _price;
+
+
   late AssetImage _logo;
   static DataManager dataBase = DataManager();
 
@@ -35,9 +38,7 @@ class Stock {
 
   String get pvp => _pvp.toString();
 
-  String priceFormated(){
-    return "R\$ ${_price.toString()}";
-  }
+  Future<double> get price => _price;
 
   String get type => _type;
 
