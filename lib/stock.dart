@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'csvManager.dart';
 
 class Stock {
-  late String _ticker, _name, _type;
+  late String _ticker, _type;
   late double _pvp, _roe;
-  late Future<String> _price;
+  late Future<String> _price, _name;
 
 
   late AssetImage _logo;
@@ -19,8 +19,8 @@ class Stock {
 
   void loadData(){
     loadLogo();
-    _name = "Petrobras";
     _price = dataBase.getPriceFromTicker(_ticker);
+    _name = dataBase.getNameFromTicker(_ticker);
   }
 
   void loadLogo(){
@@ -31,7 +31,7 @@ class Stock {
 
   String get roe => _roe.toString();
 
-  String get name => _name;
+  Future<String> get name => _name;
 
   String get pvp => _pvp.toString();
 

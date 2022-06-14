@@ -31,4 +31,19 @@ class DataManager {
     return aux;
   }
 
+  Future<String> getNameFromTicker(String ticker) async{
+    if(loaded == 0){
+      await loadAsset();
+    }
+    loaded = 1;
+    String name = "-";
+    for(int i = 0; i < data.length; i++){
+      if(data[i][0] == ticker){
+        name = data[i][2];
+      }
+    }
+    return name;
+  }
+
+
 }

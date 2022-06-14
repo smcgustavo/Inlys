@@ -49,12 +49,36 @@ class StockBlockState extends State<StockBlock>{
                   Column(
                     children: [
                       const SizedBox(height: 15,),
-                      Text(
-                        stock.name,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 26
-                        ),
+                      FutureBuilder(
+                        future: stock.name,
+                        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+                          List<Widget> children;
+                          if(snapshot.hasData){
+                            children = <Widget>[
+                              Text(
+                                '${snapshot.data}',
+                                style: const TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                ),
+                              )
+                            ];
+                          }
+                          else{
+                            children = <Widget>[
+                              const SizedBox(
+                                width: 10,
+                                height: 10,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ];
+                          }
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: children,
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 10,),
                       Row(

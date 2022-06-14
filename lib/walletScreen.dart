@@ -12,6 +12,12 @@ class WalletScreenState extends State<WalletScreen>{
 
   Stock a = Stock("BBAS3");
   Stock b = Stock("PETR4");
+  Stock c = Stock("GOLL4");
+  Stock d = Stock("MGLU3");
+  Stock e = Stock("BBDC4");
+  Stock f = Stock("ITUB4");
+  Stock g = Stock("ABEV3");
+  Stock h = Stock("VALE3");
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +41,24 @@ class WalletScreenState extends State<WalletScreen>{
               ),
               StockBlock(
                 stock: b,
+              ),
+              StockBlock(
+                stock: c,
+              ),
+              StockBlock(
+                stock: d,
+              ),
+              StockBlock(
+                stock: e,
+              ),
+              StockBlock(
+                stock: f,
+              ),
+              StockBlock(
+                stock: g,
+              ),
+              StockBlock(
+                stock: h,
               ),
             ],
           )

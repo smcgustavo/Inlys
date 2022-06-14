@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'bottomNavigationBarMenu.dart';
-import 'csvManager.dart';
 
 void main() {
   runApp(const MyApp());
