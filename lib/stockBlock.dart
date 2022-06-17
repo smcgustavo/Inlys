@@ -7,10 +7,10 @@ class StockBlock extends StatefulWidget{
     super.key,
     required this.stock
   });
+  final Stock stock;
 
   @override
   State<StatefulWidget> createState() => StockBlockState(stock: stock);
-  final Stock stock;
 }
 
 class StockBlockState extends State<StockBlock>{
@@ -36,7 +36,7 @@ class StockBlockState extends State<StockBlock>{
                     child: Container(
                         height: 90,
                         width: 100,
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.black.withOpacity(0.08),
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Center(
@@ -58,7 +58,7 @@ class StockBlockState extends State<StockBlock>{
                               Text(
                                 '${snapshot.data}',
                                 style: const TextStyle(
-                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  color: Colors.white,
                                 ),
                               )
                             ];
@@ -80,14 +80,14 @@ class StockBlockState extends State<StockBlock>{
                           );
                         },
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 20,),
                       Row(
                         children: [
                           Container(
                             width: 7,
                             height: 7,
                             decoration: const BoxDecoration(
-                                color: Color.fromRGBO(255, 255, 255, 0.7),
+                                color: Colors.white,
                                 shape: BoxShape.circle
                             ),
                           ),
@@ -95,7 +95,7 @@ class StockBlockState extends State<StockBlock>{
                           Text(
                             stock.ticker,
                             style: const TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 0.7),
+                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(width: 20,),
@@ -103,7 +103,7 @@ class StockBlockState extends State<StockBlock>{
                             width: 7,
                             height: 7,
                             decoration: const BoxDecoration(
-                                color: Color.fromRGBO(255, 255, 255, 0.7),
+                                color: Colors.white,
                                 shape: BoxShape.circle
                             ),
                           ),
@@ -117,7 +117,7 @@ class StockBlockState extends State<StockBlock>{
                                     Text(
                                         '${snapshot.data}',
                                         style: const TextStyle(
-                                          color: Color.fromRGBO(255, 255, 255, 0.7),
+                                          color: Colors.white,
                                         ),
                                     )
                                   ];
@@ -144,7 +144,7 @@ class StockBlockState extends State<StockBlock>{
                             width: 7,
                             height: 7,
                             decoration: const BoxDecoration(
-                                color: Color.fromRGBO(255, 255, 255, 0.7),
+                                color: Colors.white,
                                 shape: BoxShape.circle
                             ),
                           ),
@@ -152,7 +152,7 @@ class StockBlockState extends State<StockBlock>{
                           Text(
                             stock.type,
                             style: const TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 0.7),
+                              color: Colors.white,
                             ),
                           ),
                         ],

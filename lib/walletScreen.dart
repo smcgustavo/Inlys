@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inlys/stock.dart';
-import 'package:inlys/stockBlock.dart';
+import 'package:inlys/wallet.dart';
 
 class WalletScreen extends StatefulWidget{
   const WalletScreen({Key? key}) : super(key: key);
@@ -9,17 +8,7 @@ class WalletScreen extends StatefulWidget{
 }
 
 class WalletScreenState extends State<WalletScreen>{
-
-  Stock a = Stock("BBAS3");
-  Stock b = Stock("PETR4");
-  Stock c = Stock("GOLL4");
-  Stock d = Stock("MGLU3");
-  Stock e = Stock("BBDC4");
-  Stock f = Stock("ITUB4");
-  Stock g = Stock("ABEV3");
-  Stock h = Stock("VALE3");
-  Stock i = Stock("BIDI4");
-
+  Wallet wallet = Wallet();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +16,7 @@ class WalletScreenState extends State<WalletScreen>{
         preferredSize: const Size.fromHeight(35),
         child: AppBar(
           title: const Text("Sua Carteira"),
-          centerTitle: false,
+          centerTitle: true,
           backgroundColor: Colors.black,
         ),
       ),
@@ -36,35 +25,7 @@ class WalletScreenState extends State<WalletScreen>{
         child:
            ListView(
             padding:  const EdgeInsets.all(10),
-            children:  <Widget>[
-              StockBlock(
-                stock: a,
-              ),
-              StockBlock(
-                stock: b,
-              ),
-              StockBlock(
-                stock: c,
-              ),
-              StockBlock(
-                stock: d,
-              ),
-              StockBlock(
-                stock: e,
-              ),
-              StockBlock(
-                stock: f,
-              ),
-              StockBlock(
-                stock: g,
-              ),
-              StockBlock(
-                stock: h,
-              ),
-              StockBlock(
-                stock: i
-              )
-            ],
+            children:  wallet.getWallet()
           )
       )
 
