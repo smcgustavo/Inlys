@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/walletScreen.dart';
+import 'package:inlys/StockScreen.dart';
+import 'package:inlys/stock.dart';
 
 class BottomNavigation extends StatefulWidget{
   const BottomNavigation({Key? key}) : super(key: key);
@@ -9,12 +11,14 @@ class BottomNavigation extends StatefulWidget{
 
 class BottomNavigationState extends State<BottomNavigation>{
 
+  final Stock aux = Stock("PETR4");
   int _selectedIndex = 0;
+
   static const TextStyle style = TextStyle(color: Colors.white, fontSize: 26);
-  static const List<Widget> screens = <Widget>[
-    WalletScreen(),
-    Text("Index 1: Profile", style: style,),
-    Text("Index 2: Stocks", style: style,)
+  static List<Widget> screens = <Widget>[
+    const WalletScreen(),
+    const Text("Index 1: Profile", style: style,),
+    StockScreen(stock: aux),
   ];
 
   void _onItemTapped(int index){

@@ -36,7 +36,7 @@ class StockBlockState extends State<StockBlock>{
                     child: Container(
                         height: 90,
                         width: 100,
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withOpacity(0),
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Center(
@@ -45,7 +45,15 @@ class StockBlockState extends State<StockBlock>{
                         )
                     ),
                   ),
-                  const SizedBox(width: 30),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      height: 70,
+                      width: 5,
+                      color: Colors.white.withOpacity(0.02),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
                   Column(
                     children: [
                       const SizedBox(height: 15,),
