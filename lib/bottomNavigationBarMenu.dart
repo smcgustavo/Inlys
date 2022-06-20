@@ -11,14 +11,13 @@ class BottomNavigation extends StatefulWidget{
 
 class BottomNavigationState extends State<BottomNavigation>{
 
-  final Stock aux = Stock("PETR4");
-  int _selectedIndex = 0;
 
+  int _selectedIndex = 0;
   static const TextStyle style = TextStyle(color: Colors.white, fontSize: 26);
   static List<Widget> screens = <Widget>[
     const WalletScreen(),
     const Text("Index 1: Profile", style: style,),
-    StockScreen(stock: aux),
+    StockScreen(stock: Stock("PETR4")),
   ];
 
   void _onItemTapped(int index){
