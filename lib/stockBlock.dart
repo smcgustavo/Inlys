@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
+import 'package:inlys/StockScreen.dart';
 
 class StockBlock extends StatefulWidget{
 

@@ -9,12 +9,12 @@ class Wallet {
     Stock a = Stock("BBAS3");
     Stock b = Stock("PETR4");
     Stock c = Stock("GOLL4");
-    Stock d = Stock("MGLU3");
+    Stock d = Stock("BIDI4");
     Stock e = Stock("BBDC4");
     Stock f = Stock("ITUB4");
     Stock g = Stock("ABEV3");
     Stock h = Stock("VALE3");
-    Stock i = Stock("BIDI4");
+    Stock i = Stock("MGLU3");
 
     favoriteStocks = <Widget> [
       StockBlock(
