@@ -46,9 +46,12 @@ class StockBlockState extends State<StockBlock>{
                           width: 100,
                           color: Colors.black.withOpacity(0),
                           child: Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(7),
                             child: Center(
-                                child: Image(image: stock.logo)
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image(image: stock.logo),
+                                ),
                             ),
                           )
                       ),

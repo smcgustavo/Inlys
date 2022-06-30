@@ -52,9 +52,12 @@ class StockScreenState extends State<StockScreen>{
                       height: 120,
                       width: 120,
                       color: Colors.white.withOpacity(0.1),
-                      child: Image(
-                        image: widget.stock.logo,
-                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Image(
+                            image: widget.stock.logo,
+                          ),
+                      ),                      
                     ),
                   ),
                 ),
