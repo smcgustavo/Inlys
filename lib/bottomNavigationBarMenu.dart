@@ -16,8 +16,8 @@ class BottomNavigationState extends State<BottomNavigation>{
   static const TextStyle style = TextStyle(color: Colors.white, fontSize: 26);
   static List<Widget> screens = <Widget>[
     const WalletScreen(),
-    const Text("Index 1: Profile", style: style,),
-    StockScreen(stock: Stock("PETR4")),
+    const Text("Index 1: Sob Construção", style: TextStyle(color: Colors.black),),
+    const Text("Index 2: Sob Construção", style: TextStyle(color: Colors.black),)
   ];
 
   void _onItemTapped(int index){

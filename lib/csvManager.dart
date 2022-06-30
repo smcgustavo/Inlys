@@ -46,6 +46,21 @@ class DataManager {
     return aux;
   }
 
+  Future<String> getRoeFromTicker(String ticker) async {
+    if(loaded == 0){
+      await loadAsset();
+    }
+    loaded = 1;
+    Future<String> aux = Future<String>.value("");
+    for(int i = 0; i < data.length; i++){
+      if(data[i][0] == ticker){
+        aux = Future<String>.value("${data[i][18]}%");
+        break;
+      }
+    }
+    return aux;
+  }
+
   Future<String> getDyFromTicker(String ticker) async {
     if(loaded == 0){
       await loadAsset();

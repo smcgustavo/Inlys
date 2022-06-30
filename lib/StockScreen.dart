@@ -43,28 +43,32 @@ class StockScreenState extends State<StockScreen>{
                 ),
               ),
             ),
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  height: 120,
-                  width: 120,
-                  color: Colors.white.withOpacity(0.1),
-                  child: Image(
-                    image: widget.stock.logo,
+            Row(
+              children: <Widget>[
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      height: 120,
+                      width: 120,
+                      color: Colors.white.withOpacity(0.1),
+                      child: Image(
+                        image: widget.stock.logo,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 20,),
-            Center(
-              child: FutureText<String>(
-                text: widget.stock.name,
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.white
+                const SizedBox(width: 10,),
+                Center(
+                  child: FutureText<String>(
+                    text: widget.stock.name,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             const SizedBox(height: 20,),
             ClipRRect(
@@ -98,6 +102,14 @@ class StockScreenState extends State<StockScreen>{
                           color: Colors.white
                       ),
                       value: widget.stock.dy,
+                    ),
+                    AttributeBlock(
+                      attribute: "ROE: ",
+                      style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                      value: widget.stock.roe,
                     ),
 
                   ],
