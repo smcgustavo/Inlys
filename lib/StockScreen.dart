@@ -25,7 +25,7 @@ class StockScreenState extends State<StockScreen>{
         padding:  const EdgeInsets.all(10),
         child: Column(
           children: <Widget> [
-            const SizedBox(height: 40,),
+            const SizedBox(height: 10,),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
@@ -51,7 +51,7 @@ class StockScreenState extends State<StockScreen>{
                     child: Container(
                       height: 120,
                       width: 120,
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withOpacity(0.05),
                       child: Padding(
                         padding: const EdgeInsets.all(5),
                         child: Image(
@@ -63,14 +63,58 @@ class StockScreenState extends State<StockScreen>{
                 ),
                 const SizedBox(width: 10,),
                 Center(
-                  child: FutureText<String>(
-                    text: widget.stock.name,
-                    style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white
-                    ),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: FutureText<String>(
+                          text: widget.stock.name,
+                          style: const TextStyle(
+                              fontSize: 24,
+                              color: Colors.white
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10,),
+                      Center(
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 7,
+                              height: 7,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white38,
+                                  shape: BoxShape.circle
+                              ),
+                            ),
+                            const SizedBox(width: 5,),
+                            Text(
+                              widget.stock.ticker,
+                              style: const TextStyle(
+                                color: Colors.white38,
+                              ),
+                            ),
+                            const SizedBox(width: 5,),
+                            Container(
+                              width: 7,
+                              height: 7,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white38,
+                                  shape: BoxShape.circle
+                              ),
+                            ),
+                            const SizedBox(width: 5,),
+                            Text(
+                              widget.stock.type,
+                              style: const TextStyle(
+                                color: Colors.white38,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                ),
+                )
               ],
             ),
             const SizedBox(height: 20,),
@@ -79,44 +123,54 @@ class StockScreenState extends State<StockScreen>{
               child: Container(
                 height: 300,
                 color: Colors.white.withOpacity(0.05),
-                child: ListView(
-                  padding: const EdgeInsets.all(10),
-                  children: <Widget> [
-                    AttributeBlock(
-                      attribute: "Preço: ",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.white
+                child: Scrollbar(
+                  child: ListView(
+                    padding: const EdgeInsets.all(10),
+                    children: <Widget> [
+                      AttributeBlock(
+                        attribute: "Preço: ",
+                        style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white
+                        ),
+                        value: widget.stock.price,
                       ),
-                      value: widget.stock.price,
-                    ),
-                    AttributeBlock(
-                      attribute: "P/VP: ",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.white
+                      AttributeBlock(
+                        attribute: "P/VP: ",
+                        style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white
+                        ),
+                        value: widget.stock.pvp,
                       ),
-                      value: widget.stock.pvp,
-                    ),
-                    AttributeBlock(
-                      attribute: "DY: ",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.white
+                      AttributeBlock(
+                        attribute: "DY: ",
+                        style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white
+                        ),
+                        value: widget.stock.dy,
                       ),
-                      value: widget.stock.dy,
-                    ),
-                    AttributeBlock(
-                      attribute: "ROE: ",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.white
+                      AttributeBlock(
+                        attribute: "ROE: ",
+                        style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white
+                        ),
+                        value: widget.stock.roe,
                       ),
-                      value: widget.stock.roe,
-                    ),
+                      AttributeBlock(
+                        attribute: "PL: ",
+                        style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white
+                        ),
+                        value: widget.stock.pl,
+                      ),
 
-                  ],
-                ),
+                    ],
+                  ),
+                )
               ),
             )
           ],
@@ -162,7 +216,7 @@ class AttributeBlock extends StatelessWidget{
                   child: Container(
                     height: 50,
                     width: 120,
-                    color: Colors.white.withOpacity(0.02),
+                    color: Colors.white.withOpacity(0.04),
                     child: FutureText<String>(
                       style: const TextStyle(
                           fontSize: 22,

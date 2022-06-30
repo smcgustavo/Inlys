@@ -3,7 +3,7 @@ import 'csvManager.dart';
 
 class Stock {
   late String _ticker, _type;
-  late Future<String> _price, _name, _pvp, _dy, _roe;
+  late Future<String> _price, _name, _pvp, _dy, _roe, _pl;
 
 
   late AssetImage _logo;
@@ -22,6 +22,7 @@ class Stock {
     _pvp = dataBase.getPvpFromTicker(_ticker);
     _dy = dataBase.getDyFromTicker(_ticker);
     _roe = dataBase.getRoeFromTicker(_ticker);
+    _pl = dataBase.getPLFromTicker(_ticker);
   }
 
   void loadLogo(){
@@ -35,6 +36,8 @@ class Stock {
   Future<String> get pvp => _pvp;
 
   Future<String> get roe => _roe;
+
+  Future<String> get pl => _pl;
 
   Future<String> get price => _price;
 

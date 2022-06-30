@@ -13,7 +13,7 @@ class WalletScreenState extends State<WalletScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(35),
+        preferredSize: const Size.fromHeight(30),
         child: AppBar(
           title: const Text("Sua Carteira"),
           centerTitle: true,

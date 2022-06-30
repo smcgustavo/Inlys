@@ -76,6 +76,21 @@ class DataManager {
     return aux;
   }
 
+  Future<String> getPLFromTicker(String ticker) async {
+    if(loaded == 0){
+      await loadAsset();
+    }
+    loaded = 1;
+    Future<String> aux = Future<String>.value("%");
+    for(int i = 0; i < data.length; i++){
+      if(data[i][0] == ticker){
+        aux = Future<String>.value("R\$${data[i][4]}");
+        break;
+      }
+    }
+    return aux;
+  }
+
   Future<String> getNameFromTicker(String ticker) async{
     if(loaded == 0){
       await loadAsset();
