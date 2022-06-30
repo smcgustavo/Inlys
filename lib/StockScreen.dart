@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
+import 'dart:math' as math;
 
 class StockScreen extends StatefulWidget{
 
@@ -25,6 +26,19 @@ class StockScreenState extends State<StockScreen>{
         child: Column(
           children: <Widget> [
             const SizedBox(height: 40,),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Transform.rotate(
+                  angle: 90 * math.pi / 180,
+                  child: IconButton(
+                    color: Colors.white.withOpacity(0.5),
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+              ),
+            ),
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
@@ -175,5 +189,4 @@ class FutureText<String> extends StatelessWidget{
         },
       );
   }
-
 }

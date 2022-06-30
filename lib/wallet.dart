@@ -56,5 +56,4 @@ class Wallet {
   List<Widget> getWallet(){
     return favoriteStocks;
   }
-
 }

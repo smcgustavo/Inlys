@@ -74,6 +74,4 @@ class DataManager {
     }
     return name;
   }
-
-
 }

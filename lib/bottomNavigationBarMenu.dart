@@ -54,5 +54,4 @@ class BottomNavigationState extends State<BottomNavigation>{
       ),
     );
   }
-
 }
