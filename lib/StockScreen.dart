@@ -26,25 +26,29 @@ class StockScreenState extends State<StockScreen>{
         child: Column(
           children: <Widget> [
             const SizedBox(height: 40,),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Transform.rotate(
-                  angle: 90 * math.pi / 180,
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Transform.rotate(
+                  angle: 45 * math.pi / 180,
                   child: IconButton(
+                    alignment: Alignment.centerRight,
                     color: Colors.white.withOpacity(0.5),
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
+                ),
               ),
             ),
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
-                  height: 100,
-                  width: 100,
+                  height: 120,
+                  width: 120,
                   color: Colors.white.withOpacity(0.1),
                   child: Image(
                     image: widget.stock.logo,
@@ -63,32 +67,43 @@ class StockScreenState extends State<StockScreen>{
               ),
             ),
             const SizedBox(height: 20,),
-            AttributeBlock(
-                  attribute: "Preço: ",
-                  style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white
-                  ),
-                  value: widget.stock.price,
-            ),
-            const SizedBox(height: 15),
-            AttributeBlock(
-              attribute: "P/VP: ",
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.white
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                height: 300,
+                color: Colors.white.withOpacity(0.05),
+                child: ListView(
+                  padding: const EdgeInsets.all(10),
+                  children: <Widget> [
+                    AttributeBlock(
+                      attribute: "Preço: ",
+                      style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                      value: widget.stock.price,
+                    ),
+                    AttributeBlock(
+                      attribute: "P/VP: ",
+                      style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                      value: widget.stock.pvp,
+                    ),
+                    AttributeBlock(
+                      attribute: "DY: ",
+                      style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                      value: widget.stock.dy,
+                    ),
+
+                  ],
+                ),
               ),
-              value: widget.stock.pvp,
-            ),
-            const SizedBox(height: 15),
-            AttributeBlock(
-              attribute: "DY: ",
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.white
-              ),
-              value: widget.stock.dy,
-            ),
+            )
           ],
         ),
       ),
@@ -111,38 +126,41 @@ class AttributeBlock extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        height: 70,
-        color: Colors.white.withOpacity(0.1),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            const SizedBox(width: 5),
-            Text(
-              attribute,
-              style: style,
-            ),
-            const SizedBox(width: 30),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                height: 70,
-                width: 120,
-                color: Colors.white.withOpacity(0.02),
-                child: FutureText<String>(
-                  style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white
-                  ),
-                  text: value,
+    return Padding(
+        padding: const EdgeInsets.all(10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 50,
+            color: Colors.white.withOpacity(0.1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const SizedBox(width: 5),
+                Text(
+                  attribute,
+                  style: style,
                 ),
-              ),
+                const SizedBox(width: 30),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    height: 50,
+                    width: 120,
+                    color: Colors.white.withOpacity(0.02),
+                    child: FutureText<String>(
+                      style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                      text: value,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
     );
   }
 
