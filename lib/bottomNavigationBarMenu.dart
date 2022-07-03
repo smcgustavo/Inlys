@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/walletScreen.dart';
-import 'package:inlys/StockScreen.dart';
-import 'package:inlys/stock.dart';
+import 'package:inlys/sideMenu.dart';
 
 class BottomNavigation extends StatefulWidget{
   const BottomNavigation({Key? key}) : super(key: key);
@@ -29,6 +28,19 @@ class BottomNavigationState extends State<BottomNavigation>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideMenu(),
+      appBar: AppBar(
+        title: const Text("Inlys"),
+        centerTitle: true,
+        backgroundColor: Colors.black,
+        /*
+        leading: const InkWell(
+          child: Icon(
+            Icons.menu
+          ),
+        ),
+        */
+      ),
       body: Center(
         child: screens.elementAt(_selectedIndex),
       ),

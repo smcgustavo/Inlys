@@ -12,14 +12,6 @@ class WalletScreenState extends State<WalletScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(30),
-        child: AppBar(
-          title: const Text("Sua Carteira"),
-          centerTitle: true,
-          backgroundColor: Colors.black,
-        ),
-      ),
       backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
       body: Center(
         child:

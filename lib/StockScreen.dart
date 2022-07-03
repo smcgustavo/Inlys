@@ -25,21 +25,17 @@ class StockScreenState extends State<StockScreen>{
         padding:  const EdgeInsets.all(10),
         child: Column(
           children: <Widget> [
-            const SizedBox(height: 10,),
+            const SizedBox(height: 20,),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Transform.rotate(
-                  angle: 45 * math.pi / 180,
-                  child: IconButton(
-                    alignment: Alignment.centerRight,
+                child: IconButton(
                     color: Colors.white.withOpacity(0.5),
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.close),
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                  ),
                 ),
               ),
             ),
