@@ -15,10 +15,13 @@ class WalletScreenState extends State<WalletScreen>{
       backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
       body: Center(
         child:
-           ListView(
-            padding:  const EdgeInsets.all(10),
-            children:  wallet.getWallet()
-          )
+            Scrollbar(
+              child: ListView(
+                padding:  const EdgeInsets.all(10),
+                children:  wallet.getWallet()
+              ),
+            )
+
       )
 
     );

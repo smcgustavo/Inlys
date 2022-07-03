@@ -28,18 +28,11 @@ class BottomNavigationState extends State<BottomNavigation>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideMenu(),
+      drawer: SideMenu(),
       appBar: AppBar(
         title: const Text("Inlys"),
         centerTitle: true,
         backgroundColor: Colors.black,
-        /*
-        leading: const InkWell(
-          child: Icon(
-            Icons.menu
-          ),
-        ),
-        */
       ),
       body: Center(
         child: screens.elementAt(_selectedIndex),
