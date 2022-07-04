@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'dart:math' as math;
+import 'package:inlys/profile.dart';
 
 class StockScreen extends StatefulWidget{
 
   const StockScreen({
     super.key,
-    required this.stock
+    required this.stock,
+    required this.user
   });
 
+  final Profile user;
   final Stock stock;
 
   @override

@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/walletScreen.dart';
 import 'package:inlys/sideMenu.dart';
+import 'package:inlys/profile.dart';
 
 class BottomNavigation extends StatefulWidget{
-  const BottomNavigation({Key? key}) : super(key: key);
+  Profile user;
+  BottomNavigation({Key? key, required this.user}) : super(key: key);
   @override
   State<StatefulWidget> createState() => BottomNavigationState();
 }
 
 class BottomNavigationState extends State<BottomNavigation>{
-
-
   int _selectedIndex = 0;
   static const TextStyle style = TextStyle(color: Colors.white, fontSize: 26);
-  static List<Widget> screens = <Widget>[
-    const WalletScreen(),
-    const Text("Index 1: Sob Construção", style: TextStyle(color: Colors.black),),
-    const Text("Index 2: Sob Construção", style: TextStyle(color: Colors.black),)
-  ];
+
 
   void _onItemTapped(int index){
     setState((){
@@ -27,6 +23,11 @@ class BottomNavigationState extends State<BottomNavigation>{
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = <Widget>[
+      WalletScreen(user: widget.user),
+      const Text("Index 1: Sob Construção", style: TextStyle(color: Colors.black),),
+      const Text("Index 2: Sob Construção", style: TextStyle(color: Colors.black),)
+    ];
     return Scaffold(
       drawer: SideMenu(),
       appBar: AppBar(

@@ -92,13 +92,10 @@ class Form extends StatelessWidget {
             IconButton(
                 onPressed: (){
                   user.setSelic(double.parse(_formController.text));
-                  print(user.selic);
-
                 },
                 icon: const Icon(Icons.save),
                 color: Colors.white,
             )
-
           ],
         ),
       ),

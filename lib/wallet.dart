@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stockBlock.dart';
 import 'package:inlys/stock.dart';
+import 'package:inlys/profile.dart';
 
 class Wallet {
   static List<Widget> favoriteStocks = <Widget> [];
 
-  Wallet(){
+  void initializeWallet(Profile user){
     Stock a = Stock("BBAS3");
     Stock b = Stock("PETR4");
     Stock c = Stock("GOLL4");
@@ -19,37 +20,46 @@ class Wallet {
     favoriteStocks = <Widget> [
       StockBlock(
         stock: a,
+        user: user,
       ),
       StockBlock(
         stock: b,
+        user: user,
       ),
       StockBlock(
         stock: c,
+        user: user,
       ),
       StockBlock(
         stock: d,
+        user: user,
       ),
       StockBlock(
         stock: e,
+        user: user,
       ),
       StockBlock(
         stock: f,
+        user: user,
       ),
       StockBlock(
         stock: g,
+        user: user,
       ),
       StockBlock(
         stock: h,
+        user: user,
       ),
       StockBlock(
-          stock: i
+          stock: i,
+          user: user,
       )
     ];
   }
 
-  void addStock(String ticker){
+  void addStock(String ticker, Profile user){
     Stock aux = Stock(ticker);
-    StockBlock aux2 = StockBlock(stock: aux);
+    StockBlock aux2 = StockBlock(stock: aux, user: user,);
     favoriteStocks.add(aux2);
   }
 

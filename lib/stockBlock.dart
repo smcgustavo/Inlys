@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/StockScreen.dart';
+import 'package:inlys/profile.dart';
 
 class StockBlock extends StatefulWidget{
 
   const StockBlock({
     super.key,
-    required this.stock
+    required this.stock,
+    required this.user
   });
   final Stock stock;
+  final Profile user;
 
   @override
   State<StatefulWidget> createState() => StockBlockState(stock: stock);
@@ -31,7 +34,7 @@ class StockBlockState extends State<StockBlock>{
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => StockScreen(key: widget.key, stock: stock,))
+                    MaterialPageRoute(builder: (context) => StockScreen(key: widget.key, stock: stock, user: widget.user,))
                 );
               },
               child: Container(
