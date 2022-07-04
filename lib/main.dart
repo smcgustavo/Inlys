@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'bottomNavigationBarMenu.dart';
 import 'package:flutter/services.dart';
+import 'package:inlys/profile.dart';
 
 void main() {
+
   runApp(const MyApp());
 }
 
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    Profile user = Profile("Gustavo", 13.25);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
