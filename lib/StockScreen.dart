@@ -166,7 +166,6 @@ class StockScreenState extends State<StockScreen>{
                         ),
                         value: widget.stock.pl,
                       ),
-
                     ],
                   ),
                 )
@@ -229,6 +228,62 @@ class AttributeBlock extends StatelessWidget{
             ),
           ),
         ),
+    );
+  }
+
+}
+
+class AttributeBlockWF extends StatelessWidget{
+
+  final String attribute;
+  final TextStyle style;
+  final String value;
+
+  const AttributeBlockWF({
+    Key? key,
+    required this.attribute,
+    required this.style,
+    required this.value
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          height: 50,
+          color: Colors.white.withOpacity(0.1),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const SizedBox(width: 5),
+              Text(
+                attribute,
+                style: style,
+              ),
+              const SizedBox(width: 30),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 50,
+                  width: 120,
+                  color: Colors.white.withOpacity(0.04),
+                  child:
+                  Text(
+                    value,
+                    style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

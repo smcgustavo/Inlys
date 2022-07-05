@@ -17,91 +17,35 @@ class DataManager {
   }
 
   Future<String> getPriceFromTicker(String ticker) async {
-    if(loaded == 0){
-      await loadAsset();
-    }
-    loaded = 1;
-    Future<String> aux = Future<String>.value("R\$");
-    for(int i = 0; i < data.length; i++){
-      if(data[i][0] == ticker){
-        aux = Future<String>.value("R\$${data[i][1]}");
-        break;
-      }
-    }
-    return aux;
+    return getAttributeFromTicker(ticker, 1);
   }
-
   Future<String> getPvpFromTicker(String ticker) async {
-    if(loaded == 0){
-      await loadAsset();
-    }
-    loaded = 1;
-    Future<String> aux = Future<String>.value("");
-    for(int i = 0; i < data.length; i++){
-      if(data[i][0] == ticker){
-        aux = Future<String>.value("${data[i][5]}");
-        break;
-      }
-    }
-    return aux;
+    return getAttributeFromTicker(ticker, 5);
   }
-
-  Future<String> getRoeFromTicker(String ticker) async {
-    if(loaded == 0){
-      await loadAsset();
-    }
-    loaded = 1;
-    Future<String> aux = Future<String>.value("");
-    for(int i = 0; i < data.length; i++){
-      if(data[i][0] == ticker){
-        aux = Future<String>.value("${data[i][18]}%");
-        break;
-      }
-    }
-    return aux;
-  }
-
   Future<String> getDyFromTicker(String ticker) async {
-    if(loaded == 0){
-      await loadAsset();
-    }
-    loaded = 1;
-    Future<String> aux = Future<String>.value("%");
-    for(int i = 0; i < data.length; i++){
-      if(data[i][0] == ticker){
-        aux = Future<String>.value("${data[i][3]}%");
-        break;
-      }
-    }
-    return aux;
+    return getAttributeFromTicker(ticker, 3);
   }
-
   Future<String> getPLFromTicker(String ticker) async {
+    return getAttributeFromTicker(ticker, 4);
+  }
+  Future<String> getRoeFromTicker(String ticker) async {
+    return getAttributeFromTicker(ticker, 18);
+  }
+  Future<String> getNameFromTicker(String ticker) async{
+    return getAttributeFromTicker(ticker, 2);
+  }
+  Future<String> getAttributeFromTicker(String ticker, int pos) async{
     if(loaded == 0){
       await loadAsset();
     }
     loaded = 1;
-    Future<String> aux = Future<String>.value("%");
+    Future<String> aux = Future<String>.value("");
     for(int i = 0; i < data.length; i++){
       if(data[i][0] == ticker){
-        aux = Future<String>.value("R\$${data[i][4]}");
+        aux = Future<String>.value("${data[i][pos]}");
         break;
       }
     }
     return aux;
-  }
-
-  Future<String> getNameFromTicker(String ticker) async{
-    if(loaded == 0){
-      await loadAsset();
-    }
-    loaded = 1;
-    String name = "-";
-    for(int i = 0; i < data.length; i++){
-      if(data[i][0] == ticker){
-        name = data[i][2];
-      }
-    }
-    return name;
   }
 }
