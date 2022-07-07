@@ -49,18 +49,22 @@ class DataManager {
     return aux;
   }
 
-  Future<double> getBetterNumberFromTicker(String ticker) async{
-    double aux;
-    double aux2;
-    aux = (await getNumberFromTicker(ticker, 18));
-    aux2 = (await getNumberFromTicker(ticker, 3));
-    if(aux > aux2){
-      return Future<double>.value(aux);
+  Future<double> getPrinceAsNumberFromTicker(String ticker) async{
+    if(loaded == 0){
+      await loadAsset();
     }
-    return Future<double>.value(aux2);
+    loaded = 1;
+    double aux = 0.0;
+    for(int i = 0; i < data.length; i++){
+      if(data[i][0] == ticker){
+        aux =  double.parse(data[i][1].toString());
+        break;
+      }
+    }
+    return Future<double>.value(aux);
   }
 
-  Future<double> getNumberFromTicker(String ticker, int pos) async{
+    Future<double> getNumberFromTicker(String ticker, int pos) async{
     if(loaded == 0){
       await loadAsset();
     }

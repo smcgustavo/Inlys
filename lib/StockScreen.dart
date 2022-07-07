@@ -3,13 +3,8 @@ import 'package:inlys/stock.dart';
 import 'dart:math' as math;
 import 'package:inlys/profile.dart';
 
-class StockScreen extends StatefulWidget{
-
-  const StockScreen({
-    super.key,
-    required this.stock,
-    required this.user
-  });
+class StockScreen extends StatefulWidget {
+  const StockScreen({super.key, required this.stock, required this.user});
 
   final Profile user;
   final Stock stock;
@@ -18,32 +13,33 @@ class StockScreen extends StatefulWidget{
   State<StatefulWidget> createState() => StockScreenState();
 }
 
-class StockScreenState extends State<StockScreen>{
-
+class StockScreenState extends State<StockScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
       body: Padding(
-        padding:  const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
-          children: <Widget> [
-            const SizedBox(height: 20,),
+          children: <Widget>[
+            const SizedBox(
+              height: 20,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: IconButton(
-                    color: Colors.white.withOpacity(0.5),
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                  color: Colors.white.withOpacity(0.5),
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Center(
                   child: ClipRRect(
@@ -55,13 +51,15 @@ class StockScreenState extends State<StockScreen>{
                       child: Padding(
                         padding: const EdgeInsets.all(5),
                         child: Image(
-                            image: widget.stock.logo,
-                          ),
-                      ),                      
+                          image: widget.stock.logo,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 Center(
                   child: Column(
                     children: [
@@ -69,12 +67,12 @@ class StockScreenState extends State<StockScreen>{
                         child: FutureText<String>(
                           text: widget.stock.name,
                           style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.white
-                          ),
+                              fontSize: 24, color: Colors.white),
                         ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Center(
                         child: Row(
                           children: [
@@ -83,26 +81,30 @@ class StockScreenState extends State<StockScreen>{
                               height: 7,
                               decoration: const BoxDecoration(
                                   color: Colors.white38,
-                                  shape: BoxShape.circle
-                              ),
+                                  shape: BoxShape.circle),
                             ),
-                            const SizedBox(width: 5,),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Text(
                               widget.stock.ticker,
                               style: const TextStyle(
                                 color: Colors.white38,
                               ),
                             ),
-                            const SizedBox(width: 5,),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Container(
                               width: 7,
                               height: 7,
                               decoration: const BoxDecoration(
                                   color: Colors.white38,
-                                  shape: BoxShape.circle
-                              ),
+                                  shape: BoxShape.circle),
                             ),
-                            const SizedBox(width: 5,),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Text(
                               widget.stock.type,
                               style: const TextStyle(
@@ -115,81 +117,79 @@ class StockScreenState extends State<StockScreen>{
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      width: 70,
-                      height: 80,
-                      color: Colors.white.withOpacity(0.05),
-                      child: FutureText(
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white.withOpacity(0.80)
-                        ),
-                        text: widget.stock.indicator(widget.user.selic),
-                      ),
-                    ),
-                  ),
-                )
-
               ],
             ),
-            const SizedBox(height: 20,),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                height: 300,
-                color: Colors.white.withOpacity(0.05),
-                child: Scrollbar(
-                  child: ListView(
-                    padding: const EdgeInsets.all(10),
-                    children: <Widget> [
-                      AttributeBlock(
-                        attribute: "Preço: ",
-                        style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.white
-                        ),
-                        value: widget.stock.price,
+            const SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  height: 50,
+                  color: Colors.white.withOpacity(0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Índice de Graham:",
+                        style: TextStyle(fontSize: 22, color: Colors.white),
                       ),
-                      AttributeBlock(
-                        attribute: "P/VP: ",
-                        style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.white
-                        ),
-                        value: widget.stock.pvp,
-                      ),
-                      AttributeBlock(
-                        attribute: "DY: ",
-                        style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.white
-                        ),
-                        value: widget.stock.dy,
-                      ),
-                      AttributeBlock(
-                        attribute: "ROE: ",
-                        style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.white
-                        ),
-                        value: widget.stock.roe,
-                      ),
-                      AttributeBlock(
-                        attribute: "PL: ",
-                        style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.white
-                        ),
-                        value: widget.stock.pl,
+                      FutureText(
+                        text: widget.stock.indicator,
+                        style: widget.stock.condition ? const TextStyle(color:Colors.greenAccent, fontSize: 22) : const TextStyle(color:Colors.redAccent, fontSize: 22),
                       ),
                     ],
                   ),
-                )
+                ),
               ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                  height: 300,
+                  color: Colors.white.withOpacity(0.05),
+                  child: Scrollbar(
+                    child: ListView(
+                      padding: const EdgeInsets.all(10),
+                      children: <Widget>[
+                        AttributeBlock(
+                          attribute: "Preço: ",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white),
+                          value: widget.stock.price,
+                        ),
+                        AttributeBlock(
+                          attribute: "P/VP: ",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white),
+                          value: widget.stock.pvp,
+                        ),
+                        AttributeBlock(
+                          attribute: "DY: ",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white),
+                          value: widget.stock.dy,
+                        ),
+                        AttributeBlock(
+                          attribute: "ROE: ",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white),
+                          value: widget.stock.roe,
+                        ),
+                        AttributeBlock(
+                          attribute: "PL: ",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white),
+                          value: widget.stock.pl,
+                        ),
+                      ],
+                    ),
+                  )),
             )
           ],
         ),
@@ -198,73 +198,16 @@ class StockScreenState extends State<StockScreen>{
   }
 }
 
-class AttributeBlock extends StatelessWidget{
-
+class AttributeBlock extends StatelessWidget {
   final String attribute;
   final TextStyle style;
   final Future<String> value;
 
-  const AttributeBlock({
-    Key? key,
-    required this.attribute,
-    required this.style,
-    required this.value
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            height: 50,
-            color: Colors.white.withOpacity(0.1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const SizedBox(width: 5),
-                Text(
-                  attribute,
-                  style: style,
-                ),
-                const SizedBox(width: 30),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    height: 50,
-                    width: 120,
-                    color: Colors.white.withOpacity(0.04),
-                    child: FutureText<String>(
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.white
-                      ),
-                      text: value,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-    );
-  }
-
-}
-
-class AttributeBlockWF extends StatelessWidget{
-
-  final String attribute;
-  final TextStyle style;
-  final String value;
-
-  const AttributeBlockWF({
-    Key? key,
-    required this.attribute,
-    required this.style,
-    required this.value
-  });
+  const AttributeBlock(
+      {Key? key,
+      required this.attribute,
+      required this.style,
+      required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -290,13 +233,9 @@ class AttributeBlockWF extends StatelessWidget{
                   height: 50,
                   width: 120,
                   color: Colors.white.withOpacity(0.04),
-                  child:
-                  Text(
-                    value,
-                    style: const TextStyle(
-                        fontSize: 22,
-                        color: Colors.white
-                    ),
+                  child: FutureText<String>(
+                    style: const TextStyle(fontSize: 22, color: Colors.white),
+                    text: value,
                   ),
                 ),
               ),
@@ -306,50 +245,40 @@ class AttributeBlockWF extends StatelessWidget{
       ),
     );
   }
-
 }
 
-class FutureText<String> extends StatelessWidget{
-  const FutureText({
-    Key? key,
-    required this.text,
-    required this.style
-  });
+class FutureText<String> extends StatelessWidget {
+  const FutureText({Key? key, required this.text, required this.style});
+
   final Future<String> text;
   final TextStyle style;
+
   @override
-  Widget build(BuildContext context){
-    return
-      FutureBuilder(
-        future: text,
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-          List<Widget> children;
-          if(snapshot.hasData){
-            children = <Widget>[
-              Text(
-                '${snapshot.data}',
-                style: style
-              )
-            ];
-          }
-          else{
-            children = <Widget>[
-              const SizedBox(
-                width: 10,
-                height: 10,
-                child: CircularProgressIndicator(
-                  color: Colors.white38,
-                ),
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: text,
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          children = <Widget>[Text('${snapshot.data}', style: style)];
+        } else {
+          children = <Widget>[
+            const SizedBox(
+              width: 10,
+              height: 10,
+              child: CircularProgressIndicator(
+                color: Colors.white38,
               ),
-            ];
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: children,
             ),
-          );
-        },
-      );
+          ];
+        }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          ),
+        );
+      },
+    );
   }
 }
