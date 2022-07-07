@@ -43,6 +43,7 @@ class StockScreenState extends State<StockScreen>{
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Center(
                   child: ClipRRect(
@@ -110,10 +111,29 @@ class StockScreenState extends State<StockScreen>{
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      width: 70,
+                      height: 80,
+                      color: Colors.white.withOpacity(0.05),
+                      child: FutureText(
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white.withOpacity(0.80)
+                        ),
+                        text: widget.stock.indicator(widget.user.selic),
+                      ),
+                    ),
+                  ),
                 )
+
               ],
             ),
             const SizedBox(height: 20,),
@@ -317,7 +337,9 @@ class FutureText<String> extends StatelessWidget{
               const SizedBox(
                 width: 10,
                 height: 10,
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: Colors.white38,
+                ),
               ),
             ];
           }

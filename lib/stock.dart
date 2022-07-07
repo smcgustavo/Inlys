@@ -3,7 +3,7 @@ import 'csvManager.dart';
 
 class Stock {
   late String _ticker, _type;
-  late Future<String> _price, _name, _pvp, _dy, _roe, _pl;
+  late Future<String> _price, _name, _pvp, _dy, _roe, _pl, _indicator;
 
 
   late AssetImage _logo;
@@ -27,6 +27,13 @@ class Stock {
 
   void loadLogo(){
     _logo = AssetImage('assets/images/stocksIcons/${_ticker.substring(0,4)}.jpg');
+  }
+
+  Future<String> indicator(double selic) async{
+    double number = await dataBase.getBetterNumberFromTicker(_ticker);
+    double result = number / selic;
+    print("$selic e $number");
+    return Future<String>.value(result.toStringAsFixed(2));
   }
 
   AssetImage get logo => _logo;
