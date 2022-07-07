@@ -42,7 +42,7 @@ class Stock {
     if(result > price){
       _condition = true;
     }
-    _indicator = Future<String>.value(result.toStringAsFixed(2));
+    _indicator = Future<String>.value("R\$${result.toStringAsFixed(2)}");
   }
 
   AssetImage get logo => _logo;
