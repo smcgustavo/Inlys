@@ -22,9 +22,6 @@ class StockScreenState extends State<StockScreen> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 20,
-            ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
