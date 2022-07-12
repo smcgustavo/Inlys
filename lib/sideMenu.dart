@@ -91,7 +91,8 @@ class Form extends StatelessWidget {
             ),
             IconButton(
                 onPressed: (){
-                  user.setSelic(double.parse(_formController.text));
+                  user.setSelic(double.parse(_formController.text.replaceAll(",", ".")));
+                  FocusScope.of(context).unfocus();
                 },
                 icon: const Icon(Icons.save),
                 color: Colors.white,
