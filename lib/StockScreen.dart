@@ -1,6 +1,6 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
-import 'dart:math' as math;
 import 'package:inlys/profile.dart';
 
 class StockScreen extends StatefulWidget {
@@ -162,30 +162,35 @@ class StockScreenState extends State<StockScreen> {
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.price,
+                            description: "Preço atual da ação.",
                           ),
                           AttributeBlock(
                             attribute: "P/VP: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.pvp,
+                            description: "Valor da ação dividido pelo valor patrimonial por ação.",
                           ),
                           AttributeBlock(
                             attribute: "DY: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.dy,
+                            description: "Porcentagem do valor da ação distribuído em divivendos anualmente.",
                           ),
                           AttributeBlock(
                             attribute: "ROE: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.roe,
+                            description: "Retorno sobre o patrimônio líquido.",
                           ),
                           AttributeBlock(
                             attribute: "PL: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.pl,
+                            description: "Patrimônio líquido por ação.",
                           ),
                         ],
                       ),
@@ -204,48 +209,69 @@ class AttributeBlock extends StatelessWidget {
   final String attribute;
   final TextStyle style;
   final Future<String> value;
+  final String description;
 
   const AttributeBlock(
-      {Key? key,
+      {super.key,
       required this.attribute,
       required this.style,
-      required this.value});
+      required this.value,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-              height: 50,
-              color: Colors.white.withOpacity(0.1),
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Text(
-                        attribute,
-                        style: style,
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          color: Colors.white.withOpacity(0.0),
-                          child: FutureText<String>(
-                            style: style,
-                            text: value,
+      padding: const EdgeInsets.all(5),
+      child: 
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+                color: Colors.white.withOpacity(0.05),
+                child: ExpandablePanel(
+                  theme: ExpandableThemeData(
+                    inkWellBorderRadius: BorderRadius.circular(20),
+                    iconColor: Colors.white,
+                  ),
+                  expanded:  Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Center(
+                        child: Text(
+                          description,
+                          style: const TextStyle(
+                              color: Colors.grey,
+                            fontSize: 12
                           ),
                         ),
-                      ),
-                    ],
+                      )
                   ),
-                ),
-              ),
+                  collapsed: const Center(),
+                  header: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            attribute,
+                            style: style,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              color: Colors.white.withOpacity(0.0),
+                              child: FutureText<String>(
+                                style: style,
+                                text: value,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
             ),
-        )
+          )
     );
   }
 }
