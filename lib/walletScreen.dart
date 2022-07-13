@@ -20,6 +20,7 @@ class WalletScreenState extends State<WalletScreen>{
         child:
             Scrollbar(
               child: ListView(
+                physics: const BouncingScrollPhysics(),
                 padding:  const EdgeInsets.all(10),
                 children:  wallet.getWallet()
               ),

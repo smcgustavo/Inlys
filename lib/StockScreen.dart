@@ -145,48 +145,53 @@ class StockScreenState extends State<StockScreen> {
             const SizedBox(
               height: 20,
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                height: 530,
-                  color: Colors.white.withOpacity(0.05),
-                  child: Scrollbar(
-                    child: ListView(
-                      padding: const EdgeInsets.all(10),
-                      children: <Widget>[
-                        AttributeBlock(
-                          attribute: "Preço: ",
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.white),
-                          value: widget.stock.price,
-                        ),
-                        AttributeBlock(
-                          attribute: "P/VP: ",
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.white),
-                          value: widget.stock.pvp,
-                        ),
-                        AttributeBlock(
-                          attribute: "DY: ",
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.white),
-                          value: widget.stock.dy,
-                        ),
-                        AttributeBlock(
-                          attribute: "ROE: ",
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.white),
-                          value: widget.stock.roe,
-                        ),
-                        AttributeBlock(
-                          attribute: "PL: ",
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.white),
-                          value: widget.stock.pl,
-                        ),
-                      ],
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                    height: 517,
+                    color: Colors.white.withOpacity(0.05),
+                    child: Scrollbar(
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.all(10),
+                        children: <Widget>[
+                          AttributeBlock(
+                            attribute: "Preço: ",
+                            style: const TextStyle(
+                                fontSize: 22, color: Colors.white),
+                            value: widget.stock.price,
+                          ),
+                          AttributeBlock(
+                            attribute: "P/VP: ",
+                            style: const TextStyle(
+                                fontSize: 22, color: Colors.white),
+                            value: widget.stock.pvp,
+                          ),
+                          AttributeBlock(
+                            attribute: "DY: ",
+                            style: const TextStyle(
+                                fontSize: 22, color: Colors.white),
+                            value: widget.stock.dy,
+                          ),
+                          AttributeBlock(
+                            attribute: "ROE: ",
+                            style: const TextStyle(
+                                fontSize: 22, color: Colors.white),
+                            value: widget.stock.roe,
+                          ),
+                          AttributeBlock(
+                            attribute: "PL: ",
+                            style: const TextStyle(
+                                fontSize: 22, color: Colors.white),
+                            value: widget.stock.pl,
+                          ),
+                        ],
+                      ),
                     ),
-                  )),
+                ),
+              ),
             )
           ],
         ),
@@ -213,33 +218,34 @@ class AttributeBlock extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          height: 50,
-          color: Colors.white.withOpacity(0.1),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const SizedBox(width: 5),
-              Text(
-                attribute,
-                style: style,
-              ),
-              const SizedBox(width: 30),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 50,
-                  width: 120,
-                  color: Colors.white.withOpacity(0.04),
-                  child: FutureText<String>(
-                    style: const TextStyle(fontSize: 22, color: Colors.white),
-                    text: value,
+              height: 50,
+              color: Colors.white.withOpacity(0.1),
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        attribute,
+                        style: style,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          color: Colors.white.withOpacity(0.0),
+                          child: FutureText<String>(
+                            style: style,
+                            text: value,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+        )
     );
   }
 }
