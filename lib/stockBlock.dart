@@ -25,6 +25,8 @@ class StockBlockState extends State<StockBlock> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: InkWell(
+            splashColor: Colors.white10,
+            borderRadius: BorderRadius.circular(20),
             onTap: () {
               Navigator.push(
                   context,
@@ -55,11 +57,6 @@ class StockBlockState extends State<StockBlock> {
                             ),
                           ),
                         )),
-                  ),
-                  Container(
-                    height: 90,
-                    width: 2,
-                    color: Colors.white.withOpacity(0.02),
                   ),
                   const SizedBox(width: 15),
                   Column(

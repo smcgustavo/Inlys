@@ -148,7 +148,7 @@ class StockScreenState extends State<StockScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Container(
-                  height: 300,
+                height: 530,
                   color: Colors.white.withOpacity(0.05),
                   child: Scrollbar(
                     child: ListView(
