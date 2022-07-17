@@ -186,11 +186,12 @@ class StockScreenState extends State<StockScreen> {
                             description: "Retorno sobre o patrimônio líquido.",
                           ),
                           AttributeBlock(
-                            attribute: "PL: ",
+                            attribute: "P/L: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.pl,
-                            description: "Patrimônio líquido por ação.",
+                            description: "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
+                                "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
                           ),
                         ],
                       ),

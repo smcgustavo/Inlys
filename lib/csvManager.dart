@@ -26,7 +26,7 @@ class DataManager {
     return getAttributeFromTicker(ticker, 3,"", "%");
   }
   Future<String> getPLFromTicker(String ticker) async {
-    return getAttributeFromTicker(ticker, 4,"R\$", "");
+    return getAttributeFromTicker(ticker, 4,"", "");
   }
   Future<String> getRoeFromTicker(String ticker) async {
     return getAttributeFromTicker(ticker, 18,"","%");

@@ -83,7 +83,9 @@ class StockBlockState extends State<StockBlock> {
                               const SizedBox(
                                 width: 10,
                                 height: 10,
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
                               ),
                             ];
                           }
@@ -146,7 +148,9 @@ class StockBlockState extends State<StockBlock> {
                                   const SizedBox(
                                     width: 10,
                                     height: 10,
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ];
                               }
