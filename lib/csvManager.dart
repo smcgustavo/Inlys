@@ -16,6 +16,8 @@ class DataManager {
     data = csvData;
   }
 
+
+
   Future<String> getPriceFromTicker(String ticker) async {
     return getAttributeFromTicker(ticker, 1, "R\$", "");
   }

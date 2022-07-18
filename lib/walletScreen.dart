@@ -29,12 +29,12 @@ class WalletScreenState extends State<WalletScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AddStock(),
+                builder: (context) => SearchStock(),
               ));
         },
         backgroundColor: Colors.black,
         child: const Icon(
-          Icons.add,
+          Icons.search,
           color: Colors.white,
         ),
       ),

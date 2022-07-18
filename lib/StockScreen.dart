@@ -19,7 +19,7 @@ class StockScreenState extends State<StockScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
             Align(
@@ -150,7 +150,7 @@ class StockScreenState extends State<StockScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
-                    height: 517,
+                    height: 473,
                     color: Colors.white.withOpacity(0.05),
                     child: Scrollbar(
                       child: ListView(
