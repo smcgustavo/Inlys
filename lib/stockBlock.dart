@@ -109,7 +109,7 @@ class StockBlockState extends State<StockBlock> {
                             width: 5,
                           ),
                           Text(
-                            stock.ticker,
+                            "${stock.ticker}",
                             style: const TextStyle(
                               color: Colors.white,
                             ),

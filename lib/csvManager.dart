@@ -22,25 +22,25 @@ class DataManager {
     return data;
   }
 
-  Future<String> getPriceFromTicker(String ticker) async {
+  Future<String> getPriceFromTicker(String? ticker) async {
     return getAttributeFromTicker(ticker, 1, "R\$", "");
   }
-  Future<String> getPvpFromTicker(String ticker) async {
+  Future<String> getPvpFromTicker(String? ticker) async {
     return getAttributeFromTicker(ticker, 5,"","");
   }
-  Future<String> getDyFromTicker(String ticker) async {
+  Future<String> getDyFromTicker(String? ticker) async {
     return getAttributeFromTicker(ticker, 3,"", "%");
   }
-  Future<String> getPLFromTicker(String ticker) async {
+  Future<String> getPLFromTicker(String? ticker) async {
     return getAttributeFromTicker(ticker, 4,"", "");
   }
-  Future<String> getRoeFromTicker(String ticker) async {
+  Future<String> getRoeFromTicker(String? ticker) async {
     return getAttributeFromTicker(ticker, 18,"","%");
   }
-  Future<String> getNameFromTicker(String ticker) async{
+  Future<String> getNameFromTicker(String? ticker) async{
     return getAttributeFromTicker(ticker, 2,"","");
   }
-  Future<String> getAttributeFromTicker(String ticker, int pos, String pre, String suf) async{
+  Future<String> getAttributeFromTicker(String? ticker, int pos, String pre, String suf) async{
     if(loaded == 0){
       await loadAsset();
     }
@@ -55,7 +55,7 @@ class DataManager {
     return aux;
   }
 
-  Future<double> getPrinceAsNumberFromTicker(String ticker) async{
+  Future<double> getPrinceAsNumberFromTicker(String? ticker) async{
     if(loaded == 0){
       await loadAsset();
     }
@@ -70,7 +70,7 @@ class DataManager {
     return Future<double>.value(aux);
   }
 
-    Future<double> getNumberFromTicker(String ticker, int pos) async{
+    Future<double> getNumberFromTicker(String? ticker, int pos) async{
     if(loaded == 0){
       await loadAsset();
     }
