@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     Profile user = Profile("Gustavo", 13.25);
     return MaterialApp(
       title: 'Flutter Demo',

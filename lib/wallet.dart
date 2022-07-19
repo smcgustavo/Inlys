@@ -6,7 +6,7 @@ import 'package:inlys/profile.dart';
 class Wallet {
   static List<Widget> favoriteStocks = <Widget> [];
 
-  void initializeWallet(Profile user){
+  void initializeWallet(){
     Stock a = Stock("BBAS3");
     Stock b = Stock("PETR4");
     Stock c = Stock("GOLL4");
@@ -20,46 +20,37 @@ class Wallet {
     favoriteStocks = <Widget> [
       StockBlock(
         stock: a,
-        user: user,
       ),
       StockBlock(
         stock: b,
-        user: user,
       ),
       StockBlock(
         stock: c,
-        user: user,
       ),
       StockBlock(
         stock: d,
-        user: user,
       ),
       StockBlock(
         stock: e,
-        user: user,
       ),
       StockBlock(
         stock: f,
-        user: user,
       ),
       StockBlock(
         stock: g,
-        user: user,
       ),
       StockBlock(
         stock: h,
-        user: user,
       ),
       StockBlock(
-          stock: i,
-          user: user,
+        stock: i,
       )
     ];
   }
 
   void addStock(String ticker, Profile user){
     Stock aux = Stock(ticker);
-    StockBlock aux2 = StockBlock(stock: aux, user: user,);
+    StockBlock aux2 = StockBlock(stock: aux);
     favoriteStocks.add(aux2);
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/walletScreen.dart';
-import 'package:inlys/sideMenu.dart';
+import 'package:inlys/configMenu.dart';
 import 'package:inlys/profile.dart';
 
 class BottomNavigation extends StatefulWidget{
@@ -23,15 +23,18 @@ class BottomNavigationState extends State<BottomNavigation>{
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      WalletScreen(user: widget.user),
-      const Text("Index 2: Sob Construção", style: TextStyle(color: Colors.black),)
+      WalletScreen(),
+      const Text("Index 2: Sob Construção", style: TextStyle(color: Colors.black)),
+      ConfigMenu()
     ];
     return Scaffold(
-      drawer: SideMenu(),
-      appBar: AppBar(
-        title: const Text("Inlys"),
-        centerTitle: true,
-        backgroundColor: Colors.black,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(20.0),
+        child: AppBar(
+          title: const Text(""),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
       ),
       body: Center(
         child: screens.elementAt(_selectedIndex),
@@ -49,6 +52,10 @@ class BottomNavigationState extends State<BottomNavigation>{
           BottomNavigationBarItem(
               icon: Icon(Icons.account_balance),
               label: 'Ações'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Configurações'
           )
         ],
       ),

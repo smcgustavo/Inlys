@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/StockScreen.dart';
-import 'package:inlys/profile.dart';
 
 class StockBlock extends StatefulWidget {
-  const StockBlock({super.key, required this.stock, required this.user});
+  const StockBlock({super.key, required this.stock});
 
   final Stock stock;
-  final Profile user;
 
   @override
-  State<StatefulWidget> createState() => StockBlockState(stock: stock);
+  State<StatefulWidget> createState() => StockBlockState();
 }
 
 class StockBlockState extends State<StockBlock> {
-  StockBlockState({required this.stock});
+  StockBlockState();
 
-  final Stock stock;
+  late Stock stock = widget.stock;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,6 @@ class StockBlockState extends State<StockBlock> {
                       builder: (context) => StockScreen(
                             key: widget.key,
                             stock: stock,
-                            user: widget.user,
                           )));
             },
             child: Container(
@@ -83,7 +80,9 @@ class StockBlockState extends State<StockBlock> {
                               const SizedBox(
                                 width: 10,
                                 height: 10,
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
                               ),
                             ];
                           }
@@ -146,7 +145,9 @@ class StockBlockState extends State<StockBlock> {
                                   const SizedBox(
                                     width: 10,
                                     height: 10,
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ];
                               }

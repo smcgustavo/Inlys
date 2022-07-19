@@ -4,9 +4,8 @@ import 'package:inlys/stock.dart';
 import 'package:inlys/profile.dart';
 
 class StockScreen extends StatefulWidget {
-  const StockScreen({super.key, required this.stock, required this.user});
+  const StockScreen({super.key, required this.stock});
 
-  final Profile user;
   final Stock stock;
 
   @override
@@ -19,7 +18,7 @@ class StockScreenState extends State<StockScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
             Align(
@@ -46,16 +45,13 @@ class StockScreenState extends State<StockScreen> {
                       width: 120,
                       color: Colors.white.withOpacity(0.05),
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(0),
                         child: Image(
                           image: widget.stock.logo,
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
                 ),
                 Center(
                   child: Column(
@@ -150,7 +146,7 @@ class StockScreenState extends State<StockScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
-                    height: 517,
+                    height: 473,
                     color: Colors.white.withOpacity(0.05),
                     child: Scrollbar(
                       child: ListView(
@@ -186,11 +182,12 @@ class StockScreenState extends State<StockScreen> {
                             description: "Retorno sobre o patrimônio líquido.",
                           ),
                           AttributeBlock(
-                            attribute: "PL: ",
+                            attribute: "P/L: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.pl,
-                            description: "Patrimônio líquido por ação.",
+                            description: "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
+                                "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
                           ),
                         ],
                       ),

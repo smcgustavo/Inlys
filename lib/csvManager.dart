@@ -4,16 +4,22 @@ import 'package:flutter/services.dart';
 
 class DataManager {
   static List<List<dynamic>> data = [];
-  late int loaded;
+  static late int loaded;
 
   DataManager(){
     loaded = 0;
   }
 
   loadAsset() async{
-    final stringData = await rootBundle.loadString("assets/Data/Acoes.csv");
-    List<List<dynamic>> csvData = const CsvToListConverter(fieldDelimiter: ",").convert(stringData, eol: "\n", fieldDelimiter: ",");
-    data = csvData;
+    if(loaded == 0){
+      final stringData = await rootBundle.loadString("assets/Data/Acoes.csv");
+      List<List<dynamic>> csvData = const CsvToListConverter(fieldDelimiter: ",").convert(stringData, eol: "\n", fieldDelimiter: ",");
+      data = csvData;
+    }
+  }
+
+  List<List<dynamic>> getData(){
+    return data;
   }
 
   Future<String> getPriceFromTicker(String ticker) async {
@@ -26,7 +32,7 @@ class DataManager {
     return getAttributeFromTicker(ticker, 3,"", "%");
   }
   Future<String> getPLFromTicker(String ticker) async {
-    return getAttributeFromTicker(ticker, 4,"R\$", "");
+    return getAttributeFromTicker(ticker, 4,"", "");
   }
   Future<String> getRoeFromTicker(String ticker) async {
     return getAttributeFromTicker(ticker, 18,"","%");

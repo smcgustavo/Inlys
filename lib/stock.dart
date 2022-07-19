@@ -20,13 +20,13 @@ class Stock {
   }
 
   void loadData(){
-    loadLogo();
     _price = dataBase.getPriceFromTicker(_ticker);
     _name = dataBase.getNameFromTicker(_ticker);
     _pvp = dataBase.getPvpFromTicker(_ticker);
     _dy = dataBase.getDyFromTicker(_ticker);
     _roe = dataBase.getRoeFromTicker(_ticker);
     _pl = dataBase.getPLFromTicker(_ticker);
+    loadLogo();
     graham();
   }
 
