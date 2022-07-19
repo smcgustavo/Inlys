@@ -31,7 +31,7 @@ class Stock {
   }
 
   void loadLogo(){
-    _logo = AssetImage('assets/images/stocksIcons/${_ticker?.substring(0,4)}.jpg');
+    _logo = AssetImage('assets/images/stocksIcons/${_ticker.substring(0,4)}.jpg');
   }
 
   void graham() async{

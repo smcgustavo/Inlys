@@ -75,50 +75,15 @@ class SearchStockState extends State<SearchStock> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              height: 620,
-              child: Expanded(
-                child: Scrollbar(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final stock = stocks[index].toUpperCase();
-                      return Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListTile(
-                          leading:
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Container(
-                                  height: 120,
-                                  width: 90,
-                                  color: Colors.white.withOpacity(0.1),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Image(
-                                      image: AssetImage('assets/images/stocksIcons/${stock.substring(0,4)}.jpg'),
-                                      ),
-                                  ),
-                                  ),
-                              ),
-                          title: Text(
-                            stock,
-                            style: const TextStyle(
-                                color: Colors.white
-                              ),
-                          ),
-                          onTap: () => Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) => StockScreen(
-                                    stock: Stock(stock)
-                                ),
-                            )
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: stocks.length,
-                  ),
+            Expanded(
+              child: Scrollbar(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final stock = stocks[index].toUpperCase();
+                    return listItem(Stock(stock));
+                  },
+                  itemCount: stocks.length,
                 ),
               ),
             )
@@ -137,5 +102,41 @@ class SearchStockState extends State<SearchStock> {
       }
     }
     setState(() => stocks = result);
+  }
+
+  Widget listItem(Stock stock) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: ListTile(
+        leading:
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            height: 120,
+            width: 90,
+            color: Colors.white.withOpacity(0.1),
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Image(
+                image: stock.logo,
+              ),
+            ),
+          ),
+        ),
+        title: Text(
+          stock.ticker,
+          style: const TextStyle(
+              color: Colors.white
+          ),
+        ),
+        onTap: () => Navigator.push(context,
+            MaterialPageRoute(
+              builder: (context) => StockScreen(
+                  stock: stock
+              ),
+            )
+        ),
+      ),
+    );
   }
 }
