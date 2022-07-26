@@ -1,55 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
-import 'package:inlys/stockBlock.dart';
 import 'package:inlys/StockScreen.dart';
-
-List<String> allStocks = [
-  "BBAS3",
-  "PETR4",
-  "GOLL4",
-  "BIDI4",
-  "BBDC4",
-  "ITUB4",
-  "ABEV3",
-  "VALE3",
-  "MGLU3",
-];
+import 'package:inlys/csvManager.dart';
 
 class SearchStock extends StatefulWidget {
+
+  late List<String> allStocks = DataManager().getData().map<String>((row) => row[0]).toList(growable: false).sublist(1);
+  SearchStock({super.key});
+
   @override
   State<StatefulWidget> createState() => SearchStockState();
 }
 
 class SearchStockState extends State<SearchStock> {
 
-  List<String> stocks = allStocks;
+  late List<String> stocks;
   final controller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
+    stocks = widget.allStocks;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(""),
+        centerTitle: true,
+        backgroundColor: Colors.black,
+      ),
       backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.white70,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 35,
-            ),
             TextFormField(
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               controller: controller,
               onChanged: searchStock,
               decoration: InputDecoration(
@@ -80,7 +64,7 @@ class SearchStockState extends State<SearchStock> {
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final stock = stocks[index].toUpperCase();
+                    final stock = stocks[index];
                     return listItem(Stock(stock));
                   },
                   itemCount: stocks.length,
@@ -96,7 +80,7 @@ class SearchStockState extends State<SearchStock> {
   void searchStock(String query) {
     List<String> result = [];
     final input = query.toLowerCase();
-    for (var stock in allStocks) {
+    for (var stock in widget.allStocks) {
       if (stock.toLowerCase().contains(input)) {
         result.add(stock.toUpperCase());
       }
@@ -106,36 +90,32 @@ class SearchStockState extends State<SearchStock> {
 
   Widget listItem(Stock stock) {
     return Padding(
-      padding: EdgeInsets.all(10),
-      child: ListTile(
-        leading:
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            height: 120,
-            width: 90,
-            color: Colors.white.withOpacity(0.1),
-            child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: Image(
-                image: stock.logo,
+      padding: const EdgeInsets.all(10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          color: Colors.white.withOpacity(0.1),
+          child: ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20)
+            ),
+            title: Center(
+              child: Text(
+                stock.ticker,
+                style: const TextStyle(
+                    color: Colors.white
+                ),
               ),
             ),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(
+                  builder: (context) => StockScreen(
+                      stock: stock
+                  ),
+                )
+            ),
           ),
-        ),
-        title: Text(
-          stock.ticker,
-          style: const TextStyle(
-              color: Colors.white
-          ),
-        ),
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(
-              builder: (context) => StockScreen(
-                  stock: stock
-              ),
-            )
-        ),
+        )
       ),
     );
   }

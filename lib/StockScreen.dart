@@ -1,7 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
-import 'package:inlys/profile.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});

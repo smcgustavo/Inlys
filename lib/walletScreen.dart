@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/wallet.dart';
-import 'package:inlys/profile.dart';
 import 'package:inlys/addStockScreen.dart';
+import 'package:inlys/csvManager.dart';
+
+
 
 class WalletScreen extends StatefulWidget {
   WalletScreen({Key? key}) : super(key: key);

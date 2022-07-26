@@ -9,52 +9,58 @@ class ConfigMenu extends StatefulWidget {
   State<StatefulWidget> createState() => ConfigMenuState();
 }
 
-class ConfigMenuState extends State<ConfigMenu>{
+class ConfigMenuState extends State<ConfigMenu> {
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: const Color.fromRGBO(33, 33, 33, 1),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  const Image(
-                    image: AssetImage(
-                      'assets/images/profile.png',
+        backgroundColor: const Color.fromRGBO(33, 33, 33, 1),
+        body: SingleChildScrollView(
+            child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const Image(
+                      image: AssetImage(
+                        'assets/images/profile.png',
+                      ),
+                      width: 50,
+                      height: 50,
                     ),
-                    width: 50,
-                    height: 50,
-                  ),
-                  Text(
-                    "Olá, ${widget.user.name}",
-                    style: const TextStyle(color: Colors.white, fontSize: 22),
-                  )
-                ],
+                    Text(
+                      "Olá, ${widget.user.name}",
+                      style: const TextStyle(color: Colors.white, fontSize: 22),
+                    )
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20,),
-            Form(
-              fieldName: "Selic:",
-              fieldText: widget.user.selic.toString(),
-              user: widget.user,
-            )
-          ],
-        ),
-      )
-    ),
-  );
+              const SizedBox(
+                height: 20,
+              ),
+              Form(
+                fieldName: "Selic:",
+                fieldText: widget.user.selic.toString(),
+                user: widget.user,
+              )
+            ],
+          ),
+        )),
+      );
 }
 
 class Form extends StatelessWidget {
   final String fieldName, fieldText;
   final Profile user;
-  Form({Key? key, required this.fieldName, required this.fieldText, required this.user}) : super(key: key);
+  Form(
+      {Key? key,
+      required this.fieldName,
+      required this.fieldText,
+      required this.user})
+      : super(key: key);
   final TextEditingController _formController = TextEditingController();
 
   @override
@@ -77,41 +83,45 @@ class Form extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 15,bottom: 10, left: 15, top: 10),
-              child: Container(
-                width: 200,
-                child: TextFormField(
-                  controller: _formController,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    //suffixIcon: const Icon(Icons.save, color: Colors.white,),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    labelStyle: const TextStyle(color: Color.fromRGBO(255, 255, 255, 0.6)),
-                    enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        gapPadding: 10,
-                        borderSide: BorderSide(color: Colors.white70, width: 1.0)),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        gapPadding: 10,
-                        borderSide: BorderSide(color: Colors.white, width: 1.0)),
-                    labelText: fieldText,
+                padding: const EdgeInsets.only(
+                    right: 15, bottom: 10, left: 15, top: 10),
+                child: Container(
+                  width: 200,
+                  child: TextFormField(
+                    controller: _formController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      //suffixIcon: const Icon(Icons.save, color: Colors.white,),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.6)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          gapPadding: 10,
+                          borderSide:
+                              BorderSide(color: Colors.white70, width: 1.0)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          gapPadding: 10,
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      labelText: fieldText,
+                    ),
                   ),
-                ),
-              )
-            ),
+                )),
             IconButton(
-                onPressed: (){
-                  user.setSelic(double.parse(_formController.text.replaceAll(",", ".")));
-                  FocusScope.of(context).unfocus();
-                },
-                icon: const Icon(Icons.save),
-                color: Colors.white,
+              onPressed: () {
+                user.setSelic(
+                    double.parse(_formController.text.replaceAll(",", ".")));
+                FocusScope.of(context).unfocus();
+              },
+              icon: const Icon(Icons.save),
+              color: Colors.white,
             )
           ],
         ),
       ),
     );
   }
-
 }
