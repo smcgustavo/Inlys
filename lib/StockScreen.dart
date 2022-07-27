@@ -157,14 +157,14 @@ class StockScreenState extends State<StockScreen> {
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.price,
-                            description: "Preço atual da ação.",
+                            description: "Preço atual de cada ação.",
                           ),
                           AttributeBlock(
                             attribute: "P/VP: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.pvp,
-                            description: "Valor da ação dividido pelo valor patrimonial por ação.",
+                            description: "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.\nQuando menor que 1, sobrevendido.\nQuando maior que 1, sobrecomprado.",
                           ),
                           AttributeBlock(
                             attribute: "DY: ",
@@ -178,7 +178,7 @@ class StockScreenState extends State<StockScreen> {
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.roe,
-                            description: "Retorno sobre o patrimônio líquido.",
+                            description: "Retorno sobre o patrimônio líquido anual.",
                           ),
                           AttributeBlock(
                             attribute: "P/L: ",

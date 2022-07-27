@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/StockScreen.dart';
-import 'package:inlys/csvManager.dart';
 
 class SearchStock extends StatefulWidget {
-
-  late List<String> allStocks = DataManager().getData().map<String>((row) => row[0]).toList(growable: false).sublist(1);
-  SearchStock({super.key});
-
+  SearchStock({super.key, required this.allStocks});
+  List<String> allStocks;
   @override
-  State<StatefulWidget> createState() => SearchStockState();
+  State<StatefulWidget> createState() => SearchStockState(stocks: allStocks);
 }
 
 class SearchStockState extends State<SearchStock> {
 
-  late List<String> stocks;
+  SearchStockState({required this.stocks});
+  List<String> stocks;
   final controller = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
-    stocks = widget.allStocks;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(""),
-        centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
+      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -79,9 +73,9 @@ class SearchStockState extends State<SearchStock> {
 
   void searchStock(String query) {
     List<String> result = [];
-    final input = query.toLowerCase();
+    final input = query.toUpperCase();
     for (var stock in widget.allStocks) {
-      if (stock.toLowerCase().contains(input)) {
+      if (stock.contains(input)) {
         result.add(stock.toUpperCase());
       }
     }

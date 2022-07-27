@@ -32,7 +32,9 @@ class StockBlockState extends State<StockBlock> {
                       builder: (context) => StockScreen(
                             key: widget.key,
                             stock: stock,
-                          )));
+                          )
+                  )
+              );
             },
             child: Container(
               height: 90,
