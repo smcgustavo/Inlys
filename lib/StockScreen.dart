@@ -117,7 +117,7 @@ class StockScreenState extends State<StockScreen> {
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
                   height: 50,
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withOpacity(0.1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -143,7 +143,9 @@ class StockScreenState extends State<StockScreen> {
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                     height: 473,
-                    color: Colors.white.withOpacity(0.05),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.05)
+                    ),
                     child: Scrollbar(
                       child: ListView(
                         physics: const BouncingScrollPhysics(),
@@ -219,7 +221,9 @@ class AttributeBlock extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-                color: Colors.white.withOpacity(0.05),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.08),
+                ),
                 child: ExpandablePanel(
                   theme: ExpandableThemeData(
                     inkWellBorderRadius: BorderRadius.circular(20),

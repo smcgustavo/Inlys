@@ -89,7 +89,7 @@ class HomeScreenState extends State<HomeScreen> {
     return Container(
       height: 60,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.black87.withOpacity(0.1),
       ),
       child: Center(
         child: Row(
@@ -113,12 +113,12 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget indicator(String indicator, String value, String difference, IconData icon, Color iconColor) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white70, width: 1),
-          color: Colors.white.withOpacity(0.10)
+            color: Colors.white.withOpacity(0.05),
+            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            borderRadius: BorderRadius.circular(10)
         ),
         height: 150,
         width: 150,
@@ -153,12 +153,12 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget futureIndicator(String indicator, Future<String> value, String difference, IconData icon, Color iconColor) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white70, width: 1),
-            color: Colors.white.withOpacity(0.10)
+            color: Colors.white.withOpacity(0.05),
+            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            borderRadius: BorderRadius.circular(10)
         ),
         height: 150,
         width: 150,
@@ -189,14 +189,14 @@ class HomeScreenState extends State<HomeScreen> {
   }
   Widget otherPage(String text, IconData icon){
     return  ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         child: Container(
             height: 100,
             width: 340,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              border: Border.all(color: Colors.white, width: 1),
-              borderRadius: BorderRadius.circular(20)
+                color: Colors.white.withOpacity(0.05),
+                border: Border.all(color: Colors.white.withOpacity(0.1)),
+                borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -281,5 +281,4 @@ class Tratamento {
     string = prefix + quote.currentPrice.toString().replaceAll(".", ",");
     return string;
   }
-  
 }
