@@ -15,10 +15,11 @@ class StockScreenState extends State<StockScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(31, 31, 31, 1),
+      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Align(
               alignment: Alignment.centerRight,
@@ -36,78 +37,74 @@ class StockScreenState extends State<StockScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      height: 120,
-                      width: 120,
-                      color: Colors.white.withOpacity(0.05),
-                      child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Image(
-                          image: widget.stock.logo,
-                        ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    height: 120,
+                    width: 120,
+                    color: Colors.white.withOpacity(0.05),
+                    child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Image(
+                        image: widget.stock.logo,
                       ),
                     ),
                   ),
                 ),
-                Center(
-                  child: Column(
-                    children: [
-                      Center(
-                        child: FutureText<String>(
-                          text: widget.stock.name,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                      child: FutureText<String>(
+                        text: widget.stock.name,
+                        style: const TextStyle(
+                            fontSize: 24, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                              color: Colors.white38,
+                              shape: BoxShape.circle),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          widget.stock.ticker,
                           style: const TextStyle(
-                              fontSize: 24, color: Colors.white),
+                            color: Colors.white38,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Center(
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 7,
-                              height: 7,
-                              decoration: const BoxDecoration(
-                                  color: Colors.white38,
-                                  shape: BoxShape.circle),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              widget.stock.ticker,
-                              style: const TextStyle(
-                                color: Colors.white38,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              width: 7,
-                              height: 7,
-                              decoration: const BoxDecoration(
-                                  color: Colors.white38,
-                                  shape: BoxShape.circle),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              widget.stock.type,
-                              style: const TextStyle(
-                                color: Colors.white38,
-                              ),
-                            ),
-                          ],
+                        const SizedBox(
+                          width: 5,
                         ),
-                      ),
-                    ],
-                  ),
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                              color: Colors.white38,
+                              shape: BoxShape.circle),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          widget.stock.type,
+                          style: const TextStyle(
+                            color: Colors.white38,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

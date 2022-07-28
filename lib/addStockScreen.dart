@@ -18,14 +18,12 @@ class SearchStockState extends State<SearchStock> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
+            const SizedBox(height: 40,),
             TextFormField(
               style: const TextStyle(color: Colors.white),
               controller: controller,

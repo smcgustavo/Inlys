@@ -23,7 +23,7 @@ class BottomNavigationState extends State<BottomNavigation>{
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = <Widget>[
-      WalletScreen(),
+      //WalletScreen(allStocks: ,),
       const Text("Index 2: Sob Construção", style: TextStyle(color: Colors.black)),
       ConfigMenu()
     ];
