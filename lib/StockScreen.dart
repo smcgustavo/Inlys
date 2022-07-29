@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
+import 'package:inlys/yahooApi.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
@@ -17,7 +18,7 @@ class StockScreenState extends State<StockScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(top: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -155,7 +156,7 @@ class StockScreenState extends State<StockScreen> {
                             attribute: "Preço: ",
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
-                            value: widget.stock.price,
+                            value: Api.price(widget.stock.ticker + "F.SA", "R\$"),
                             description: "Preço atual de cada ação.",
                           ),
                           AttributeBlock(

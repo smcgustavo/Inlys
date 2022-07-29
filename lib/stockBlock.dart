@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/StockScreen.dart';
+import 'package:inlys/yahooApi.dart';
 
 class StockBlock extends StatefulWidget {
   const StockBlock({super.key, required this.stock});
@@ -39,7 +40,7 @@ class StockBlockState extends State<StockBlock> {
             child: Container(
               height: 90,
               decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withOpacity(0.05),
                   border: Border.all(color: Colors.white.withOpacity(0.2)),
                   borderRadius: BorderRadius.circular(20)
               ),
@@ -115,7 +116,7 @@ class StockBlockState extends State<StockBlock> {
                             width: 5,
                           ),
                           Text(
-                            "${stock.ticker}",
+                            stock.ticker,
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -133,7 +134,7 @@ class StockBlockState extends State<StockBlock> {
                             width: 5,
                           ),
                           FutureBuilder(
-                            future: stock.price,
+                            future: Api.price(stock.ticker + "F.SA", "R\$"),
                             builder: (BuildContext context,
                                 AsyncSnapshot<String> snapshot) {
                               List<Widget> children;

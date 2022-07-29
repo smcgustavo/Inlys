@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:inlys/walletScreen.dart';
 import 'addStockScreen.dart';
-import 'package:yahoofin/yahoofin.dart';
-
+import 'package:inlys/yahooApi.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key, required this.allStocks});
-  List<String> allStocks;
+  const HomeScreen({super.key, required this.allStocks});
+  final List<String> allStocks;
   @override
   State<StatefulWidget> createState() => HomeScreenState();
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  final yfin = YahooFin();
   @override
   Widget build(BuildContext context) {
-    StockInfo bovespa = yfin.getStockInfo(ticker: "^BVSP");
-    StockInfo dolar = yfin.getStockInfo(ticker: "USDBRL=X");
-    Future<StockQuote> ibov = bovespa.getStockPrice();
-    Future<StockQuote> dol = dolar.getStockPrice();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(0),
@@ -32,14 +26,13 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            //header("Gustavo"),
             Padding(
               padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("Dólar", Tratamento.price("USDBRL=X", "R\$", yfin), "0.32%", Icons.trending_up, Colors.greenAccent),
-                  futureIndicator("Ibovespa", Tratamento.price("^BVSP", "", yfin) , "0.55%", Icons.trending_up, Colors.greenAccent)
+                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), "0.32%", Icons.trending_up, Colors.greenAccent),
+                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , "0.55%", Icons.trending_up, Colors.greenAccent)
                 ],
               ),
             ),
@@ -56,7 +49,7 @@ class HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 20), 
                 child: InkWell(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => WalletScreen(allStocks: widget.allStocks,))
@@ -67,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
             Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: InkWell(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => SearchStock(allStocks: widget.allStocks))
@@ -226,7 +219,7 @@ class HomeScreenState extends State<HomeScreen> {
           height: 40,
         ),
         const SizedBox(width: 20,),
-        const Text("Inlys",
+        const Text("Analys",
           style: TextStyle(
             color: Colors.white,
             fontSize: 22
@@ -273,12 +266,3 @@ class FutureText<String> extends StatelessWidget {
   }
 }
 
-class Tratamento {
-  static Future<String> price(String ticker, String prefix, YahooFin yfin) async {
-    StockInfo info = yfin.getStockInfo(ticker: ticker);
-    StockQuote quote = await info.getStockPrice();
-    String string = "";
-    string = prefix + quote.currentPrice.toString().replaceAll(".", ",");
-    return string;
-  }
-}
