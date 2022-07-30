@@ -12,7 +12,8 @@ class Api {
   static Future<String> change(String ticker, String prefix) async {
     StockInfo info = yfin.getStockInfo(ticker: ticker);
     StockQuote quote2 = await info.getStockPriceChange();
-    String string = quote2.regularMarketChange.toString().replaceAll(".", ",");
+    String string = quote2.regularMarketChangePercent.toString();
+    string = "${string.substring(0,6).replaceAll(".", ",")}%";
     return string;
   }
 }
