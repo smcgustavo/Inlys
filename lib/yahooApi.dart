@@ -9,4 +9,10 @@ class Api {
     string = prefix + quote.currentPrice.toString().replaceAll(".", ",");
     return string;
   }
+  static Future<String> change(String ticker, String prefix) async {
+    StockInfo info = yfin.getStockInfo(ticker: ticker);
+    StockQuote quote2 = await info.getStockPriceChange();
+    String string = quote2.regularMarketChange.toString().replaceAll(".", ",");
+    return string;
+  }
 }

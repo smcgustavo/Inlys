@@ -31,8 +31,8 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), "0.32%", Icons.trending_up, Colors.greenAccent),
-                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , "0.55%", Icons.trending_up, Colors.greenAccent)
+                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "R\$"), Icons.trending_up, Colors.greenAccent),
+                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", ""), Icons.trending_up, Colors.greenAccent)
                 ],
               ),
             ),
@@ -134,7 +134,9 @@ class HomeScreenState extends State<HomeScreen> {
                     difference,
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
-                  Icon(icon, color: iconColor, size: 30,)
+                  Icon(icon,
+                    color: difference[0] == '-' ? Colors.redAccent : Colors.greenAccent,
+                    size: 30,)
                 ],
               )
             ],
@@ -144,7 +146,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget futureIndicator(String indicator, Future<String> value, String difference, IconData icon, Color iconColor) {
+  Widget futureIndicator(String indicator, Future<String> value, Future<String> difference, IconData icon, Color iconColor) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -167,11 +169,10 @@ class HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    difference,
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                  Icon(icon, color: iconColor, size: 30,)
+                  FutureText(text: difference, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                  Icon(icon,
+                    color: Colors.white.withOpacity(0.40),
+                    size: 30,)
                 ],
               )
             ],
