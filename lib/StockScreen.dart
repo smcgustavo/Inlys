@@ -35,90 +35,99 @@ class StockScreenState extends State<StockScreen> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    height: 120,
-                    width: 120,
-                    color: Colors.white.withOpacity(0.05),
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Image(
-                        image: widget.stock.logo,
+            Padding(
+              padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  color: Colors.white.withOpacity(0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Container(
+                          height: 120,
+                          width: 120,
+                          color: Colors.white.withOpacity(0.00),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Image(
+                              image: widget.stock.logo,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Center(
+                            child: FutureText<String>(
+                              text: widget.stock.name,
+                              style: const TextStyle(
+                                  fontSize: 24, color: Colors.white),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 7,
+                                height: 7,
+                                decoration: const BoxDecoration(
+                                    color: Colors.white38,
+                                    shape: BoxShape.circle),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.stock.ticker,
+                                style: const TextStyle(
+                                  color: Colors.white38,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                width: 7,
+                                height: 7,
+                                decoration: const BoxDecoration(
+                                    color: Colors.white38,
+                                    shape: BoxShape.circle),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.stock.type,
+                                style: const TextStyle(
+                                  color: Colors.white38,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Center(
-                      child: FutureText<String>(
-                        text: widget.stock.name,
-                        style: const TextStyle(
-                            fontSize: 24, color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 7,
-                          height: 7,
-                          decoration: const BoxDecoration(
-                              color: Colors.white38,
-                              shape: BoxShape.circle),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          widget.stock.ticker,
-                          style: const TextStyle(
-                            color: Colors.white38,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Container(
-                          width: 7,
-                          height: 7,
-                          decoration: const BoxDecoration(
-                              color: Colors.white38,
-                              shape: BoxShape.circle),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          widget.stock.type,
-                          style: const TextStyle(
-                            color: Colors.white38,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
             const SizedBox(
               height: 15,
             ),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
                   height: 50,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withOpacity(0.05),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -139,7 +148,7 @@ class StockScreenState extends State<StockScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
@@ -164,7 +173,7 @@ class StockScreenState extends State<StockScreen> {
                             style: const TextStyle(
                                 fontSize: 22, color: Colors.white),
                             value: widget.stock.pvp,
-                            description: "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.\nQuando menor que 1, sobrevendido.\nQuando maior que 1, sobrecomprado.",
+                            description: "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
                           ),
                           AttributeBlock(
                             attribute: "DY: ",

@@ -23,22 +23,22 @@ class DataManager {
   }
 
   Future<String> getPriceFromTicker(String? ticker) async {
-    return getAttributeFromTicker(ticker, 1, "R\$", "");
+    return await getAttributeFromTicker(ticker, 1, "R\$", "");
   }
   Future<String> getPvpFromTicker(String? ticker) async {
-    return getAttributeFromTicker(ticker, 5,"","");
+    return await getAttributeFromTicker(ticker, 5,"","");
   }
   Future<String> getDyFromTicker(String? ticker) async {
-    return getAttributeFromTicker(ticker, 3,"", "%");
+    return await getAttributeFromTicker(ticker, 3,"", "%");
   }
   Future<String> getPLFromTicker(String? ticker) async {
-    return getAttributeFromTicker(ticker, 4,"", "");
+    return await getAttributeFromTicker(ticker, 4,"", "");
   }
   Future<String> getRoeFromTicker(String? ticker) async {
-    return getAttributeFromTicker(ticker, 18,"","%");
+    return await getAttributeFromTicker(ticker, 18,"","%");
   }
   Future<String> getNameFromTicker(String? ticker) async{
-    return getAttributeFromTicker(ticker, 2,"","");
+    return await getAttributeFromTicker(ticker, 2,"","");
   }
   Future<String> getAttributeFromTicker(String? ticker, int pos, String pre, String suf) async{
     if(loaded == 0){

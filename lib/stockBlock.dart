@@ -13,10 +13,6 @@ class StockBlock extends StatefulWidget {
 }
 
 class StockBlockState extends State<StockBlock> {
-  StockBlockState();
-
-  late Stock stock = widget.stock;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,7 +28,7 @@ class StockBlockState extends State<StockBlock> {
                   MaterialPageRoute(
                       builder: (context) => StockScreen(
                             key: widget.key,
-                            stock: stock,
+                            stock: widget.stock,
                           )
                   )
               );
@@ -57,7 +53,7 @@ class StockBlockState extends State<StockBlock> {
                           child: Center(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image(image: stock.logo),
+                              child: Image(image: widget.stock.logo),
                             ),
                           ),
                         )),
@@ -69,7 +65,7 @@ class StockBlockState extends State<StockBlock> {
                         height: 15,
                       ),
                       FutureBuilder(
-                        future: stock.name,
+                        future: widget.stock.name,
                         builder: (BuildContext context,
                             AsyncSnapshot<String> snapshot) {
                           List<Widget> children;
@@ -116,7 +112,7 @@ class StockBlockState extends State<StockBlock> {
                             width: 5,
                           ),
                           Text(
-                            stock.ticker,
+                            widget.stock.ticker,
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -134,7 +130,7 @@ class StockBlockState extends State<StockBlock> {
                             width: 5,
                           ),
                           FutureBuilder(
-                            future: Api.price(stock.ticker + "F.SA", "R\$"),
+                            future: Api.price(widget.stock.ticker + "F.SA", "R\$"),
                             builder: (BuildContext context,
                                 AsyncSnapshot<String> snapshot) {
                               List<Widget> children;
@@ -179,7 +175,7 @@ class StockBlockState extends State<StockBlock> {
                             width: 5,
                           ),
                           Text(
-                            stock.type,
+                            widget.stock.type,
                             style: const TextStyle(
                               color: Colors.white,
                             ),
