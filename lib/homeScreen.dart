@@ -31,8 +31,8 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "R\$"), Icons.trending_up, Colors.greenAccent),
-                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", ""), Icons.trending_up, Colors.greenAccent)
+                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "R\$"), "USDBRL=X"),
+                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", ""), "^BVSP")
                 ],
               ),
             ),
@@ -41,8 +41,8 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  indicator("Ipca", "0.13%", "-0.42%", Icons.trending_down, Colors.redAccent),
-                  indicator("CDI", "13.25%", "0.25%", Icons.trending_up, Colors.greenAccent)
+                  futureIndicator("Bitcoin", Api.price("BTC-USD", "\$"), Api.change("BTC-USD", ""), "BTC-USD"),
+                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", ""), "^GSPC")
                 ],
               ),
             ),
@@ -146,7 +146,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget futureIndicator(String indicator, Future<String> value, Future<String> difference, IconData icon, Color iconColor) {
+  Widget futureIndicator(String indicator, Future<String> value, Future<String> difference, String ticker) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -170,9 +170,7 @@ class HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FutureText(text: difference, style: const TextStyle(color: Colors.white, fontSize: 14)),
-                  Icon(icon,
-                    color: Colors.white.withOpacity(0.40),
-                    size: 30,)
+                  FutureIcon(color: Api.color(ticker))
                 ],
               )
             ],
@@ -267,3 +265,52 @@ class FutureText<String> extends StatelessWidget {
   }
 }
 
+class FutureIcon<String> extends StatelessWidget {
+  const FutureIcon({Key? key, required this.color});
+
+  final Future<Color> color;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: color,
+      builder: (BuildContext context, AsyncSnapshot<Color> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          if(snapshot.data == Colors.redAccent){
+            children = <Widget>[
+              Icon(
+                Icons.trending_down,
+                color: snapshot.data,
+              )
+            ];
+          }
+          else {
+            children = <Widget>[
+              Icon(
+                Icons.trending_up,
+                color: snapshot.data,
+              )
+            ];
+          }
+        } else {
+          children = <Widget>[
+            const SizedBox(
+              width: 10,
+              height: 10,
+              child: CircularProgressIndicator(
+                color: Colors.white38,
+              ),
+            ),
+          ];
+        }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          ),
+        );
+      },
+    );
+  }
+}

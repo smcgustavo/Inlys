@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/yahooApi.dart';
 
@@ -12,9 +13,10 @@ class StockScreen extends StatefulWidget {
   State<StatefulWidget> createState() => StockScreenState();
 }
 
-class StockScreenState extends State<StockScreen> {
+class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
+    TabController _controller = TabController(length: 3, vsync: this);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -150,60 +152,98 @@ class StockScreenState extends State<StockScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(15),
                 child: Container(
-                    height: 473,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.05)
+                  color: Colors.white.withOpacity(0.05),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: TabBar(
+                      splashBorderRadius: BorderRadius.circular(10),
+                      controller: _controller,
+                        labelColor: Colors.white,
+                        isScrollable: true,
+                        unselectedLabelColor: Colors.white70,
+                        indicatorColor: Colors.white70,
+                        labelPadding: const EdgeInsets.only(left: 5, right: 5),
+                        tabs: const [
+                          Tab(text: "Fundamentos",),
+                          Tab(text: "Gráfico",),
+                          Tab(text: "Calculadora de Dividendos",)
+                        ]
                     ),
-                    child: Scrollbar(
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.all(10),
-                        children: <Widget>[
-                          AttributeBlock(
-                            attribute: "Preço: ",
-                            style: const TextStyle(
-                                fontSize: 22, color: Colors.white),
-                            value: Api.price(widget.stock.ticker + "F.SA", "R\$"),
-                            description: "Preço atual de cada ação.",
-                          ),
-                          AttributeBlock(
-                            attribute: "P/VP: ",
-                            style: const TextStyle(
-                                fontSize: 22, color: Colors.white),
-                            value: widget.stock.pvp,
-                            description: "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
-                          ),
-                          AttributeBlock(
-                            attribute: "DY: ",
-                            style: const TextStyle(
-                                fontSize: 22, color: Colors.white),
-                            value: widget.stock.dy,
-                            description: "Porcentagem do valor da ação distribuído em divivendos anualmente.",
-                          ),
-                          AttributeBlock(
-                            attribute: "ROE: ",
-                            style: const TextStyle(
-                                fontSize: 22, color: Colors.white),
-                            value: widget.stock.roe,
-                            description: "Retorno sobre o patrimônio líquido anual.",
-                          ),
-                          AttributeBlock(
-                            attribute: "P/L: ",
-                            style: const TextStyle(
-                                fontSize: 22, color: Colors.white),
-                            value: widget.stock.pl,
-                            description: "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
-                                "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
-                          ),
-                        ],
-                      ),
-                    ),
+                  ),
                 ),
+              ),
+            ),
+            Container(
+              height: 470,
+              child: TabBarView(
+                controller: _controller,
+                  children: [
+                    fundamentals(),
+                    const Text("Gráfico Aqui", style: TextStyle(color: Colors.white),),
+                    const Text("Calculadora Aqui", style: TextStyle(color: Colors.white),),
+                  ]
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+  Widget fundamentals (){
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.05)
+          ),
+          child: Scrollbar(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(10),
+              children: <Widget>[
+                AttributeBlock(
+                  attribute: "Preço: ",
+                  style: const TextStyle(
+                      fontSize: 22, color: Colors.white),
+                  value: Api.price(widget.stock.ticker + "F.SA", "R\$"),
+                  description: "Preço atual de cada ação.",
+                ),
+                AttributeBlock(
+                  attribute: "P/VP: ",
+                  style: const TextStyle(
+                      fontSize: 22, color: Colors.white),
+                  value: widget.stock.pvp,
+                  description: "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
+                ),
+                AttributeBlock(
+                  attribute: "DY: ",
+                  style: const TextStyle(
+                      fontSize: 22, color: Colors.white),
+                  value: widget.stock.dy,
+                  description: "Porcentagem do valor da ação distribuído em divivendos anualmente.",
+                ),
+                AttributeBlock(
+                  attribute: "ROE: ",
+                  style: const TextStyle(
+                      fontSize: 22, color: Colors.white),
+                  value: widget.stock.roe,
+                  description: "Retorno sobre o patrimônio líquido anual.",
+                ),
+                AttributeBlock(
+                  attribute: "P/L: ",
+                  style: const TextStyle(
+                      fontSize: 22, color: Colors.white),
+                  value: widget.stock.pl,
+                  description: "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
+                      "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

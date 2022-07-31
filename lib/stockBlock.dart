@@ -51,10 +51,7 @@ class StockBlockState extends State<StockBlock> {
                         child: Padding(
                           padding: const EdgeInsets.all(7),
                           child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image(image: widget.stock.logo),
-                            ),
+                            child: Image(image: widget.stock.logo),
                           ),
                         )),
                   ),

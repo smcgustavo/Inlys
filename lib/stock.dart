@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'csvManager.dart';
 import 'dart:math';
+import 'package:inlys/yahooApi.dart';
 
 class Stock {
   late String _ticker, _type;
@@ -38,8 +39,8 @@ class Stock {
     double lpa = await dataBase.getNumberFromTicker(_ticker, 28);
     double vpa = await dataBase.getNumberFromTicker(_ticker, 27);
     double result = sqrt((lpa * vpa * 22.5));
-    double price = await dataBase.getPrinceAsNumberFromTicker(_ticker);
-    if(result > price){
+    double? price = await Api.priceAsNumber("${ticker}F.SA");
+    if(result > price!){
       _condition = true;
     }
     _indicator = Future<String>.value("R\$${result.toStringAsFixed(2)}");
