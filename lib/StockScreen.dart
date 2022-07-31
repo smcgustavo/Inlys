@@ -20,14 +20,15 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
-        padding: const EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(height: 40,),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(top: 15.0),
                 child: IconButton(
                   color: Colors.white.withOpacity(0.5),
                   icon: const Icon(Icons.close),
@@ -38,151 +39,102 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10,top: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   color: Colors.white.withOpacity(0.05),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Container(
-                          height: 120,
-                          width: 120,
-                          color: Colors.white.withOpacity(0.00),
-                          child: Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Image(
-                              image: widget.stock.logo,
+                  child: Column(
+                    children: [
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Container(
+                            height: 120,
+                            width: 120,
+                            color: Colors.white.withOpacity(0.00),
+                            child: Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Image(
+                                image: widget.stock.logo,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Center(
-                            child: FutureText<String>(
-                              text: widget.stock.name,
-                              style: const TextStyle(
-                                  fontSize: 24, color: Colors.white),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Center(
+                              child: FutureText<String>(
+                                text: widget.stock.name,
+                                style: const TextStyle(
+                                    fontSize: 24, color: Colors.white),
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: 7,
-                                height: 7,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white38,
-                                    shape: BoxShape.circle),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                widget.stock.ticker,
-                                style: const TextStyle(
-                                  color: Colors.white38,
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: 7,
+                                  height: 7,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white38,
+                                      shape: BoxShape.circle),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                width: 7,
-                                height: 7,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white38,
-                                    shape: BoxShape.circle),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                widget.stock.type,
-                                style: const TextStyle(
-                                  color: Colors.white38,
+                                const SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                Text(
+                                  widget.stock.ticker,
+                                  style: const TextStyle(
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 7,
+                                  height: 7,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white38,
+                                      shape: BoxShape.circle),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  widget.stock.type,
+                                  style: const TextStyle(
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                       ),
-                    ],
+
+                    ]
                   ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  height: 50,
-                  color: Colors.white.withOpacity(0.05),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text(
-                        "Índice de Graham:",
-                        style: TextStyle(fontSize: 22, color: Colors.white),
-                      ),
-                      FutureText(
-                        text: widget.stock.indicator,
-                        style: widget.stock.condition ? const TextStyle(color:Colors.greenAccent, fontSize: 22) : const TextStyle(color:Colors.redAccent, fontSize: 22),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                  color: Colors.white.withOpacity(0.05),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: TabBar(
-                      splashBorderRadius: BorderRadius.circular(10),
-                      controller: _controller,
-                        labelColor: Colors.white,
-                        isScrollable: true,
-                        unselectedLabelColor: Colors.white70,
-                        indicatorColor: Colors.white70,
-                        labelPadding: const EdgeInsets.only(left: 5, right: 5),
-                        tabs: const [
-                          Tab(text: "Fundamentos",),
-                          Tab(text: "Gráfico",),
-                          Tab(text: "Calculadora de Dividendos",)
-                        ]
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            customTabBar(_controller),
             Container(
-              height: 470,
+              height: 500,
               child: TabBarView(
                 controller: _controller,
                   children: [
                     fundamentals(),
-                    const Text("Gráfico Aqui", style: TextStyle(color: Colors.white),),
-                    const Text("Calculadora Aqui", style: TextStyle(color: Colors.white),),
+                    stockGraph(),
+                    dividendCalculator(),
                   ]
               ),
             )
@@ -191,11 +143,68 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
       ),
     );
   }
+
+
+  Widget customTabBar(TabController controller){
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+        child: Container(
+          color: Colors.white.withOpacity(0.05),
+          child: Align(
+            alignment: Alignment.center,
+            child: TabBar(
+                splashBorderRadius: BorderRadius.circular(10),
+                controller: controller,
+                labelColor: Colors.white,
+                isScrollable: true,
+                unselectedLabelColor: Colors.white70,
+                indicatorColor: Colors.white70,
+                labelPadding: const EdgeInsets.only(left: 5, right: 5),
+                tabs: const [
+                  Tab(text: "Fundamentos",),
+                  Tab(text: "Gráfico",),
+                  Tab(text: "Calculadora de Dividendos",)
+                ]
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget stockGraph(){
+    return Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+        child: Container(
+          color: Colors.white.withOpacity(0.05),
+          child: Center(child: Text("Gráfico Aqui", style: TextStyle(color: Colors.white),)),
+        ),
+      ),
+    );
+  }
+
+  Widget dividendCalculator(){
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+        child: Container(
+          color: Colors.white.withOpacity(0.05),
+          child: Center(child: Text("Calculadora de Dividendos Aqui", style: TextStyle(color: Colors.white),)),
+        ),
+      ),
+    );
+  }
+
   Widget fundamentals (){
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.05)
@@ -205,6 +214,7 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(10),
               children: <Widget>[
+                grahamIndicator(),
                 AttributeBlock(
                   attribute: "Preço: ",
                   style: const TextStyle(
@@ -248,6 +258,32 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
       ),
     );
   }
+
+  Widget grahamIndicator(){
+    return Padding(
+      padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          height: 50,
+          color: Colors.white.withOpacity(0.05),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                "Índice de Graham:",
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+              FutureText(
+                text: widget.stock.indicator,
+                style: widget.stock.condition ? const TextStyle(color:Colors.greenAccent, fontSize: 22) : const TextStyle(color:Colors.redAccent, fontSize: 22),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class AttributeBlock extends StatelessWidget {
@@ -269,7 +305,7 @@ class AttributeBlock extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: 
           ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(15),
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.08),

@@ -26,14 +26,11 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "R\$"), "USDBRL=X"),
-                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", ""), "^BVSP")
-                ],
+            const Padding(
+              padding: EdgeInsets.only(left: 35, top: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                  child: Text("Índices:", style: TextStyle(color: Colors.white, fontSize: 28),)
               ),
             ),
             Padding(
@@ -41,8 +38,25 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", ""), "^GSPC"),
+                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", ""), "^BVSP")
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 35, top: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Moedas:", style: TextStyle(color: Colors.white, fontSize: 28),)
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "R\$"), "USDBRL=X"),
                   futureIndicator("Bitcoin", Api.price("BTC-USD", "\$"), Api.change("BTC-USD", ""), "BTC-USD"),
-                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", ""), "^GSPC")
                 ],
               ),
             ),
@@ -113,8 +127,8 @@ class HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: Colors.white.withOpacity(0.1)),
             borderRadius: BorderRadius.circular(10)
         ),
-        height: 150,
-        width: 150,
+        height: 100,
+        width: 100,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,8 +169,8 @@ class HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: Colors.white.withOpacity(0.1)),
             borderRadius: BorderRadius.circular(10)
         ),
-        height: 150,
-        width: 150,
+        height: 140,
+        width: 140,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -183,8 +197,8 @@ class HomeScreenState extends State<HomeScreen> {
     return  ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-            height: 100,
-            width: 340,
+            height: 80,
+            width: 315,
             decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
                 border: Border.all(color: Colors.white.withOpacity(0.1)),
