@@ -11,18 +11,18 @@ class Api {
     return string;
   }
 
-  static Future<double?> priceAsNumber(String ticker) async {
+  static Future<double> priceAsNumber(String ticker) async {
     StockInfo info = yfin.getStockInfo(ticker: ticker);
     StockQuote quote = await info.getStockPrice();
     double? number = quote.currentPrice;
-    return number;
+    return number!;
   }
 
-  static Future<String> change(String ticker, String prefix) async {
+  static Future<String> change(String ticker, String prefix, int size) async {
     StockInfo info = yfin.getStockInfo(ticker: ticker);
     StockQuote quote2 = await info.getStockPriceChange();
     String string = quote2.regularMarketChangePercent.toString();
-    string = "${string.substring(0,6).replaceAll(".", ",")}%";
+    string = "${string.substring(0, size).replaceAll(".", ",")}%";
     return string;
   }
   static Future<double?> changeAsNumber(String ticker, String prefix) async {

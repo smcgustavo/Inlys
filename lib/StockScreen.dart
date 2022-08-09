@@ -1,19 +1,20 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/yahooApi.dart';
+import 'wallet.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
-
   final Stock stock;
 
   @override
   State<StatefulWidget> createState() => StockScreenState();
 }
 
-class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
+class StockScreenState extends State<StockScreen>
+    with TickerProviderStateMixin {
+
   @override
   Widget build(BuildContext context) {
     TabController _controller = TabController(length: 3, vsync: this);
@@ -24,7 +25,9 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
@@ -39,14 +42,13 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,top: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   color: Colors.white.withOpacity(0.05),
-                  child: Column(
-                    children: [
-                      Row(
+                  child: Column(children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ClipRRect(
@@ -114,29 +116,54 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
                                     color: Colors.white38,
                                   ),
                                 ),
+                                Container(
+                                  child: ((){
+                                    if(Wallet.favoriteStocks.contains(widget.stock)){
+                                      return IconButton(
+                                          onPressed: (){
+                                            setState((){
+                                              Wallet.removeStock(widget.stock.ticker);
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.turned_in,
+                                            color: Colors.grey,
+                                          )
+                                      );
+                                    }
+                                    return IconButton(
+                                        onPressed: (){
+                                          setState((){
+                                            Wallet.addStock(widget.stock.ticker);
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.turned_in_not,
+                                          color: Colors.grey,
+                                        )
+                                    );
+                                  }()
+                                  ),
+                                )
+
                               ],
                             ),
                           ],
                         ),
                       ],
-                      ),
-
-                    ]
-                  ),
+                    ),
+                  ]),
                 ),
               ),
             ),
             customTabBar(_controller),
             Container(
               height: 500,
-              child: TabBarView(
-                controller: _controller,
-                  children: [
-                    fundamentals(),
-                    stockGraph(),
-                    dividendCalculator(),
-                  ]
-              ),
+              child: TabBarView(controller: _controller, children: [
+                fundamentals(),
+                stockGraph(),
+                DividendCalculator(stock: widget.stock),
+              ]),
             )
           ],
         ),
@@ -144,12 +171,12 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
     );
   }
 
-
-  Widget customTabBar(TabController controller){
+  Widget customTabBar(TabController controller) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
       child: ClipRRect(
-        borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(20), topLeft: Radius.circular(20)),
         child: Container(
           color: Colors.white.withOpacity(0.05),
           child: Align(
@@ -163,52 +190,50 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
                 indicatorColor: Colors.white70,
                 labelPadding: const EdgeInsets.only(left: 5, right: 5),
                 tabs: const [
-                  Tab(text: "Fundamentos",),
-                  Tab(text: "Gráfico",),
-                  Tab(text: "Calculadora de Dividendos",)
-                ]
-            ),
+                  Tab(
+                    text: "Fundamentos",
+                  ),
+                  Tab(
+                    text: "Gráfico",
+                  ),
+                  Tab(
+                    text: "Calculadora de Dividendos",
+                  )
+                ]),
           ),
         ),
       ),
     );
   }
 
-  Widget stockGraph(){
+  Widget stockGraph() {
     return Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: ClipRRect(
-        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+        borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
         child: Container(
           color: Colors.white.withOpacity(0.05),
-          child: Center(child: Text("Gráfico Aqui", style: TextStyle(color: Colors.white),)),
+          child: const Center(
+              child: Text(
+            "Gráfico Aqui",
+            style: TextStyle(color: Colors.white),
+          )),
         ),
       ),
     );
   }
 
-  Widget dividendCalculator(){
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
-        child: Container(
-          color: Colors.white.withOpacity(0.05),
-          child: Center(child: Text("Calculadora de Dividendos Aqui", style: TextStyle(color: Colors.white),)),
-        ),
-      ),
-    );
-  }
 
-  Widget fundamentals (){
+
+  Widget fundamentals() {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: ClipRRect(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+        borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
         child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05)
-          ),
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.05)),
           child: Scrollbar(
             child: ListView(
               physics: const BouncingScrollPhysics(),
@@ -217,38 +242,36 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
                 grahamIndicator(),
                 AttributeBlock(
                   attribute: "Preço: ",
-                  style: const TextStyle(
-                      fontSize: 22, color: Colors.white),
-                  value: Api.price(widget.stock.ticker + "F.SA", "R\$"),
+                  style: const TextStyle(fontSize: 22, color: Colors.white),
+                  value: Api.price("${widget.stock.ticker}.SA", "R\$"),
                   description: "Preço atual de cada ação.",
                 ),
                 AttributeBlock(
                   attribute: "P/VP: ",
-                  style: const TextStyle(
-                      fontSize: 22, color: Colors.white),
+                  style: const TextStyle(fontSize: 22, color: Colors.white),
                   value: widget.stock.pvp,
-                  description: "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
+                  description:
+                      "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
                 ),
                 AttributeBlock(
                   attribute: "DY: ",
-                  style: const TextStyle(
-                      fontSize: 22, color: Colors.white),
+                  style: const TextStyle(fontSize: 22, color: Colors.white),
                   value: widget.stock.dy,
-                  description: "Porcentagem do valor da ação distribuído em divivendos anualmente.",
+                  description:
+                      "Porcentagem do valor da ação distribuído em divivendos anualmente.",
                 ),
                 AttributeBlock(
                   attribute: "ROE: ",
-                  style: const TextStyle(
-                      fontSize: 22, color: Colors.white),
+                  style: const TextStyle(fontSize: 22, color: Colors.white),
                   value: widget.stock.roe,
                   description: "Retorno sobre o patrimônio líquido anual.",
                 ),
                 AttributeBlock(
                   attribute: "P/L: ",
-                  style: const TextStyle(
-                      fontSize: 22, color: Colors.white),
+                  style: const TextStyle(fontSize: 22, color: Colors.white),
                   value: widget.stock.pl,
-                  description: "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
+                  description:
+                      "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
                       "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
                 ),
               ],
@@ -259,7 +282,7 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
     );
   }
 
-  Widget grahamIndicator(){
+  Widget grahamIndicator() {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
       child: ClipRRect(
@@ -276,7 +299,9 @@ class StockScreenState extends State<StockScreen> with TickerProviderStateMixin{
               ),
               FutureText(
                 text: widget.stock.indicator,
-                style: widget.stock.condition ? const TextStyle(color:Colors.greenAccent, fontSize: 22) : const TextStyle(color:Colors.redAccent, fontSize: 22),
+                style: widget.stock.condition
+                    ? const TextStyle(color: Colors.greenAccent, fontSize: 22)
+                    : const TextStyle(color: Colors.redAccent, fontSize: 22),
               ),
             ],
           ),
@@ -302,60 +327,54 @@ class AttributeBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
-      child: 
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
+        padding: const EdgeInsets.all(5),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.08),
+              ),
+              child: ExpandablePanel(
+                theme: ExpandableThemeData(
+                  inkWellBorderRadius: BorderRadius.circular(20),
+                  iconColor: Colors.white,
                 ),
-                child: ExpandablePanel(
-                  theme: ExpandableThemeData(
-                    inkWellBorderRadius: BorderRadius.circular(20),
-                    iconColor: Colors.white,
-                  ),
-                  expanded:  Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Center(
-                        child: Text(
-                          description,
-                          style: const TextStyle(
-                              color: Colors.grey,
-                            fontSize: 12
-                          ),
-                        ),
-                      )
-                  ),
-                  collapsed: const Center(),
-                  header: Padding(
-                    padding: const EdgeInsets.all(5),
+                expanded: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(
-                            attribute,
-                            style: style,
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              color: Colors.white.withOpacity(0.0),
-                              child: FutureText<String>(
-                                style: style,
-                                text: value,
-                              ),
+                      child: Text(
+                        description,
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    )),
+                collapsed: const Center(),
+                header: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          attribute,
+                          style: style,
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            color: Colors.white.withOpacity(0.0),
+                            child: FutureText<String>(
+                              style: style,
+                              text: value,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                )
-            ),
-          )
-    );
+                ),
+              )),
+        ));
   }
 }
 
@@ -393,4 +412,120 @@ class FutureText<String> extends StatelessWidget {
       },
     );
   }
+}
+
+class DividendCalculator extends StatefulWidget{
+
+  DividendCalculator({super.key, required this.stock});
+
+  final Stock stock;
+  final TextEditingController _formController = TextEditingController();
+  String result = "";
+
+
+  @override
+  State<StatefulWidget> createState() => DividendCalculatorState();
+}
+
+class DividendCalculatorState extends State<DividendCalculator>{
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+        child: Container(
+            color: Colors.white.withOpacity(0.05),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 200,
+                            child: TextFormField(
+                              autofocus: false,
+                              controller: widget._formController,
+                              keyboardType: TextInputType.number,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                labelText: "D.Y desejado:",
+                                labelStyle: TextStyle(color: Colors.white),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                    gapPadding: 10,
+                                    borderSide: BorderSide(
+                                        color: Colors.white70, width: 1.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                    gapPadding: 10,
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1.0)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white.withOpacity(0.05),
+                              ),
+                            child: IconButton(
+                                onPressed: () {
+                                  setState(() async {
+                                    double price = 15;
+                                    widget.result = price.toString();
+                                  });
+                                },
+                                icon: const Icon(Icons.done),
+                                iconSize: 30,
+                                color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                    const EdgeInsets.only(top: 20, left: 10, right: 10),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.05),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(children:  [
+                            const Text(
+                              "Preço sugerido para este D.Y:",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 18),
+                            ),
+                            Text(
+                                widget.result,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                          ]
+                          ),
+                        )
+                    ),
+                  )
+                ],
+              ),
+            )),
+      ),
+    );
+  }
+
 }

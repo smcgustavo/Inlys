@@ -38,8 +38,8 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", ""), "^GSPC"),
-                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", ""), "^BVSP")
+                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", "", 5), "^GSPC"),
+                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", "",4), "^BVSP")
                 ],
               ),
             ),
@@ -55,8 +55,8 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "R\$"), "USDBRL=X"),
-                  futureIndicator("Bitcoin", Api.price("BTC-USD", "\$"), Api.change("BTC-USD", ""), "BTC-USD"),
+                  futureIndicator("Dólar", Api.price("USDBRL=X", "R\$"), Api.change("USDBRL=X", "",4), "USDBRL=X"),
+                  futureIndicator("Euro", Api.price("EURBRL=X", "R\$"), Api.change("EURBRL=X", "",4), "EURBRL=X"),
                 ],
               ),
             ),
@@ -83,7 +83,7 @@ class HomeScreenState extends State<HomeScreen> {
                     child: otherPage("Todas as Ações", Icons.account_balance))
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 15),
               child: appLogo(),
             )
           ],
@@ -169,8 +169,8 @@ class HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: Colors.white.withOpacity(0.1)),
             borderRadius: BorderRadius.circular(10)
         ),
-        height: 140,
-        width: 140,
+        height: 150,
+        width: 150,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -198,7 +198,7 @@ class HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
             height: 80,
-            width: 315,
+            width: 325,
             decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
                 border: Border.all(color: Colors.white.withOpacity(0.1)),
@@ -232,7 +232,7 @@ class HomeScreenState extends State<HomeScreen> {
           height: 40,
         ),
         const SizedBox(width: 20,),
-        const Text("Analys",
+        const Text("Alys",
           style: TextStyle(
             color: Colors.white,
             fontSize: 22

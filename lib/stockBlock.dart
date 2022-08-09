@@ -13,8 +13,10 @@ class StockBlock extends StatefulWidget {
 }
 
 class StockBlockState extends State<StockBlock> {
+
   @override
   Widget build(BuildContext context) {
+    Future<String> price = Api.price("${widget.stock.ticker}F.SA", "R\$");
     return Padding(
         padding: const EdgeInsets.all(10),
         child: ClipRRect(
@@ -31,7 +33,7 @@ class StockBlockState extends State<StockBlock> {
                             stock: widget.stock,
                           )
                   )
-              );
+              ).then((_) => setState(() {}));
             },
             child: Container(
               height: 90,
@@ -95,89 +97,86 @@ class StockBlockState extends State<StockBlock> {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const BoxDecoration(
-                                color: Colors.white, shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget.stock.ticker,
-                            style: const TextStyle(
-                              color: Colors.white,
+                      Container(
+                        width: 230,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              width: 5,
+                              height: 7,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white, shape: BoxShape.circle),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const BoxDecoration(
-                                color: Colors.white, shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          FutureBuilder(
-                            future: Api.price(widget.stock.ticker + "F.SA", "R\$"),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              List<Widget> children;
-                              if (snapshot.hasData) {
-                                children = <Widget>[
-                                  Text(
-                                    '${snapshot.data}',
+
+                            Text(
+                              widget.stock.ticker,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+
+                            Container(
+                              width: 7,
+                              height: 7,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white, shape: BoxShape.circle),
+                            ),
+
+                            FutureBuilder(
+                              future: price,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> snapshot) {
+                                List<Widget> children;
+                                if (snapshot.hasData) {
+                                  children = <Widget>[
+                                    Text(
+                                      '${snapshot.data}',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ];
+                                } else {
+                                  children = <Widget>[
+                                    const SizedBox(
+                                      width: 10,
+                                      height: 10,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ];
+                                }
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: children,
+                                  ),
+                                );
+                              },
+                            ),
+                            Container(
+                              width: 5,
+                              height: 7,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white, shape: BoxShape.circle),
+                            ),
+                            Row(
+                              children: [
+                                FutureText(
+                                    text: Api.change("${widget.stock.ticker}.SA", "", 3),
                                     style: const TextStyle(
                                       color: Colors.white,
                                     ),
-                                  )
-                                ];
-                              } else {
-                                children = <Widget>[
-                                  const SizedBox(
-                                    width: 10,
-                                    height: 10,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ];
-                              }
-                              return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: children,
                                 ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const BoxDecoration(
-                                color: Colors.white, shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget.stock.type,
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                                FutureIcon(color: Api.color("${widget.stock.ticker}.SA"))
+                              ],
+                            )
+                          ],
+                        ),
                       )
                     ],
                   )
@@ -186,5 +185,56 @@ class StockBlockState extends State<StockBlock> {
             ),
           ),
         ));
+  }
+
+}
+
+class FutureIcon<String> extends StatelessWidget {
+  const FutureIcon({Key? key, required this.color});
+
+  final Future<Color> color;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: color,
+      builder: (BuildContext context, AsyncSnapshot<Color> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          if(snapshot.data == Colors.redAccent){
+            children = <Widget>[
+              Icon(
+                Icons.trending_down,
+                color: snapshot.data,
+              )
+            ];
+          }
+          else {
+            children = <Widget>[
+              Icon(
+                Icons.trending_up,
+                color: snapshot.data,
+              )
+            ];
+          }
+        } else {
+          children = <Widget>[
+            const SizedBox(
+              width: 10,
+              height: 10,
+              child: CircularProgressIndicator(
+                color: Colors.white38,
+              ),
+            ),
+          ];
+        }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:inlys/stock.dart';
-import 'package:inlys/profile.dart';
 
 class Wallet {
   static List<Stock> favoriteStocks = <Stock> [];
@@ -8,7 +7,7 @@ class Wallet {
     initializeWallet();
   }
 
-  void initializeWallet(){
+  static void initializeWallet(){
     Stock a = Stock("BBAS3");
     Stock b = Stock("PETR4");
     Stock c = Stock("GOLL4");
@@ -32,13 +31,21 @@ class Wallet {
     ];
   }
 
-  void addStock(String ticker, Profile user){
+  static void addStock(String ticker){
     Stock aux = Stock(ticker);
     favoriteStocks.add(aux);
   }
 
-  List<Stock> getWallet(){
-    initializeWallet();
+  static void removeStock(String ticker){
+    for(int i = 0; i < favoriteStocks.length;i++){
+      if(favoriteStocks[i].ticker == ticker){
+        favoriteStocks.removeAt(i);
+        break;
+      }
+    }
+  }
+
+  static List<Stock> getWallet(){
     return favoriteStocks;
   }
 }

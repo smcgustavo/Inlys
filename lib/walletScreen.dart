@@ -7,13 +7,12 @@ import 'package:inlys/stock.dart';
 class WalletScreen extends StatefulWidget {
   WalletScreen({Key? key, required this.allStocks}) : super(key: key);
   List<String> allStocks;
-  Wallet wallet = Wallet();
   @override
   State<StatefulWidget> createState() => WalletScreenState();
 }
 
 class WalletScreenState extends State<WalletScreen> {
-  late List<Stock> stocks = widget.wallet.getWallet();
+  late List<Stock> stocks = Wallet.getWallet();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +20,17 @@ class WalletScreenState extends State<WalletScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 35),
         child: Center(
-            child: Scrollbar(
-          child: ListView.builder(
+          child: Scrollbar(
+              child: (() {
+            if (stocks.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Carteira vazia.",
+                  style: TextStyle(color: Colors.grey, fontSize: 20),
+                ),
+              );
+            }
+            return ListView.builder(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(10),
               itemCount: stocks.length,
@@ -30,8 +38,8 @@ class WalletScreenState extends State<WalletScreen> {
                 final StockBlock aux = StockBlock(stock: stocks[index]);
                 return aux;
               },
-            )
-          ),
+            );
+          }())),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -40,7 +48,7 @@ class WalletScreenState extends State<WalletScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => SearchStock(allStocks: widget.allStocks),
-              ));
+              )).then((_) => setState(() {}));
         },
         backgroundColor: Colors.black,
         child: const Icon(
