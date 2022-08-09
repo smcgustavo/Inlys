@@ -11,7 +11,6 @@ class Wallet {
     Stock a = Stock("BBAS3");
     Stock b = Stock("PETR4");
     Stock c = Stock("GOLL4");
-    Stock d = Stock("BIDI4");
     Stock e = Stock("BBDC4");
     Stock f = Stock("ITUB4");
     Stock g = Stock("ABEV3");
@@ -22,7 +21,6 @@ class Wallet {
       a,
       b,
       c,
-      d,
       e,
       f,
       g,

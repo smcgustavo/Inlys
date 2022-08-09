@@ -22,6 +22,9 @@ class Api {
     StockInfo info = yfin.getStockInfo(ticker: ticker);
     StockQuote quote2 = await info.getStockPriceChange();
     String string = quote2.regularMarketChangePercent.toString();
+    if(string[0] == '-'){
+      size++;
+    }
     string = "${string.substring(0, size).replaceAll(".", ",")}%";
     return string;
   }
