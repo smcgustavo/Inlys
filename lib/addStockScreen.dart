@@ -53,14 +53,27 @@ class SearchStockState extends State<SearchStock> {
             ),
             Expanded(
               child: Scrollbar(
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final stock = stocks[index];
-                    return listItem(Stock(stock));
-                  },
-                  itemCount: stocks.length,
-                ),
+                child:
+                ((){
+                  if(stocks.isEmpty){
+                    return const Center(
+                      child: Text(
+                        "Nenhum papel encontrado.",
+                        style: TextStyle(
+                          color: Colors.grey
+                        ),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final stock = stocks[index];
+                      return listItem(Stock(stock));
+                    },
+                    itemCount: stocks.length,
+                  );
+                }()),
               ),
             )
           ],

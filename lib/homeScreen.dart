@@ -38,7 +38,7 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", "", 5), "^GSPC"),
+                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", "", 4), "^GSPC"),
                   futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", "",4), "^BVSP")
                 ],
               ),
@@ -55,8 +55,8 @@ class HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  futureIndicator("Dólar", Api.price("BRL=X", "R\$"), Api.change("BRL=X", "",3), "BRL=X"),
-                  futureIndicator("Euro", Api.price("EURBRL=X", "R\$"), Api.change("EURBRL=X", "",3), "EURBRL=X"),
+                  futureIndicator("Dólar", Api.price("BRL=X", "R\$"), Api.change("BRL=X", "",4), "BRL=X"),
+                  futureIndicator("Euro", Api.price("EURBRL=X", "R\$"), Api.change("EURBRL=X", "",4), "EURBRL=X"),
                 ],
               ),
             ),

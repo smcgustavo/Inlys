@@ -2,7 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/yahooApi.dart';
-import 'wallet.dart';
+import 'package:inlys/wallet.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
@@ -118,7 +118,7 @@ class StockScreenState extends State<StockScreen>
                                 ),
                                 Container(
                                   child: ((){
-                                    if(Wallet.favoriteStocks.contains(widget.stock)){
+                                    if(Wallet.stocksString.contains(widget.stock.ticker)){
                                       return IconButton(
                                           onPressed: (){
                                             setState((){

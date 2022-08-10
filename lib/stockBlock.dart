@@ -59,10 +59,8 @@ class StockBlockState extends State<StockBlock> {
                   ),
                   const SizedBox(width: 15),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const SizedBox(
-                        height: 15,
-                      ),
                       FutureBuilder(
                         future: widget.stock.name,
                         builder: (BuildContext context,
@@ -95,9 +93,6 @@ class StockBlockState extends State<StockBlock> {
                             ),
                           );
                         },
-                      ),
-                      const SizedBox(
-                        height: 15,
                       ),
                       Container(
                         width: 230,
@@ -159,25 +154,29 @@ class StockBlockState extends State<StockBlock> {
                               },
                             ),
                             Container(
-                              width: 5,
+                              width: 7,
                               height: 7,
                               decoration: const BoxDecoration(
                                   color: Colors.white, shape: BoxShape.circle),
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 FutureText(
-                                    text: Api.change("${widget.stock.ticker}.SA", "", 3),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
+                                  text: Api.change("${widget.stock.ticker}.SA", "", 3),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
                                 ),
                                 FutureIcon(color: Api.color("${widget.stock.ticker}.SA"))
                               ],
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],

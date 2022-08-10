@@ -50,7 +50,7 @@ class WalletScreenState extends State<WalletScreen> {
                 builder: (context) => SearchStock(allStocks: widget.allStocks),
               )).then((_) => setState(() {}));
         },
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white12,
         child: const Icon(
           Icons.search,
           color: Colors.white,
