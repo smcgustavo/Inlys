@@ -11,10 +11,21 @@ class WalletScreen extends StatefulWidget {
   State<StatefulWidget> createState() => WalletScreenState();
 }
 
-class WalletScreenState extends State<WalletScreen> {
-  late List<Stock> stocks = Wallet.getWallet();
+class WalletScreenState extends State<WalletScreen>
+    with WidgetsBindingObserver {
+
+  List<Stock> stocks = Wallet.getWallet();
+
+  @override
+  void didPop(){
+    setState((){
+      stocks = Wallet.getWallet();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    SearchStock(allStocks: widget.allStocks);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -22,24 +33,25 @@ class WalletScreenState extends State<WalletScreen> {
         child: Center(
           child: Scrollbar(
               child: (() {
-            if (stocks.isEmpty) {
-              return const Center(
-                child: Text(
-                  "Carteira vazia.",
-                  style: TextStyle(color: Colors.grey, fontSize: 20),
-                ),
+              if (stocks.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "Carteira vazia.",
+                    style: TextStyle(color: Colors.grey, fontSize: 20),
+                  ),
+                );
+              }
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(10),
+                itemCount: stocks.length,
+                itemBuilder: (context, index) {
+                  final StockBlock aux = StockBlock(stock: stocks[index]);
+                  return aux;
+                },
               );
-            }
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(10),
-              itemCount: stocks.length,
-              itemBuilder: (context, index) {
-                final StockBlock aux = StockBlock(stock: stocks[index]);
-                return aux;
-              },
-            );
-          }())),
+            }())
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -19,65 +19,94 @@ class SearchStockState extends State<SearchStock> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 40,),
-            TextFormField(
-              style: const TextStyle(color: Colors.white),
-              controller: controller,
-              onChanged: searchStock,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: Colors.white70,
-                ),
-                hintText: 'Pesquise o papel:',
-                hintStyle: const TextStyle(color: Colors.white70),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.white70)),
-                enabledBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    gapPadding: 10,
-                    borderSide: BorderSide(color: Colors.white70, width: 1.0)),
-                focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    gapPadding: 10,
-                    borderSide: BorderSide(color: Colors.white, width: 1.0)),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: Scrollbar(
-                child:
-                ((){
-                  if(stocks.isEmpty){
-                    return const Center(
-                      child: Text(
-                        "Nenhum papel encontrado.",
-                        style: TextStyle(
-                          color: Colors.grey
-                        ),
-                      ),
-                    );
-                  }
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final stock = stocks[index];
-                      return listItem(Stock(stock));
+      body: Column(
+        children: [
+          const SizedBox(height: 40,),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                    onPressed: (){
+                      Navigator.pop(context);
                     },
-                    itemCount: stocks.length,
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white70,
+                    )
+                ),
+                Container(
+                  width: 285,
+                  child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    controller: controller,
+                    onChanged: searchStock,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.white70,
+                      ),
+                      hintText: 'Pesquise o papel:',
+                      hintStyle: const TextStyle(color: Colors.white70),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.white70)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          gapPadding: 10,
+                          borderSide: BorderSide(color: Colors.white70, width: 1.0)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          gapPadding: 10,
+                          borderSide: BorderSide(color: Colors.white, width: 1.0)),
+                    ),
+                  ),
+                ),
+                IconButton(
+                    onPressed: (){
+                      setState((){
+                        controller.text = "";
+                        searchStock("");
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.clear,
+                      color: Colors.white70,
+                    )
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Scrollbar(
+              child:
+              ((){
+                if(stocks.isEmpty){
+                  return const Center(
+                    child: Text(
+                      "Nenhum papel encontrado.",
+                      style: TextStyle(
+                        color: Colors.grey
+                      ),
+                    ),
                   );
-                }()),
-              ),
-            )
-          ],
-        ),
+                }
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final stock = stocks[index];
+                    return listItem(Stock(stock));
+                  },
+                  itemCount: stocks.length,
+                );
+              }()),
+            ),
+          )
+        ],
       ),
     );
   }
