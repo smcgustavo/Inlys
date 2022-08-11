@@ -3,6 +3,7 @@ import 'package:inlys/stockBlock.dart';
 import 'package:inlys/wallet.dart';
 import 'package:inlys/addStockScreen.dart';
 import 'package:inlys/stock.dart';
+import 'package:inlys/StockScreen.dart';
 
 class WalletScreen extends StatefulWidget {
   WalletScreen({Key? key, required this.allStocks}) : super(key: key);
@@ -30,28 +31,72 @@ class WalletScreenState extends State<WalletScreen>
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
         padding: const EdgeInsets.only(top: 35),
-        child: Center(
-          child: Scrollbar(
-              child: (() {
-              if (stocks.isEmpty) {
-                return const Center(
-                  child: Text(
-                    "Carteira vazia.",
-                    style: TextStyle(color: Colors.grey, fontSize: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                IconButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white70,
+                    )
+                ),
+                const SizedBox(
+                  width: 115,
+                ),
+                const Text("Carteira:",
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 26
                   ),
-                );
-              }
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(10),
-                itemCount: stocks.length,
-                itemBuilder: (context, index) {
-                  final StockBlock aux = StockBlock(stock: stocks[index]);
-                  return aux;
-                },
-              );
-            }())
-          ),
+                )
+              ],
+            ),
+            Expanded(
+              child: Scrollbar(
+                  child: (() {
+                  if (stocks.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "Carteira vazia.",
+                        style: TextStyle(color: Colors.grey, fontSize: 20),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
+                    itemCount: stocks.length,
+                    itemBuilder: (context, index) {
+                      final StockBlock aux = StockBlock(stock: stocks[index]);
+                      return
+                        Padding(
+                            padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StockScreen(
+                                        key: widget.key,
+                                        stock: stocks[index],
+                                      )
+                                  )
+                              ).then((_) => setState(() {}));;
+                            },
+                            child: aux,
+                          ),
+                        );
+                    },
+                  );
+                }())
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
