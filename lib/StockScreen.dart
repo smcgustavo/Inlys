@@ -214,7 +214,7 @@ class StockScreenState extends State<StockScreen>
               variation(stock.ticker, "Variação diária:", Api.change("${stock.ticker}.SA", "R\$ ", 4), Api.color("${stock.ticker}.SA")),
               variation(stock.ticker, "Variação semanal:", Api.changeWeek("${stock.ticker}.SA", "R\$ ", 4), Api.colorWeek("${stock.ticker}.SA")),
               variation(stock.ticker, "Variação mensal:", Api.changeMonth("${stock.ticker}.SA", "R\$ ", 4), Api.colorMonth("${stock.ticker}.SA")),
-              variation(stock.ticker, "Variação mensal:", Api.changeYear("${stock.ticker}.SA", "R\$ ", 4), Api.colorYear("${stock.ticker}.SA")),
+              variation(stock.ticker, "Variação anual:", Api.changeYear("${stock.ticker}.SA", "R\$ ", 4), Api.colorYear("${stock.ticker}.SA")),
             ],
           ),
         ),

@@ -51,7 +51,7 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 1]) * 100).toStringAsFixed(2);
+    String result = (((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 5 - 1]) * 100).toStringAsFixed(2);
     return "${result}%";
   }
 
@@ -62,7 +62,7 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    double result = ((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 1]) * 100;
+    double result = ((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 5 - 1]) * 100;
     return result;
   }
 
@@ -78,22 +78,22 @@ class Api {
   static Future<String> changeMonth(String ticker, String prefix, int size) async{
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
-        interval: StockInterval.oneDay,
+        interval: StockInterval.ninetyMinute,
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100).toStringAsFixed(2);
+    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(2);
     return "${result}%";
   }
 
   static Future<double?> changeMonthAsNumber(String ticker, String prefix) async {
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
-        interval: StockInterval.oneDay,
+        interval: StockInterval.ninetyMinute,
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    double result = ((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100;
+    double result = ((aux![aux.length - 1] - aux![0]) / aux![0]) * 100;
     return result;
   }
 
@@ -109,22 +109,22 @@ class Api {
   static Future<String> changeYear(String ticker, String prefix, int size) async{
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
-        interval: StockInterval.oneDay,
+        interval: StockInterval.fiveDay,
         period: StockRange.oneYear
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100).toStringAsFixed(2);
+    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(2);
     return "${result}%";
   }
 
   static Future<double?> changeYearAsNumber(String ticker, String prefix) async {
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
-        interval: StockInterval.oneDay,
+        interval: StockInterval.fiveDay,
         period: StockRange.oneYear
     );
     List<num>? aux = chart.chartQuotes?.close;
-    double result = ((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100;
+    double result = ((aux![aux.length - 1] - aux![0]) / aux![0]) * 100;
     return result;
   }
 
