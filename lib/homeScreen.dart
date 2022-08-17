@@ -20,7 +20,7 @@ class HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.black,
         ),
       ),
-      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+      backgroundColor: const Color.fromRGBO(21,21,21,1),
       body: Padding(
         padding: const EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 60),
         child: Column(
@@ -165,8 +165,8 @@ class HomeScreenState extends State<HomeScreen> {
       borderRadius: BorderRadius.circular(10),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            color: Colors.white.withOpacity(0.0),
+            border: Border.all(color: Colors.white.withOpacity(0.3)),
             borderRadius: BorderRadius.circular(10)
         ),
         height: 150,
@@ -200,8 +200,8 @@ class HomeScreenState extends State<HomeScreen> {
             height: 80,
             width: 325,
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
+                color: Colors.white.withOpacity(0.0),
+                border: Border.all(color: Colors.white.withOpacity(0.3)),
                 borderRadius: BorderRadius.circular(10)
             ),
             child: Row(

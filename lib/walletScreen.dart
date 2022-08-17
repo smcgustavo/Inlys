@@ -41,15 +41,15 @@ class WalletScreenState extends State<WalletScreen>
                     },
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Colors.white70,
+                      color: Colors.white,
                     )
                 ),
                 const SizedBox(
-                  width: 115,
+                  width: 112,
                 ),
                 const Text("Carteira:",
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: Colors.white,
                     fontSize: 26
                   ),
                 )
@@ -62,7 +62,7 @@ class WalletScreenState extends State<WalletScreen>
                     return const Center(
                       child: Text(
                         "Carteira vazia.",
-                        style: TextStyle(color: Colors.grey, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     );
                   }

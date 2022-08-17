@@ -10,7 +10,6 @@ class SearchStock extends StatefulWidget {
 }
 
 class SearchStockState extends State<SearchStock> {
-
   SearchStockState({required this.stocks});
   List<String> stocks;
   final controller = TextEditingController();
@@ -21,23 +20,24 @@ class SearchStockState extends State<SearchStock> {
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Column(
         children: [
-          const SizedBox(height: 40,),
+          const SizedBox(
+            height: 40,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                     },
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white70,
-                    )
-                ),
-                Container(
-                  width: 285,
+                    )),
+                SizedBox(
+                  width: 310,
+                  height: 70,
                   child: TextFormField(
                     style: const TextStyle(color: Colors.white),
                     controller: controller,
@@ -49,32 +49,35 @@ class SearchStockState extends State<SearchStock> {
                       ),
                       hintText: 'Pesquise o papel:',
                       hintStyle: const TextStyle(color: Colors.white70),
+                      suffixIcon: IconButton(
+                        alignment: Alignment.center,
+                          onPressed: () {
+                            setState(() {
+                              controller.text = "";
+                              searchStock("");
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.clear,
+                            color: Colors.white70,
+                          )
+                      ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(color: Colors.white70)),
                       enabledBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           gapPadding: 10,
-                          borderSide: BorderSide(color: Colors.white70, width: 1.0)),
+                          borderSide:
+                              BorderSide(color: Colors.white70, width: 1.0)),
                       focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           gapPadding: 10,
-                          borderSide: BorderSide(color: Colors.white, width: 1.0)),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
                     ),
                   ),
                 ),
-                IconButton(
-                    onPressed: (){
-                      setState((){
-                        controller.text = "";
-                        searchStock("");
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.clear,
-                      color: Colors.white70,
-                    )
-                )
               ],
             ),
           ),
@@ -83,15 +86,12 @@ class SearchStockState extends State<SearchStock> {
           ),
           Expanded(
             child: Scrollbar(
-              child:
-              ((){
-                if(stocks.isEmpty){
+              child: (() {
+                if (stocks.isEmpty) {
                   return const Center(
                     child: Text(
                       "Nenhum papel encontrado.",
-                      style: TextStyle(
-                        color: Colors.grey
-                      ),
+                      style: TextStyle(color: Colors.grey),
                     ),
                   );
                 }
@@ -126,31 +126,25 @@ class SearchStockState extends State<SearchStock> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          color: Colors.white.withOpacity(0.1),
-          child: ListTile(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20)
-            ),
-            title: Center(
-              child: Text(
-                stock.ticker,
-                style: const TextStyle(
-                    color: Colors.white
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            color: Colors.white.withOpacity(0.1),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              title: Center(
+                child: Text(
+                  stock.ticker,
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StockScreen(stock: stock),
+                  )),
             ),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(
-                  builder: (context) => StockScreen(
-                      stock: stock
-                  ),
-                )
-            ),
-          ),
-        )
-      ),
+          )),
     );
   }
 }

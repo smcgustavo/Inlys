@@ -43,4 +43,97 @@ class Api {
     }
     return result;
   }
+
+  static Future<String> changeWeek(String ticker, String prefix, int size) async{
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.oneDay,
+        period: StockRange.oneMonth
+    );
+    List<num>? aux = chart.chartQuotes?.close;
+    String result = (((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 1]) * 100).toStringAsFixed(2);
+    return "${result}%";
+  }
+
+  static Future<double?> changeWeekAsNumber(String ticker, String prefix) async {
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.oneDay,
+        period: StockRange.oneMonth
+    );
+    List<num>? aux = chart.chartQuotes?.close;
+    double result = ((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 1]) * 100;
+    return result;
+  }
+
+  static Future<Color> colorWeek(String ticker) async{
+    Color result = Colors.greenAccent;
+    double? aux = await changeWeekAsNumber(ticker, "");
+    if(aux! < 0){
+      result = Colors.redAccent;
+    }
+    return result;
+  }
+
+  static Future<String> changeMonth(String ticker, String prefix, int size) async{
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.oneDay,
+        period: StockRange.oneMonth
+    );
+    List<num>? aux = chart.chartQuotes?.close;
+    String result = (((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100).toStringAsFixed(2);
+    return "${result}%";
+  }
+
+  static Future<double?> changeMonthAsNumber(String ticker, String prefix) async {
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.oneDay,
+        period: StockRange.oneMonth
+    );
+    List<num>? aux = chart.chartQuotes?.close;
+    double result = ((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100;
+    return result;
+  }
+
+  static Future<Color> colorMonth(String ticker) async{
+    Color result = Colors.greenAccent;
+    double? aux = await changeMonthAsNumber(ticker, "");
+    if(aux! < 0){
+      result = Colors.redAccent;
+    }
+    return result;
+  }
+
+  static Future<String> changeYear(String ticker, String prefix, int size) async{
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.oneDay,
+        period: StockRange.oneYear
+    );
+    List<num>? aux = chart.chartQuotes?.close;
+    String result = (((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100).toStringAsFixed(2);
+    return "${result}%";
+  }
+
+  static Future<double?> changeYearAsNumber(String ticker, String prefix) async {
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.oneDay,
+        period: StockRange.oneYear
+    );
+    List<num>? aux = chart.chartQuotes?.close;
+    double result = ((aux![aux.length - 1] - aux![0]) / aux![aux.length - 1]) * 100;
+    return result;
+  }
+
+  static Future<Color> colorYear(String ticker) async{
+    Color result = Colors.greenAccent;
+    double? aux = await changeYearAsNumber(ticker, "");
+    if(aux! < 0){
+      result = Colors.redAccent;
+    }
+    return result;
+  }
 }

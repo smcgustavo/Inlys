@@ -6,6 +6,7 @@ import 'package:inlys/yahooApi.dart';
 class Stock {
   late String _ticker, _type;
   late Future<String> _price, _name, _pvp, _dy, _roe, _pl, _indicator;
+  late Future<String> _vpa, _lpa;
   late bool _condition;
 
 
@@ -13,15 +14,19 @@ class Stock {
   late AssetImage _logo;
   static DataManager dataBase = DataManager();
 
-  Stock(String ticker){
+  Stock(String ticker) {
     _condition = false;
     _ticker = ticker;
     _type = "Ação";
     loadData();
   }
 
-  void loadData(){
+  Future<String> get vpa => _vpa;
+
+  void loadData() {
     _price = dataBase.getPriceFromTicker(_ticker);
+    _vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
+    _lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");
     _name = dataBase.getNameFromTicker(_ticker);
     _pvp = dataBase.getPvpFromTicker(_ticker);
     _dy = dataBase.getDyFromTicker(_ticker);
@@ -43,7 +48,12 @@ class Stock {
     if(result > price!){
       _condition = true;
     }
-    _indicator = Future<String>.value("R\$${result.toStringAsFixed(2)}");
+    if(result.toString() == "NaN"){
+      _indicator = Future<String>.value("Indisponível");
+    }
+    else{
+      _indicator = Future<String>.value("R\$${result.toStringAsFixed(2)}");
+    }
   }
 
   AssetImage get logo => _logo;
@@ -67,4 +77,6 @@ class Stock {
   String get type => _type;
 
   String get ticker => _ticker.toString();
+
+  get lpa => _lpa;
 }
