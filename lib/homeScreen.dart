@@ -20,11 +20,11 @@ class HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.black,
         ),
       ),
-      backgroundColor: const Color.fromRGBO(21,21,21,1),
+      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
-        padding: const EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 60),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        padding: const EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 0),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             const Padding(
               padding: EdgeInsets.only(left: 35, top: 20),
@@ -34,13 +34,25 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", "", 4), "^GSPC"),
-                  futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", "",4), "^BVSP")
-                ],
+              padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10, bottom: 10),
+              child: Container(
+                width: 350,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.0),
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(5),
+                  children: [
+                    futureIndicator("Ibovespa", Api.price("^BVSP", "") , Api.change("^BVSP", "",4), "^BVSP"),
+                    futureIndicator("IBRX", Api.price("IBXX.SA", ""), Api.change("IBXX.SA", "", 4), "IBXX.SA"),
+                    futureIndicator("IBX50", Api.price("^IBX50", ""), Api.change("^IBX50", "", 4), "^IBX50"),
+                    futureIndicator("S&P500", Api.price("^GSPC", ""), Api.change("^GSPC", "", 4), "^GSPC"),
+                  ],
+                ),
               ),
             ),
             const Padding(
@@ -51,13 +63,25 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  futureIndicator("Dólar", Api.price("BRL=X", "R\$"), Api.change("BRL=X", "", 3), "BRL=X"),
-                  futureIndicator("Euro", Api.price("EURBRL=X", "R\$"), Api.change("EURBRL=X", "",4), "EURBRL=X"),
-                ],
+              padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10, bottom: 10),
+              child: Container(
+                width: 350,
+                height: 150,
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.00),
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(5),
+                  children: [
+                    futureIndicator("Dólar", Api.price("BRL=X", "R\$") , Api.change("BRL=X", "", 4), "BRL=X"),
+                    futureIndicator("Euro", Api.price("EURBRL=X", "R\$"), Api.change("EURBRL=X", "", 4), "EURBRL=X"),
+                    futureIndicator("Libra", Api.price("GBPBRL=X", "R\$"), Api.change("GBPBRL=X", "", 4), "GBPBRL=X"),
+                    futureIndicator("Iene", Api.price("JPYBRL=X", "R\$"), Api.change("JPYBRL=X", "", 4), "JPYBRL=X"),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -161,33 +185,36 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget futureIndicator(String indicator, Future<String> value, Future<String> difference, String ticker) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.0),
-            border: Border.all(color: Colors.white.withOpacity(0.3)),
-            borderRadius: BorderRadius.circular(10)
-        ),
-        height: 150,
-        width: 150,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                indicator,
-                style: const TextStyle(color: Colors.white,fontSize: 18),
-              ),
-              FutureText(text: value, style: const TextStyle(color: Colors.white,fontSize: 24)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FutureText(text: difference, style: const TextStyle(color: Colors.white, fontSize: 14)),
-                  FutureIcon(color: Api.color(ticker))
-                ],
-              )
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.0),
+              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              borderRadius: BorderRadius.circular(10)
+          ),
+          height: 125,
+          width: 125,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  indicator,
+                  style: const TextStyle(color: Colors.white,fontSize: 18),
+                ),
+                FutureText(text: value, style: const TextStyle(color: Colors.white,fontSize: 20)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FutureText(text: difference, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                    FutureIcon(color: Api.color(ticker))
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

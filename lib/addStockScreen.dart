@@ -17,73 +17,59 @@ class SearchStockState extends State<SearchStock> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white70,
+            )
+        ),
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.white),
+            controller: controller,
+            onChanged: searchStock,
+            decoration: InputDecoration(
+              hintText: 'Pesquise o papel:',
+              hintStyle: const TextStyle(color: Colors.white70),
+              suffixIcon: IconButton(
+                  alignment: Alignment.center,
+                  onPressed: () {
+                    setState(() {
+                      controller.text = "";
+                      searchStock("");
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.clear,
+                    color: Colors.white70,
+                  )
+              ),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(color: Color.fromRGBO(0, 0, 0, 0))),
+              enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  gapPadding: 10,
+                  borderSide:
+                  BorderSide(color: Color.fromRGBO(0, 0, 0, 0), width: 1.0)),
+              focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  gapPadding: 10,
+                  borderSide:
+                  BorderSide(color: Color.fromRGBO(0, 0, 0, 0), width: 1.0)),
+            ),
+          ),
+        ),
+      ),
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Column(
         children: [
-          const SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white70,
-                    )),
-                SizedBox(
-                  width: 310,
-                  height: 70,
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    controller: controller,
-                    onChanged: searchStock,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Colors.white70,
-                      ),
-                      hintText: 'Pesquise o papel:',
-                      hintStyle: const TextStyle(color: Colors.white70),
-                      suffixIcon: IconButton(
-                        alignment: Alignment.center,
-                          onPressed: () {
-                            setState(() {
-                              controller.text = "";
-                              searchStock("");
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.clear,
-                            color: Colors.white70,
-                          )
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.white70)),
-                      enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          gapPadding: 10,
-                          borderSide:
-                              BorderSide(color: Colors.white70, width: 1.0)),
-                      focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          gapPadding: 10,
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
           Expanded(
             child: Scrollbar(
               child: (() {

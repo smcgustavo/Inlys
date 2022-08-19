@@ -28,76 +28,69 @@ class WalletScreenState extends State<WalletScreen>
   Widget build(BuildContext context) {
     SearchStock(allStocks: widget.allStocks);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 35),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    )
-                ),
-                const SizedBox(
-                  width: 112,
-                ),
-                const Text("Carteira:",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26
-                  ),
-                )
-              ],
-            ),
-            Expanded(
-              child: Scrollbar(
-                  child: (() {
-                  if (stocks.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        "Carteira vazia.",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    );
-                  }
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.all(10),
-                    itemCount: stocks.length,
-                    itemBuilder: (context, index) {
-                      final StockBlock aux = StockBlock(stock: stocks[index]);
-                      return
-                        Padding(
-                            padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(20),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StockScreen(
-                                        key: widget.key,
-                                        stock: stocks[index],
-                                      )
-                                  )
-                              ).then((_) => setState(() {}));;
-                            },
-                            child: aux,
-                          ),
-                        );
-                    },
-                  );
-                }())
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+        title: const Text("Carteira:",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 26
+          ),
         ),
+        leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )
+        ),
+      ),
+      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+      body: Column(
+        children: [
+          Expanded(
+            child: Scrollbar(
+                child: (() {
+                if (stocks.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      "Carteira vazia.",
+                      style: TextStyle(color: Colors.white70, fontSize: 20),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  itemCount: stocks.length,
+                  itemBuilder: (context, index) {
+                    final StockBlock aux = StockBlock(stock: stocks[index]);
+                    return
+                      Padding(
+                          padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => StockScreen(
+                                      key: widget.key,
+                                      stock: stocks[index],
+                                    )
+                                )
+                            ).then((_) => setState(() {}));;
+                          },
+                          child: aux,
+                        ),
+                      );
+                  },
+                );
+              }())
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -107,9 +100,9 @@ class WalletScreenState extends State<WalletScreen>
                 builder: (context) => SearchStock(allStocks: widget.allStocks),
               )).then((_) => setState(() {}));
         },
-        backgroundColor: Colors.white12,
+        backgroundColor: Colors.black87,
         child: const Icon(
-          Icons.search,
+          Icons.add,
           color: Colors.white,
         ),
       ),

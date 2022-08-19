@@ -17,17 +17,14 @@ class StockScreenState extends State<StockScreen>
 
   @override
   Widget build(BuildContext context) {
-    TabController _controller = TabController(length: 2, vsync: this);
+    TabController controller = TabController(length: 2, vsync: this);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
         padding: const EdgeInsets.only(top: 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: <Widget>[
-            const SizedBox(
-              height: 40,
-            ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
@@ -141,7 +138,6 @@ class StockScreenState extends State<StockScreen>
                                     }()
                                     ),
                                   )
-
                                 ],
                               ),
                             ],
@@ -153,10 +149,10 @@ class StockScreenState extends State<StockScreen>
                 ),
               ),
             ),
-            customTabBar(_controller),
+            customTabBar(controller),
             Container(
-              height: 500,
-              child: TabBarView(controller: _controller, children: [
+              height: 600,
+              child: TabBarView(controller: controller, children: [
                 fundamentals(),
                 variations(widget.stock),
               ]),

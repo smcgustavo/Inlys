@@ -25,7 +25,7 @@ class Api {
     if(string[0] == '-'){
       size++;
     }
-    string = "${string.substring(0, size).replaceAll(".", ",")}%";
+    string = "${string.substring(0, size + 1).replaceAll(".", ",")}%";
     return string;
   }
   static Future<double?> changeAsNumber(String ticker, String prefix) async {
