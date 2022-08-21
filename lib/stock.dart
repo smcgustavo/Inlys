@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'csvManager.dart';
 import 'dart:math';
 import 'package:inlys/yahooApi.dart';
+import 'package:inlys/series.dart';
 
 class Stock {
   late String _ticker, _type;
   late Future<String> _price, _name, _pvp, _dy, _roe, _pl, _indicator;
   late Future<String> _vpa, _lpa;
   late bool _condition;
-
+  late List<Series> history;
 
 
   late AssetImage _logo;
@@ -23,7 +24,8 @@ class Stock {
 
   Future<String> get vpa => _vpa;
 
-  void loadData() {
+  void loadData() async {
+    history = await Api.historicalSeries("$_ticker.SA");
     _price = dataBase.getPriceFromTicker(_ticker);
     _vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
     _lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");
@@ -45,7 +47,7 @@ class Stock {
     double vpa = await dataBase.getNumberFromTicker(_ticker, 27);
     double result = sqrt((lpa * vpa * 22.5));
     double? price = await Api.priceAsNumber("${ticker}F.SA");
-    if(result > price!){
+    if(result > price){
       _condition = true;
     }
     if(result.toString() == "NaN"){

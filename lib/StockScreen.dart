@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:inlys/stock.dart';
 import 'package:inlys/yahooApi.dart';
 import 'package:inlys/wallet.dart';
+import 'series.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
@@ -14,10 +17,10 @@ class StockScreen extends StatefulWidget {
 
 class StockScreenState extends State<StockScreen>
     with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
-    TabController controller = TabController(length: 2, vsync: this);
+    TabController controller = TabController(length: 3, vsync: this);
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -72,7 +75,8 @@ class StockScreenState extends State<StockScreen>
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
                                     width: 7,
@@ -110,33 +114,33 @@ class StockScreenState extends State<StockScreen>
                                     ),
                                   ),
                                   Container(
-                                    child: ((){
-                                      if(Wallet.stocksString.contains(widget.stock.ticker)){
+                                    child: (() {
+                                      if (Wallet.stocksString
+                                          .contains(widget.stock.ticker)) {
                                         return IconButton(
-                                            onPressed: (){
-                                              setState((){
-                                                Wallet.removeStock(widget.stock.ticker);
+                                            onPressed: () {
+                                              setState(() {
+                                                Wallet.removeStock(
+                                                    widget.stock.ticker);
                                               });
                                             },
                                             icon: const Icon(
                                               Icons.turned_in,
                                               color: Colors.grey,
-                                            )
-                                        );
+                                            ));
                                       }
                                       return IconButton(
-                                          onPressed: (){
-                                            setState((){
-                                              Wallet.addStock(widget.stock.ticker);
+                                          onPressed: () {
+                                            setState(() {
+                                              Wallet.addStock(
+                                                  widget.stock.ticker);
                                             });
                                           },
                                           icon: const Icon(
                                             Icons.turned_in_not,
                                             color: Colors.grey,
-                                          )
-                                      );
-                                    }()
-                                    ),
+                                          ));
+                                    }()),
                                   )
                                 ],
                               ),
@@ -155,6 +159,7 @@ class StockScreenState extends State<StockScreen>
               child: TabBarView(controller: controller, children: [
                 fundamentals(),
                 variations(widget.stock),
+                stockGraph()
               ]),
             )
           ],
@@ -188,6 +193,9 @@ class StockScreenState extends State<StockScreen>
                   Tab(
                     text: "Variações",
                   ),
+                  Tab(
+                    text: "Gráfico",
+                  )
                 ]),
           ),
         ),
@@ -195,22 +203,39 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget variations(Stock stock){
+  Widget variations(Stock stock) {
     return Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
-          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))
-        ),
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15))),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: ListView(
             children: [
-              variation(stock.ticker, "Variação diária:", Api.change("${stock.ticker}.SA", "R\$ ", 4), Api.color("${stock.ticker}.SA")),
-              variation(stock.ticker, "Variação semanal:", Api.changeWeek("${stock.ticker}.SA", "R\$ ", 4), Api.colorWeek("${stock.ticker}.SA")),
-              variation(stock.ticker, "Variação mensal:", Api.changeMonth("${stock.ticker}.SA", "R\$ ", 4), Api.colorMonth("${stock.ticker}.SA")),
-              variation(stock.ticker, "Variação anual:", Api.changeYear("${stock.ticker}.SA", "R\$ ", 4), Api.colorYear("${stock.ticker}.SA")),
+              variation(
+                  stock.ticker,
+                  "Variação diária:",
+                  Api.change("${stock.ticker}.SA", "R\$ ", 4),
+                  Api.color("${stock.ticker}.SA")),
+              variation(
+                  stock.ticker,
+                  "Variação semanal:",
+                  Api.changeWeek("${stock.ticker}.SA", "R\$ ", 4),
+                  Api.colorWeek("${stock.ticker}.SA")),
+              variation(
+                  stock.ticker,
+                  "Variação mensal:",
+                  Api.changeMonth("${stock.ticker}.SA", "R\$ ", 4),
+                  Api.colorMonth("${stock.ticker}.SA")),
+              variation(
+                  stock.ticker,
+                  "Variação anual:",
+                  Api.changeYear("${stock.ticker}.SA", "R\$ ", 4),
+                  Api.colorYear("${stock.ticker}.SA")),
             ],
           ),
         ),
@@ -218,14 +243,14 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget variation(String stockTicker, String description, Future<String> change, Future<Color> colorChoosed){
+  Widget variation(String stockTicker, String description,
+      Future<String> change, Future<Color> colorChoosed) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.08),
-            borderRadius: BorderRadius.circular(15)
-        ),
+            borderRadius: BorderRadius.circular(15)),
         height: 50,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -236,7 +261,9 @@ class StockScreenState extends State<StockScreen>
                 description,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
-              FutureText(text: change, style: const TextStyle(color: Colors.white, fontSize: 20)),
+              FutureText(
+                  text: change,
+                  style: const TextStyle(color: Colors.white, fontSize: 20)),
               FutureIcon(color: colorChoosed)
             ],
           ),
@@ -253,17 +280,22 @@ class StockScreenState extends State<StockScreen>
             bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
         child: Container(
           color: Colors.white.withOpacity(0.05),
-          child: const Center(
-              child: Text(
-            "Gráfico Aqui",
-            style: TextStyle(color: Colors.white),
-          )),
+          child: Center(
+            child: SfCartesianChart(
+              primaryYAxis: NumericAxis(),
+              series: <ChartSeries>[
+                LineSeries<Series, num>(
+                    dataSource: widget.stock.history,
+                    xValueMapper: (Series aux, _) => aux.date,
+                    yValueMapper: (Series aux, _) => aux.price,
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
-
-
 
   Widget fundamentals() {
     return Padding(
@@ -318,14 +350,14 @@ class StockScreenState extends State<StockScreen>
                   style: const TextStyle(fontSize: 22, color: Colors.white),
                   value: widget.stock.vpa,
                   description:
-                  "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
+                      "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
                 ),
                 AttributeBlock(
                   attribute: "LPA: ",
                   style: const TextStyle(fontSize: 22, color: Colors.white),
                   value: widget.stock.lpa,
                   description:
-                  "O LPA é o valor do lucro total dividido pelo número de ações.",
+                      "O LPA é o valor do lucro total dividido pelo número de ações.",
                 ),
               ],
             ),
@@ -467,20 +499,18 @@ class FutureText<String> extends StatelessWidget {
   }
 }
 
-class DividendCalculator extends StatefulWidget{
-
+class DividendCalculator extends StatefulWidget {
   DividendCalculator({super.key, required this.stock});
 
   final Stock stock;
   final TextEditingController _formController = TextEditingController();
   String result = "";
 
-
   @override
   State<StatefulWidget> createState() => DividendCalculatorState();
 }
 
-class DividendCalculatorState extends State<DividendCalculator>{
+class DividendCalculatorState extends State<DividendCalculator> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -515,13 +545,13 @@ class DividendCalculatorState extends State<DividendCalculator>{
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
+                                        BorderRadius.all(Radius.circular(15)),
                                     gapPadding: 10,
                                     borderSide: BorderSide(
                                         color: Colors.white70, width: 1.0)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
+                                        BorderRadius.all(Radius.circular(15)),
                                     gapPadding: 10,
                                     borderSide: BorderSide(
                                         color: Colors.white, width: 1.0)),
@@ -529,20 +559,20 @@ class DividendCalculatorState extends State<DividendCalculator>{
                             ),
                           ),
                           Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.white.withOpacity(0.05),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.white.withOpacity(0.05),
+                            ),
                             child: IconButton(
-                                onPressed: () {
-                                  setState(() async {
-                                    double price = 15;
-                                    widget.result = price.toString();
-                                  });
-                                },
-                                icon: const Icon(Icons.done),
-                                iconSize: 30,
-                                color: Colors.white,
+                              onPressed: () {
+                                setState(() async {
+                                  double price = 15;
+                                  widget.result = price.toString();
+                                });
+                              },
+                              icon: const Icon(Icons.done),
+                              iconSize: 30,
+                              color: Colors.white,
                             ),
                           )
                         ],
@@ -551,28 +581,26 @@ class DividendCalculatorState extends State<DividendCalculator>{
                   ),
                   Padding(
                     padding:
-                    const EdgeInsets.only(top: 20, left: 10, right: 10),
+                        const EdgeInsets.only(top: 20, left: 10, right: 10),
                     child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.05),
                             borderRadius: BorderRadius.circular(20)),
                         child: Padding(
                           padding: const EdgeInsets.all(20),
-                          child: Column(children:  [
+                          child: Column(children: [
                             const Text(
                               "Preço sugerido para este D.Y:",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                             Text(
-                                widget.result,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 18),
-                              ),
-                          ]
-                          ),
-                        )
-                    ),
+                              widget.result,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18),
+                            ),
+                          ]),
+                        )),
                   )
                 ],
               ),
@@ -594,15 +622,14 @@ class FutureIcon<String> extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Color> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          if(snapshot.data == Colors.redAccent){
+          if (snapshot.data == Colors.redAccent) {
             children = <Widget>[
               Icon(
                 Icons.trending_down,
                 color: snapshot.data,
               )
             ];
-          }
-          else {
+          } else {
             children = <Widget>[
               Icon(
                 Icons.trending_up,

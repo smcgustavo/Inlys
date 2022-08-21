@@ -1,5 +1,6 @@
 import 'package:yahoofin/yahoofin.dart';
 import 'package:flutter/material.dart';
+import 'series.dart';
 
 class Api {
   static YahooFin yfin = YahooFin();
@@ -135,5 +136,18 @@ class Api {
       result = Colors.redAccent;
     }
     return result;
+  }
+  static Future<List<Series>> historicalSeries(String ticker) async{
+    StockChart chart = await yfin.getChartQuotes(
+        stockHistory: yfin.initStockHistory(ticker: ticker),
+        interval: StockInterval.fiveDay,
+        period: StockRange.oneYear
+    );
+    ChartQuotes result = chart.chartQuotes!;
+    List<Series> series = [];
+    for(var i = 0; i < result.close!.length; i++){
+      series.add(Series(result.close![i], result.timestamp![i]));
+    }
+    return series;
   }
 }
