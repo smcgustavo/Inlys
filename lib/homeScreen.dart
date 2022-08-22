@@ -14,11 +14,17 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
-        child: AppBar(
-          backgroundColor: Colors.black,
-        ),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+        elevation: 0,
+        leading: appLogo(),
+        title: const Text("Alys",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 26
+          )
+          ,),
       ),
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -106,79 +112,7 @@ class HomeScreenState extends State<HomeScreen> {
                     },
                     child: otherPage("Todas as Ações", Icons.account_balance))
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: appLogo(),
-            )
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget header(String name) {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: Colors.black87.withOpacity(0.1),
-      ),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 42,
-            ),
-            const SizedBox(width: 20),
-            Text(
-              "Olá, $name",
-              style: const TextStyle(color: Colors.white, fontSize: 28),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget indicator(String indicator, String value, String difference, IconData icon, Color iconColor) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
-            borderRadius: BorderRadius.circular(10)
-        ),
-        height: 100,
-        width: 100,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                indicator,
-                style: const TextStyle(color: Colors.white,fontSize: 18),
-              ),
-              Text(
-                value,
-                style: const TextStyle(color: Colors.white, fontSize: 24),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    difference,
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                  Icon(icon,
-                    color: difference[0] == '-' ? Colors.redAccent : Colors.greenAccent,
-                    size: 30,)
-                ],
-              )
-            ],
-          ),
         ),
       ),
     );
@@ -191,8 +125,7 @@ class HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.0),
-              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              color: Colors.white.withOpacity(0.05),
               borderRadius: BorderRadius.circular(10)
           ),
           height: 125,
@@ -227,8 +160,7 @@ class HomeScreenState extends State<HomeScreen> {
             height: 80,
             width: 325,
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.0),
-                border: Border.all(color: Colors.white.withOpacity(0.3)),
+                color: Colors.white.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
@@ -251,21 +183,12 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
   Widget appLogo(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset("assets/images/iconLauncher/icon.png",
-          width: 40,
-          height: 40,
-        ),
-        const SizedBox(width: 20,),
-        const Text("Alys",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22
-          )
-          ,)
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Image.asset("assets/images/iconLauncher/icon.png",
+        width: 60,
+        height: 60,
+      ),
     );
   }
 }

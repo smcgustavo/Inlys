@@ -29,7 +29,8 @@ class WalletScreenState extends State<WalletScreen>
     SearchStock(allStocks: widget.allStocks);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+        backgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+        elevation: 0,
         title: const Text("Carteira:",
           style: TextStyle(
               color: Colors.white,

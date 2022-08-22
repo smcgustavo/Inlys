@@ -18,7 +18,8 @@ class SearchStockState extends State<SearchStock> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+        backgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+        elevation: 0,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -109,6 +110,7 @@ class SearchStockState extends State<SearchStock> {
   }
 
   Widget listItem(Stock stock) {
+
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ClipRRect(

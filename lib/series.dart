@@ -1,5 +1,5 @@
 class Series {
   final num price;
-  final num date;
+  final DateTime date;
   Series(this.price, this.date);
 }

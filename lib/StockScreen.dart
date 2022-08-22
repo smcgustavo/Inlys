@@ -17,6 +17,7 @@ class StockScreen extends StatefulWidget {
 
 class StockScreenState extends State<StockScreen>
     with TickerProviderStateMixin {
+
   @override
   Widget build(BuildContext context) {
     TabController controller = TabController(length: 3, vsync: this);
@@ -153,7 +154,8 @@ class StockScreenState extends State<StockScreen>
                 ),
               ),
             ),
-            customTabBar(controller),
+            //customTabBar(controller),
+            /*
             Container(
               height: 600,
               child: TabBarView(controller: controller, children: [
@@ -161,83 +163,106 @@ class StockScreenState extends State<StockScreen>
                 variations(widget.stock),
                 stockGraph()
               ]),
-            )
+            ),*/
+            block("Fundamentos", fundamentals(), 400),
+            block("Variações", variations(widget.stock), 255),
+            block("Gráfico", stockGraph(), 500)
           ],
         ),
       ),
     );
   }
 
+  Widget block(String name, Widget child, double height){
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 30.0, top: 30),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10),
+          child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(20)
+              ),
+              height: height,
+              child: child,
+          ),
+        )
+      ],
+    );
+  }
+
   Widget customTabBar(TabController controller) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-        child: Container(
-          color: Colors.white.withOpacity(0.05),
-          child: Align(
-            alignment: Alignment.center,
-            child: TabBar(
-                splashBorderRadius: BorderRadius.circular(10),
-                controller: controller,
-                labelColor: Colors.white,
-                isScrollable: true,
-                unselectedLabelColor: Colors.white70,
-                indicatorColor: Colors.white70,
-                labelPadding: const EdgeInsets.only(left: 5, right: 5),
-                tabs: const [
-                  Tab(
-                    text: "Fundamentos",
-                  ),
-                  Tab(
-                    text: "Variações",
-                  ),
-                  Tab(
-                    text: "Gráfico",
-                  )
-                ]),
-          ),
-        ),
+      child: Align(
+        alignment: Alignment.center,
+        child: TabBar(
+            splashBorderRadius: BorderRadius.circular(10),
+            controller: controller,
+            labelColor: Colors.white,
+            isScrollable: true,
+            unselectedLabelColor: Colors.white70,
+            indicatorColor: Colors.white70,
+            labelPadding: const EdgeInsets.only(left: 5, right: 5),
+            tabs: const [
+              Tab(
+                text: "Fundamentos",
+              ),
+              Tab(
+                text: "Variações",
+              ),
+              Tab(
+                text: "Gráfico",
+              )
+            ]),
       ),
     );
   }
 
   Widget variations(Stock stock) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15))),
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListView(
-            children: [
-              variation(
-                  stock.ticker,
-                  "Variação diária:",
-                  Api.change("${stock.ticker}.SA", "R\$ ", 4),
-                  Api.color("${stock.ticker}.SA")),
-              variation(
-                  stock.ticker,
-                  "Variação semanal:",
-                  Api.changeWeek("${stock.ticker}.SA", "R\$ ", 4),
-                  Api.colorWeek("${stock.ticker}.SA")),
-              variation(
-                  stock.ticker,
-                  "Variação mensal:",
-                  Api.changeMonth("${stock.ticker}.SA", "R\$ ", 4),
-                  Api.colorMonth("${stock.ticker}.SA")),
-              variation(
-                  stock.ticker,
-                  "Variação anual:",
-                  Api.changeYear("${stock.ticker}.SA", "R\$ ", 4),
-                  Api.colorYear("${stock.ticker}.SA")),
-            ],
-          ),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
+          children: [
+            variation(
+                stock.ticker,
+                "Variação diária:",
+                Api.change("${stock.ticker}.SA", "R\$ ", 4),
+                Api.color("${stock.ticker}.SA")),
+            variation(
+                stock.ticker,
+                "Variação semanal:",
+                Api.changeWeek("${stock.ticker}.SA", "R\$ ", 4),
+                Api.colorWeek("${stock.ticker}.SA")),
+            variation(
+                stock.ticker,
+                "Variação mensal:",
+                Api.changeMonth("${stock.ticker}.SA", "R\$ ", 4),
+                Api.colorMonth("${stock.ticker}.SA")),
+            variation(
+                stock.ticker,
+                "Variação anual:",
+                Api.changeYear("${stock.ticker}.SA", "R\$ ", 4),
+                Api.colorYear("${stock.ticker}.SA")),
+          ],
         ),
       ),
     );
@@ -272,26 +297,30 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget stockGraph() {
+  Widget stockGraph()  {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
-        child: Container(
-          color: Colors.white.withOpacity(0.05),
-          child: Center(
-            child: SfCartesianChart(
-              primaryYAxis: NumericAxis(),
-              series: <ChartSeries>[
-                LineSeries<Series, num>(
-                    dataSource: widget.stock.history,
-                    xValueMapper: (Series aux, _) => aux.date,
-                    yValueMapper: (Series aux, _) => aux.price,
-                )
-              ],
-            ),
+      child: Center(
+        child: SfCartesianChart(
+          primaryYAxis: NumericAxis(
+            labelStyle: const TextStyle(
+              color: Colors.white
+            )
           ),
+          primaryXAxis: DateTimeAxis(
+            intervalType: DateTimeIntervalType.days,
+            labelStyle: const TextStyle(
+              color: Colors.white
+            ),
+            interval: 70,
+          ),
+          series: <ChartSeries>[
+            LineSeries<Series, DateTime>(
+                dataSource: widget.stock.history,
+                xValueMapper: (Series aux, _) => aux.date,
+                yValueMapper: (Series aux, _) => aux.price,
+            )
+          ],
         ),
       ),
     );
@@ -300,68 +329,61 @@ class StockScreenState extends State<StockScreen>
   Widget fundamentals() {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-        child: Container(
-          decoration: BoxDecoration(color: Colors.white.withOpacity(0.05)),
-          child: Scrollbar(
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(10),
-              children: <Widget>[
-                grahamIndicator(),
-                AttributeBlock(
-                  attribute: "Preço: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: Api.price("${widget.stock.ticker}.SA", "R\$"),
-                  description: "Preço atual de cada ação.",
-                ),
-                AttributeBlock(
-                  attribute: "P/VP: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: widget.stock.pvp,
-                  description:
-                      "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
-                ),
-                AttributeBlock(
-                  attribute: "DY: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: widget.stock.dy,
-                  description:
-                      "Porcentagem do valor da ação distribuído em divivendos anualmente.",
-                ),
-                AttributeBlock(
-                  attribute: "ROE: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: widget.stock.roe,
-                  description: "Retorno sobre o patrimônio líquido anual.",
-                ),
-                AttributeBlock(
-                  attribute: "P/L: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: widget.stock.pl,
-                  description:
-                      "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
-                      "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
-                ),
-                AttributeBlock(
-                  attribute: "VPA: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: widget.stock.vpa,
-                  description:
-                      "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
-                ),
-                AttributeBlock(
-                  attribute: "LPA: ",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
-                  value: widget.stock.lpa,
-                  description:
-                      "O LPA é o valor do lucro total dividido pelo número de ações.",
-                ),
-              ],
+      child: Scrollbar(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(10),
+          children: <Widget>[
+            grahamIndicator(),
+            AttributeBlock(
+              attribute: "Preço: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: Api.price("${widget.stock.ticker}.SA", "R\$"),
+              description: "Preço atual de cada ação.",
             ),
-          ),
+            AttributeBlock(
+              attribute: "P/VP: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: widget.stock.pvp,
+              description:
+                  "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
+            ),
+            AttributeBlock(
+              attribute: "DY: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: widget.stock.dy,
+              description:
+                  "Porcentagem do valor da ação distribuído em divivendos anualmente.",
+            ),
+            AttributeBlock(
+              attribute: "ROE: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: widget.stock.roe,
+              description: "Retorno sobre o patrimônio líquido anual.",
+            ),
+            AttributeBlock(
+              attribute: "P/L: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: widget.stock.pl,
+              description:
+                  "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
+                  "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
+            ),
+            AttributeBlock(
+              attribute: "VPA: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: widget.stock.vpa,
+              description:
+                  "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
+            ),
+            AttributeBlock(
+              attribute: "LPA: ",
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+              value: widget.stock.lpa,
+              description:
+                  "O LPA é o valor do lucro total dividido pelo número de ações.",
+            ),
+          ],
         ),
       ),
     );

@@ -146,7 +146,9 @@ class Api {
     ChartQuotes result = chart.chartQuotes!;
     List<Series> series = [];
     for(var i = 0; i < result.close!.length; i++){
-      series.add(Series(result.close![i], result.timestamp![i]));
+      DateTime aux = DateTime.fromMillisecondsSinceEpoch(result.timestamp![i].toInt() * 1000);
+      print(aux);
+      series.add(Series(result.close![i], aux));
     }
     return series;
   }

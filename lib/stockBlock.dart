@@ -5,7 +5,6 @@ import 'package:inlys/yahooApi.dart';
 
 class StockBlock extends StatefulWidget {
   const StockBlock({super.key, required this.stock});
-
   final Stock stock;
 
   @override
@@ -23,7 +22,6 @@ class StockBlockState extends State<StockBlock> {
         height: 90,
         decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.05),
-            border: Border.all(color: Colors.white.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(20)
         ),
         child: Row(
@@ -173,7 +171,6 @@ class StockBlockState extends State<StockBlock> {
 
 class FutureIcon<String> extends StatelessWidget {
   const FutureIcon({Key? key, required this.color});
-
   final Future<Color> color;
 
   @override
