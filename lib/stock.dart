@@ -25,7 +25,7 @@ class Stock {
   Future<String> get vpa => _vpa;
 
   void loadData() async {
-    history = await Api.historicalSeries("$_ticker.SA");
+    history = await Api.historicalSeries("$_ticker.SA", 12);
     _price = dataBase.getPriceFromTicker(_ticker);
     _vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
     _lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");

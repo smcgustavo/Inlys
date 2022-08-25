@@ -137,7 +137,56 @@ class Api {
     }
     return result;
   }
-  static Future<List<Series>> historicalSeries(String ticker) async{
+
+  static Future<List<Series>> historicalSeries(String ticker, int months) async{
+    StockChart chart;
+    if(months == 12){
+      chart = await yfin.getChartQuotes(
+          stockHistory: yfin.initStockHistory(ticker: ticker),
+          interval: StockInterval.oneWeek,
+          period: StockRange.oneYear
+      );
+    }
+    else if(months == 6){
+      chart = await yfin.getChartQuotes(
+          stockHistory: yfin.initStockHistory(ticker: ticker),
+          interval: StockInterval.fiveDay,
+          period: StockRange.sixMonth
+      );
+    }
+    else if(months == 3){
+      chart = await yfin.getChartQuotes(
+          stockHistory: yfin.initStockHistory(ticker: ticker),
+          interval: StockInterval.oneDay,
+          period: StockRange.threeMonth
+      );
+    }
+    else if(months == 1){
+      chart = await yfin.getChartQuotes(
+          stockHistory: yfin.initStockHistory(ticker: ticker),
+          interval: StockInterval.oneDay,
+          period: StockRange.oneMonth
+      );
+    }
+    else{
+      chart = await yfin.getChartQuotes(
+          stockHistory: yfin.initStockHistory(ticker: ticker),
+          interval: StockInterval.oneWeek,
+          period: StockRange.oneYear
+      );
+    }
+
+    ChartQuotes result = chart.chartQuotes!;
+    List<Series> series = [];
+    for(var i = 0; i < result.close!.length; i++){
+      DateTime aux = DateTime.fromMillisecondsSinceEpoch(result.timestamp![i].toInt() * 1000);
+      series.add(Series(result.close![i], aux));
+    }
+    return series;
+  }
+}
+
+/*static Future<List<Series>> historicalSeries(String ticker) async{
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
         interval: StockInterval.fiveDay,
@@ -147,9 +196,7 @@ class Api {
     List<Series> series = [];
     for(var i = 0; i < result.close!.length; i++){
       DateTime aux = DateTime.fromMillisecondsSinceEpoch(result.timestamp![i].toInt() * 1000);
-      print(aux);
       series.add(Series(result.close![i], aux));
     }
     return series;
-  }
-}
+  }*/

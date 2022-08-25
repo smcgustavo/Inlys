@@ -5,7 +5,6 @@ import 'package:inlys/yahooApi.dart';
 import 'package:inlys/wallet.dart';
 import 'series.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
@@ -18,10 +17,12 @@ class StockScreen extends StatefulWidget {
 class StockScreenState extends State<StockScreen>
     with TickerProviderStateMixin {
 
+  int months = 12;
+  double interval = 70.0;
+
   @override
   Widget build(BuildContext context) {
     TabController controller = TabController(length: 3, vsync: this);
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -166,7 +167,7 @@ class StockScreenState extends State<StockScreen>
             ),*/
             block("Fundamentos", fundamentals(), 400),
             block("Variações", variations(widget.stock), 255),
-            block("Gráfico", stockGraph(), 500)
+            block("Gráfico", stockGraph(), 380)
           ],
         ),
       ),
@@ -299,30 +300,125 @@ class StockScreenState extends State<StockScreen>
 
   Widget stockGraph()  {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 15),
       child: Center(
-        child: SfCartesianChart(
-          primaryYAxis: NumericAxis(
-            labelStyle: const TextStyle(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      setState((){
+                        months = 12;
+                        interval = 70;
+                      });
+                    },
+                    child: const Text(
+                      "1a",
+                      style: TextStyle(color: Colors.white),
+                    )
+                ),
+                TextButton(
+                    onPressed: () {
+                      setState((){
+                        months = 6;
+                        interval = 35;
+                      });
+                    },
+                    child: const Text(
+                      "6m",
+                      style: TextStyle(color: Colors.white),
+                    )
+                ),
+                TextButton(
+                    onPressed: () {
+                      setState((){
+                        months = 3;
+                        interval = 12;
+                      });
+                    },
+                    child: const Text(
+                      "3m",
+                      style: TextStyle(color: Colors.white),
+                    )
+                ),
+                TextButton(
+                    onPressed: () {
+                      setState((){
+                        months = 1;
+                        interval = 10;
+                      });
+                    },
+                    child: const Text(
+                      "1m",
+                      style: TextStyle(color: Colors.white),
+                    )
+                ),
+              ],
+            ),
+            Graph()
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Graph() {
+    return FutureBuilder(
+      future: Api.historicalSeries("${widget.stock.ticker}.SA", months),
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        List<Widget> children;
+        if(snapshot.hasData){
+          children = <Widget>[
+            SfCartesianChart(
+              primaryYAxis: NumericAxis(
+              labelStyle: const TextStyle(
               color: Colors.white
             )
-          ),
-          primaryXAxis: DateTimeAxis(
+            ),
+            primaryXAxis: DateTimeAxis(
             intervalType: DateTimeIntervalType.days,
             labelStyle: const TextStyle(
               color: Colors.white
             ),
-            interval: 70,
-          ),
-          series: <ChartSeries>[
-            LineSeries<Series, DateTime>(
-                dataSource: widget.stock.history,
-                xValueMapper: (Series aux, _) => aux.date,
-                yValueMapper: (Series aux, _) => aux.price,
+            interval: interval,
+            ),
+            series: <ChartSeries>[
+              LineSeries<Series, DateTime>(
+              dataSource: snapshot.data,
+              xValueMapper: (Series aux, _) => aux.date,
+              yValueMapper: (Series aux, _) => aux.price,
+              )
+              ],
             )
-          ],
-        ),
-      ),
+          ];
+        }
+        else if(snapshot.hasError){
+          children = <Widget>[
+            Icon(
+              Icons.error_outlined,
+              color: Colors.white.withOpacity(0.1),
+            )
+          ];
+        }
+        else{
+          children = <Widget>[
+            const SizedBox(
+              height: 60,
+              width: 60,
+              child: CircularProgressIndicator(
+                color: Colors.white70,
+              ),
+            )
+          ];
+        }
+        return Center(
+          child: Column(
+            children: children,
+          ),
+        );
+      },
     );
   }
 
