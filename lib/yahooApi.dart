@@ -22,11 +22,9 @@ class Api {
   static Future<String> change(String ticker, String prefix, int size) async {
     StockInfo info = yfin.getStockInfo(ticker: ticker);
     StockQuote quote2 = await info.getStockPriceChange();
-    String string = quote2.regularMarketChangePercent.toString();
-    if(string[0] == '-'){
-      size++;
-    }
-    string = "${string.substring(0, size + 1).replaceAll(".", ",")}%";
+    String? string = quote2.regularMarketChangePercent?.toStringAsFixed(size);
+    string = string?.replaceAll(".", ",");
+    string = "${string}%";
     return string;
   }
   static Future<double?> changeAsNumber(String ticker, String prefix) async {
@@ -52,7 +50,7 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 5 - 1]) * 100).toStringAsFixed(2);
+    String result = (((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 5 - 1]) * 100).toStringAsFixed(size);
     return "${result}%";
   }
 
@@ -79,18 +77,18 @@ class Api {
   static Future<String> changeMonth(String ticker, String prefix, int size) async{
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
-        interval: StockInterval.ninetyMinute,
+        interval: StockInterval.oneDay,
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(2);
-    return "${result}%";
+    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(size);
+    return "$result%";
   }
 
   static Future<double?> changeMonthAsNumber(String ticker, String prefix) async {
     StockChart chart = await yfin.getChartQuotes(
         stockHistory: yfin.initStockHistory(ticker: ticker),
-        interval: StockInterval.ninetyMinute,
+        interval: StockInterval.oneDay,
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
@@ -114,7 +112,7 @@ class Api {
         period: StockRange.oneYear
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(2);
+    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(size);
     return "${result}%";
   }
 

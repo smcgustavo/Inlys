@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'csvManager.dart';
 import 'dart:math';
 import 'package:inlys/yahooApi.dart';
-import 'package:inlys/series.dart';
 
 class Stock {
   late String _ticker, _type;
-  late Future<String> _price, _name, _pvp, _dy, _roe, _pl, _indicator;
+  late Future<String> _price, _name, _pvp, _dy, _roe, _pl, _indicator; // <- mais lerdo
   late Future<String> _vpa, _lpa;
   late bool _condition;
-  late List<Series> history;
 
 
   late AssetImage _logo;
@@ -24,8 +22,7 @@ class Stock {
 
   Future<String> get vpa => _vpa;
 
-  void loadData() async {
-    history = await Api.historicalSeries("$_ticker.SA", 12);
+  void loadData()  {
     _price = dataBase.getPriceFromTicker(_ticker);
     _vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
     _lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");
@@ -42,7 +39,7 @@ class Stock {
     _logo = AssetImage('assets/images/stocksIcons/${_ticker.substring(0,4)}.jpg');
   }
 
-  void graham() async{
+  void graham() async {
     double lpa = await dataBase.getNumberFromTicker(_ticker, 28);
     double vpa = await dataBase.getNumberFromTicker(_ticker, 27);
     double result = sqrt((lpa * vpa * 22.5));
@@ -50,8 +47,9 @@ class Stock {
     if(result > price){
       _condition = true;
     }
-    if(result.toString() == "NaN"){
+    if(result.toString() == "NaN" || (vpa < 0 && lpa < 0)){
       _indicator = Future<String>.value("Indisponível");
+      _condition = false;
     }
     else{
       _indicator = Future<String>.value("R\$${result.toStringAsFixed(2)}");
