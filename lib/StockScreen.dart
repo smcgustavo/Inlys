@@ -5,7 +5,7 @@ import 'package:inlys/yahooApi.dart';
 import 'package:inlys/wallet.dart';
 import 'series.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show NumberFormat;
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
@@ -17,7 +17,6 @@ class StockScreen extends StatefulWidget {
 
 class StockScreenState extends State<StockScreen>
     with TickerProviderStateMixin {
-
   int months = 12;
   double interval = 70.0;
   List<Color> selected = [
@@ -29,7 +28,6 @@ class StockScreenState extends State<StockScreen>
 
   @override
   Widget build(BuildContext context) {
-    TabController controller = TabController(length: 3, vsync: this);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -128,6 +126,13 @@ class StockScreenState extends State<StockScreen>
                                           .contains(widget.stock.ticker)) {
                                         return IconButton(
                                             onPressed: () {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(
+                                                  content: Text("Ação removida."),
+                                                  duration: Duration(seconds: 2),
+                                                  backgroundColor: Color.fromRGBO(35, 35, 35, 1),
+                                                )
+                                              );
                                               setState(() {
                                                 Wallet.removeStock(
                                                     widget.stock.ticker);
@@ -140,6 +145,13 @@ class StockScreenState extends State<StockScreen>
                                       }
                                       return IconButton(
                                           onPressed: () {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(
+                                                  content: Text("Ação adicionada."),
+                                                  duration: Duration(seconds: 2),
+                                                  backgroundColor: Color.fromRGBO(35, 35, 35, 1),
+                                                )
+                                            );
                                             setState(() {
                                               Wallet.addStock(
                                                   widget.stock.ticker);
@@ -162,26 +174,17 @@ class StockScreenState extends State<StockScreen>
                 ),
               ),
             ),
-            //customTabBar(controller),
-            /*
-            Container(
-              height: 600,
-              child: TabBarView(controller: controller, children: [
-                fundamentals(),
-                variations(widget.stock),
-                stockGraph()
-              ]),
-            ),*/
             block("Fundamentos", fundamentals(), 400),
             block("Variações", variations(widget.stock), 255),
-            block("Gráfico", stockGraph(), 480)
+            block("Gráfico", stockGraph(), 490),
+            const SizedBox(height: 20,)
           ],
         ),
       ),
     );
   }
 
-  Widget block(String name, Widget child, double height){
+  Widget block(String name, Widget child, double height) {
     return Column(
       children: [
         Padding(
@@ -190,10 +193,7 @@ class StockScreenState extends State<StockScreen>
             alignment: Alignment.centerLeft,
             child: Text(
               name,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
           ),
         ),
@@ -203,43 +203,14 @@ class StockScreenState extends State<StockScreen>
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10),
           child: Container(
-              decoration: BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(20)
-              ),
-              height: height,
-              child: child,
+                borderRadius: BorderRadius.circular(20)),
+            height: height,
+            child: child,
           ),
         )
       ],
-    );
-  }
-
-  Widget customTabBar(TabController controller) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
-      child: Align(
-        alignment: Alignment.center,
-        child: TabBar(
-            splashBorderRadius: BorderRadius.circular(10),
-            controller: controller,
-            labelColor: Colors.white,
-            isScrollable: true,
-            unselectedLabelColor: Colors.white70,
-            indicatorColor: Colors.white70,
-            labelPadding: const EdgeInsets.only(left: 5, right: 5),
-            tabs: const [
-              Tab(
-                text: "Fundamentos",
-              ),
-              Tab(
-                text: "Variações",
-              ),
-              Tab(
-                text: "Gráfico",
-              )
-            ]),
-      ),
     );
   }
 
@@ -252,23 +223,23 @@ class StockScreenState extends State<StockScreen>
           children: [
             variation(
                 stock.ticker,
-                "Variação diária:",
-                Api.change("${stock.ticker}.SA", "R\$ ", 3),
+                "Variação Diária:",
+                Api.change("${stock.ticker}.SA", "R\$ ", 2),
                 Api.color("${stock.ticker}.SA")),
             variation(
                 stock.ticker,
-                "Variação semanal:",
-                Api.changeWeek("${stock.ticker}.SA", "R\$ ", 3),
+                "Variação Semanal:",
+                Api.changeWeek("${stock.ticker}.SA", "R\$ ", 2),
                 Api.colorWeek("${stock.ticker}.SA")),
             variation(
                 stock.ticker,
-                "Variação mensal:",
-                Api.changeMonth("${stock.ticker}.SA", "R\$ ", 3),
+                "Variação Mensal:",
+                Api.changeMonth("${stock.ticker}.SA", "R\$ ", 2),
                 Api.colorMonth("${stock.ticker}.SA")),
             variation(
                 stock.ticker,
-                "Variação anual:",
-                Api.changeYear("${stock.ticker}.SA", "R\$ ", 3),
+                "Variação Anual:",
+                Api.changeYear("${stock.ticker}.SA", "R\$ ", 2),
                 Api.colorYear("${stock.ticker}.SA")),
           ],
         ),
@@ -279,7 +250,7 @@ class StockScreenState extends State<StockScreen>
   Widget variation(String stockTicker, String description,
       Future<String> change, Future<Color> colorChoosed) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.only(top: 5, bottom: 5),
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.08),
@@ -288,16 +259,22 @@ class StockScreenState extends State<StockScreen>
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                description,
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Text(
+                  description,
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                ),
               ),
               FutureText(
                   text: change,
                   style: const TextStyle(color: Colors.white, fontSize: 20)),
-              FutureIcon(color: colorChoosed)
+              Padding(
+                padding: const EdgeInsets.only(right: 5.0),
+                child: FutureIcon(color: colorChoosed),
+              )
             ],
           ),
         ),
@@ -305,9 +282,9 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget stockGraph()  {
+  Widget stockGraph() {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 15),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
       child: Center(
         child: Column(
           children: [
@@ -321,7 +298,7 @@ class StockScreenState extends State<StockScreen>
                   ),
                   child: TextButton(
                       onPressed: () {
-                        setState((){
+                        setState(() {
                           months = 12;
                           interval = 60;
                           selected[0] = Colors.white.withOpacity(0.1);
@@ -333,8 +310,7 @@ class StockScreenState extends State<StockScreen>
                       child: const Text(
                         "1a",
                         style: TextStyle(color: Colors.white),
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -343,7 +319,7 @@ class StockScreenState extends State<StockScreen>
                   ),
                   child: TextButton(
                       onPressed: () {
-                        setState((){
+                        setState(() {
                           months = 6;
                           interval = 30;
                           selected[0] = Colors.white.withOpacity(0.0);
@@ -355,8 +331,7 @@ class StockScreenState extends State<StockScreen>
                       child: const Text(
                         "6m",
                         style: TextStyle(color: Colors.white),
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -365,7 +340,7 @@ class StockScreenState extends State<StockScreen>
                   ),
                   child: TextButton(
                       onPressed: () {
-                        setState((){
+                        setState(() {
                           months = 3;
                           interval = 15;
                           selected[0] = Colors.white.withOpacity(0.0);
@@ -377,8 +352,7 @@ class StockScreenState extends State<StockScreen>
                       child: const Text(
                         "3m",
                         style: TextStyle(color: Colors.white),
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -387,7 +361,7 @@ class StockScreenState extends State<StockScreen>
                   ),
                   child: TextButton(
                       onPressed: () {
-                        setState((){
+                        setState(() {
                           months = 1;
                           interval = 5;
                           selected[0] = Colors.white.withOpacity(0.0);
@@ -399,12 +373,14 @@ class StockScreenState extends State<StockScreen>
                       child: const Text(
                         "1m",
                         style: TextStyle(color: Colors.white),
-                      )
-                  ),
+                      )),
                 ),
               ],
             ),
-            Graph()
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Graph(),
+            )
           ],
         ),
       ),
@@ -414,51 +390,42 @@ class StockScreenState extends State<StockScreen>
   Widget Graph() {
     return FutureBuilder(
       future: Api.historicalSeries("${widget.stock.ticker}.SA", months),
-      builder: (BuildContext context, AsyncSnapshot snapshot){
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         List<Widget> children;
-        if(snapshot.hasData){
+        if (snapshot.hasData) {
           children = <Widget>[
             SizedBox(
               height: 400,
               width: 400,
               child: SfCartesianChart(
                 primaryYAxis: NumericAxis(
-                  numberFormat: NumberFormat.currency(
-                      symbol: "R\$"
-                  ),
+                    numberFormat: NumberFormat.currency(symbol: "R\$"),
+                    labelStyle: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                primaryXAxis: DateTimeAxis(
+                  intervalType: DateTimeIntervalType.days,
                   labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                  interval: interval,
+                ),
+                series: <ChartSeries>[
+                  LineSeries<Series, DateTime>(
+                    dataSource: snapshot.data,
+                    xValueMapper: (Series aux, _) => aux.date,
+                    yValueMapper: (Series aux, _) => aux.price,
                   )
-              ),
-              primaryXAxis: DateTimeAxis(
-              intervalType: DateTimeIntervalType.days,
-              labelStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold
-              ),
-              interval: interval,
-              ),
-              series: <ChartSeries>[
-                LineSeries<Series, DateTime>(
-                  dataSource: snapshot.data,
-                  xValueMapper: (Series aux, _) => aux.date,
-                  yValueMapper: (Series aux, _) => aux.price,
-                )
                 ],
               ),
             )
           ];
-        }
-        else if(snapshot.hasError){
+        } else if (snapshot.hasError) {
           children = <Widget>[
             Icon(
               Icons.error_outlined,
               color: Colors.white.withOpacity(0.1),
             )
           ];
-        }
-        else{
+        } else {
           children = <Widget>[
             const SizedBox(
               height: 60,
@@ -484,38 +451,38 @@ class StockScreenState extends State<StockScreen>
       child: Scrollbar(
         child: ListView(
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
           children: <Widget>[
             grahamIndicator(),
             AttributeBlock(
               attribute: "Preço: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: Api.price("${widget.stock.ticker}.SA", "R\$"),
               description: "Preço atual de cada ação.",
             ),
             AttributeBlock(
               attribute: "P/VP: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: widget.stock.pvp,
               description:
                   "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
             ),
             AttributeBlock(
               attribute: "DY: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: widget.stock.dy,
               description:
                   "Porcentagem do valor da ação distribuído em divivendos anualmente.",
             ),
             AttributeBlock(
               attribute: "ROE: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: widget.stock.roe,
               description: "Retorno sobre o patrimônio líquido anual.",
             ),
             AttributeBlock(
               attribute: "P/L: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: widget.stock.pl,
               description:
                   "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
@@ -523,14 +490,14 @@ class StockScreenState extends State<StockScreen>
             ),
             AttributeBlock(
               attribute: "VPA: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: widget.stock.vpa,
               description:
                   "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
             ),
             AttributeBlock(
               attribute: "LPA: ",
-              style: const TextStyle(fontSize: 22, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
               value: widget.stock.lpa,
               description:
                   "O LPA é o valor do lucro total dividido pelo número de ações.",
@@ -554,13 +521,13 @@ class StockScreenState extends State<StockScreen>
             children: [
               const Text(
                 "Índice de Graham:",
-                style: TextStyle(fontSize: 22, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
               FutureText(
                 text: widget.stock.indicator,
                 style: widget.stock.condition
-                    ? const TextStyle(color: Colors.greenAccent, fontSize: 22)
-                    : const TextStyle(color: Colors.redAccent, fontSize: 22),
+                    ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
+                    : const TextStyle(color: Colors.redAccent, fontSize: 20),
               ),
             ],
           ),
@@ -607,16 +574,19 @@ class AttributeBlock extends StatelessWidget {
                             const TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     )),
-                collapsed: const Center(),
+                collapsed: const SizedBox(),
                 header: Padding(
                   padding: const EdgeInsets.all(5),
                   child: Center(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          attribute,
-                          style: style,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Text(
+                            attribute,
+                            style: style,
+                          ),
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(20),
@@ -638,7 +608,7 @@ class AttributeBlock extends StatelessWidget {
 }
 
 class FutureText<String> extends StatelessWidget {
-  const FutureText({Key? key, required this.text, required this.style});
+  const FutureText({super.key, required this.text, required this.style});
 
   final Future<String> text;
   final TextStyle style;
@@ -651,11 +621,14 @@ class FutureText<String> extends StatelessWidget {
         List<Widget> children;
         if (snapshot.hasData) {
           children = <Widget>[Text('${snapshot.data}', style: style)];
-        }
-        else if(snapshot.hasError){
-          children = <Widget>[Text("Error", style: style,)];
-        }
-        else {
+        } else if (snapshot.hasError) {
+          children = <Widget>[
+            Text(
+              "Error",
+              style: style,
+            )
+          ];
+        } else {
           children = <Widget>[
             const SizedBox(
               width: 10,
@@ -678,7 +651,7 @@ class FutureText<String> extends StatelessWidget {
 }
 
 class FutureIcon<String> extends StatelessWidget {
-  const FutureIcon({Key? key, required this.color});
+  const FutureIcon({super.key, required this.color});
   final Future<Color> color;
 
   @override
@@ -695,8 +668,7 @@ class FutureIcon<String> extends StatelessWidget {
                 color: snapshot.data,
               )
             ];
-          }
-          else {
+          } else {
             children = <Widget>[
               Icon(
                 Icons.trending_up,
@@ -704,16 +676,14 @@ class FutureIcon<String> extends StatelessWidget {
               )
             ];
           }
-        }
-        else if(snapshot.hasError){
+        } else if (snapshot.hasError) {
           children = <Widget>[
             const Icon(
               Icons.error,
               color: Colors.white60,
             )
           ];
-        }
-        else {
+        } else {
           children = <Widget>[
             const SizedBox(
               width: 10,

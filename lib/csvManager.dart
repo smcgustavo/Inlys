@@ -48,7 +48,12 @@ class DataManager {
     Future<String> aux = Future<String>.value("");
     for(int i = 0; i < data.length; i++){
       if(data[i][0] == ticker){
-        aux = Future<String>.value("$pre${data[i][pos]}$suf");
+        if(data[i][pos].toString().isEmpty){
+          aux = Future<String>.value("${pre}0$suf");
+        }
+        else{
+          aux = Future<String>.value("$pre${data[i][pos]}$suf");
+        }
         break;
       }
     }

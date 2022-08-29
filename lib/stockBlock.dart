@@ -145,7 +145,7 @@ class StockBlockState extends State<StockBlock> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           FutureText(
-                            text: Api.change("${widget.stock.ticker}.SA", "", 3),
+                            text: Api.change("${widget.stock.ticker}.SA", "", 2),
                             style: const TextStyle(
                               color: Colors.white,
                             ),

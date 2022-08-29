@@ -15,6 +15,7 @@ class Stock {
 
   Stock(String ticker) {
     _condition = false;
+    _indicator = Future<String>.value("Indisponível");
     _ticker = ticker;
     _type = "Ação";
     loadData();

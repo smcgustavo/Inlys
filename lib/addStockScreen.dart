@@ -85,8 +85,8 @@ class SearchStockState extends State<SearchStock> {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final stock = stocks[index];
-                    return listItem(Stock(stock));
+                    final stock = Stock(stocks[index]);
+                    return listItem(stock);
                   },
                   itemCount: stocks.length,
                 );

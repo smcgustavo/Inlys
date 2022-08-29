@@ -4,11 +4,12 @@ import 'series.dart';
 
 class Api {
   static YahooFin yfin = YahooFin();
+
   static Future<String> price(String ticker, String prefix) async {
     StockInfo info = yfin.getStockInfo(ticker: ticker);
     StockQuote quote = await info.getStockPrice();
-    String string = "";
-    string = prefix + quote.currentPrice.toString().replaceAll(".", ",");
+    String? string = "";
+    string = "$prefix${quote.currentPrice?.toStringAsFixed(2).replaceAll(".", ",")}";
     return string;
   }
 
