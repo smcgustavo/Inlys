@@ -512,26 +512,46 @@ class StockScreenState extends State<StockScreen>
   Widget grahamIndicator() {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          height: 50,
+      child: Container(
+        decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.05),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Text(
-                "Índice de Graham:",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-              FutureText(
-                text: widget.stock.indicator,
-                style: widget.stock.condition
-                    ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
-                    : const TextStyle(color: Colors.redAccent, fontSize: 20),
-              ),
-            ],
+          borderRadius: BorderRadius.circular(20)
+        ),
+        child: ExpandablePanel(
+          theme: ExpandableThemeData(
+            inkWellBorderRadius: BorderRadius.circular(20),
+            iconColor: Colors.white,
           ),
+          expanded: const Padding(
+              padding: EdgeInsets.all(10),
+              child: Center(
+                child: Text(
+                  "Cálculo do preço justo de uma ação, utiliza o VPA e o LPA.\nFórmula: Raíz(22,5 X VPA X LPA)\nIndisponível quando o VPA ou LPA são negativos.",
+                  style:
+                  TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              )
+          ),
+          collapsed: const SizedBox(),
+          header: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text(
+                  "Índice de Graham:",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                FutureText(
+                  text: widget.stock.indicator,
+                  style: widget.stock.condition
+                      ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
+                      : const TextStyle(color: Colors.redAccent, fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+
         ),
       ),
     );
