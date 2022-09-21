@@ -74,7 +74,6 @@ class HomeScreenState extends State<HomeScreen> {
                 width: 350,
                 height: 150,
                 decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.00),
                     borderRadius: BorderRadius.circular(20)
                 ),
                 child: ListView(
