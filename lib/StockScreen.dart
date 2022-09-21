@@ -464,27 +464,27 @@ class StockScreenState extends State<StockScreen>
             BlockAttribute(
               attribute: "P/VP: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.pvp}".replaceAll(',', '.'),
+              value: "${widget.stock.pvp}".replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
             ),
             BlockAttribute(
               attribute: "DY: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.dy}%".replaceAll(',', '.'),
+              value: "${widget.stock.dy}%".replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "Porcentagem do valor da ação distribuído em divivendos anualmente.",
             ),
             BlockAttribute(
               attribute: "ROE: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.roe}".replaceAll(',', '.'),
+              value: "${widget.stock.roe}".replaceAll(',', '.').replaceAll('nan', '0'),
               description: "Retorno sobre o patrimônio líquido anual.",
             ),
             BlockAttribute(
               attribute: "P/L: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.pl}".replaceAll(',', '.'),
+              value: "${widget.stock.pl}".replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
                   "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
@@ -492,14 +492,14 @@ class StockScreenState extends State<StockScreen>
             BlockAttribute(
               attribute: "VPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.vpa}".replaceAll(',', '.'),
+              value: "${widget.stock.vpa}".replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
             ),
             BlockAttribute(
               attribute: "LPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.lpa}".replaceAll(',', '.'),
+              value: "${widget.stock.lpa}".replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "O LPA é o valor do lucro total dividido pelo número de ações.",
             ),
