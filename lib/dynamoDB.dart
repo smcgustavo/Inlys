@@ -16,7 +16,7 @@ class Dynamo{
         },
         tableName: "Stock"
     );
-    var map = aux.item as Map<String, AttributeValue>;
+    var map = aux.item!;
     return map;
   }
 }

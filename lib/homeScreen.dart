@@ -89,27 +89,32 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 20), 
-                child: InkWell(
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => WalletScreen(allStocks: widget.allStocks,))
-                      );
-                    },
-                    child: otherPage("Sua Carteira", Icons.wallet))
-            ),
-            Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: InkWell(
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SearchStock(allStocks: widget.allStocks))
-                      );
-                    },
-                    child: otherPage("Todas as Ações", Icons.account_balance))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => WalletScreen(allStocks: widget.allStocks,))
+                          );
+                        },
+                        child: otherPage("Sua Carteira", Icons.wallet))
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => SearchStock(allStocks: widget.allStocks))
+                          );
+                        },
+                        child: otherPage("Todas as Ações", Icons.search))
+                ),
+              ],
             ),
           ],
         ),
@@ -157,20 +162,20 @@ class HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
             height: 80,
-            width: 325,
+            width: 80,
             decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: [/*
                 Text(text,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24
                   ),
-                ),
+                ),*/
                 Icon(
                   icon,
                   color: Colors.white,

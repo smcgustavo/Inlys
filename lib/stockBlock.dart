@@ -43,6 +43,7 @@ class StockBlockState extends State<StockBlock> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                /*
                 FutureBuilder(
                   future: widget.stock.name,
                   builder: (BuildContext context,
@@ -75,6 +76,12 @@ class StockBlockState extends State<StockBlock> {
                       ),
                     );
                   },
+                ),*/ // <Aqui
+                Text(
+                    "${widget.stock.name}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
                 ),
                 Container(
                   width: 230,

@@ -11,7 +11,6 @@ final List<String> allStocks = ["AALR3" ,"ABCB4" ,"ABEV3" ,"AERI3" ,"AESB3" ,"AF
 
 void main() async {
   Dynamo.getItem("PETR4");
-  /*
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -20,7 +19,6 @@ void main() async {
   ]);
   Wallet.initializeWallet();
   runApp(MyApp());
-  */
 }
 
 class MyApp extends StatelessWidget {

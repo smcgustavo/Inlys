@@ -1,12 +1,14 @@
+import 'package:aws_dynamodb_api/dynamodb-2012-08-10.dart';
 import 'package:flutter/material.dart';
 import 'csvManager.dart';
 import 'dart:math';
 import 'package:inlys/yahooApi.dart';
+import 'dynamoDB.dart';
 
 class Stock {
   late String _ticker, _type;
-  late Future<String> _price, _name, _pvp, _dy, _roe, _pl, _indicator; // <- mais lerdo
-  late Future<String> _vpa, _lpa;
+  late Future<String> _price,  _indicator; // <- mais lerdo
+  late String? _vpa, _name, _pvp, _dy, _roe, _pl, _lpa;
   late bool _condition;
 
 
@@ -21,19 +23,31 @@ class Stock {
     loadData();
   }
 
-  Future<String> get vpa => _vpa;
+
 
   void loadData()  {
     _price = dataBase.getPriceFromTicker(_ticker);
-    _vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
-    _lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");
-    _name = dataBase.getNameFromTicker(_ticker);
-    _pvp = dataBase.getPvpFromTicker(_ticker);
-    _dy = dataBase.getDyFromTicker(_ticker);
-    _roe = dataBase.getRoeFromTicker(_ticker);
-    _pl = dataBase.getPLFromTicker(_ticker);
+    //_vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
+    //_lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");
+    //_name = dataBase.getNameFromTicker(_ticker);
+    //_pvp = dataBase.getPvpFromTicker(_ticker);
+    //_dy = dataBase.getDyFromTicker(_ticker);
+    //_roe = dataBase.getRoeFromTicker(_ticker);
+    //_pl = dataBase.getPLFromTicker(_ticker);
+    loadAttributes();
     loadLogo();
     graham();
+  }
+
+  void loadAttributes() async{
+    Map<String, AttributeValue> attributes = await Dynamo.getItem(_ticker);
+    _vpa = attributes['VPA']?.s;
+    _lpa = attributes['LPA']?.s;
+    _name = attributes['NAME']?.s;
+    _pvp = attributes['P/VP']?.s;
+    _roe = attributes['ROE']?.s;
+    _dy = attributes['DY']?.s;
+    _pl = attributes['P/L']?.s;
   }
 
   void loadLogo(){
@@ -59,21 +73,23 @@ class Stock {
 
   AssetImage get logo => _logo;
 
-  Future<String> get name => _name;
+  String? get name => _name;
+
+  String? get vpa => _vpa;
 
   bool get condition => _condition;
 
-  Future<String> get pvp => _pvp;
+  String? get pvp => _pvp;
 
-  Future<String> get roe => _roe;
+  String? get roe => _roe;
 
-  Future<String> get pl => _pl;
+  String? get pl => _pl;
 
   Future<String> get indicator => _indicator;
 
   Future<String> get price => _price;
 
-  Future<String> get dy => _dy;
+  String? get dy => _dy;
 
   String get type => _type;
 

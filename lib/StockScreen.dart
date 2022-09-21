@@ -75,8 +75,9 @@ class StockScreenState extends State<StockScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Center(
-                                child: FutureText<String>(
-                                  text: widget.stock.name,
+                                child:
+                                Text(
+                                  "${widget.stock.name}",
                                   style: const TextStyle(
                                       fontSize: 24, color: Colors.white),
                                 ),
@@ -460,45 +461,45 @@ class StockScreenState extends State<StockScreen>
               value: Api.price("${widget.stock.ticker}.SA", "R\$"),
               description: "Preço atual de cada ação.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "P/VP: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.pvp,
+              value: "${widget.stock.pvp}".replaceAll(',', '.'),
               description:
                   "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "DY: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.dy,
+              value: "${widget.stock.dy}%".replaceAll(',', '.'),
               description:
                   "Porcentagem do valor da ação distribuído em divivendos anualmente.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "ROE: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.roe,
+              value: "${widget.stock.roe}".replaceAll(',', '.'),
               description: "Retorno sobre o patrimônio líquido anual.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "P/L: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.pl,
+              value: "${widget.stock.pl}".replaceAll(',', '.'),
               description:
                   "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
                   "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "VPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.vpa,
+              value: "${widget.stock.vpa}".replaceAll(',', '.'),
               description:
                   "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "LPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.lpa,
+              value: "${widget.stock.lpa}".replaceAll(',', '.'),
               description:
                   "O LPA é o valor do lucro total dividido pelo número de ações.",
             ),
@@ -596,6 +597,71 @@ class AttributeBlock extends StatelessWidget {
                               style: style,
                               text: value,
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )),
+        ));
+  }
+}
+
+class BlockAttribute extends StatelessWidget {
+  final String attribute;
+  final TextStyle style;
+  final String? value;
+  final String description;
+
+  const BlockAttribute({super.key, required this.attribute, required this.style, required this.value, required this.description});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(5),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.08),
+              ),
+              child: ExpandablePanel(
+                theme: ExpandableThemeData(
+                  inkWellBorderRadius: BorderRadius.circular(20),
+                  iconColor: Colors.white,
+                ),
+                expanded: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                      child: Text(
+                        description,
+                        style:
+                        const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    )),
+                collapsed: const SizedBox(),
+                header: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Text(
+                            attribute,
+                            style: style,
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            color: Colors.white.withOpacity(0.0),
+                            child: Text(
+                              "$value",
+                              style: style,
+                            )
                           ),
                         ),
                       ],
