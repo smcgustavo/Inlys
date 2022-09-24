@@ -81,7 +81,7 @@ class WalletScreenState extends State<WalletScreen>
                                       stock: stocks[index],
                                     )
                                 )
-                            ).then((_) => setState(() {}));;
+                            ).then((_) => setState(() {}));
                           },
                           child: aux,
                         ),

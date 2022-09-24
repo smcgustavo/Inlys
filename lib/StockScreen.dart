@@ -271,7 +271,8 @@ class StockScreenState extends State<StockScreen>
               ),
               FutureText(
                   text: change,
-                  style: const TextStyle(color: Colors.white, fontSize: 20)),
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
+              ),
               Padding(
                 padding: const EdgeInsets.only(right: 5.0),
                 child: FutureIcon(color: colorChoosed),
@@ -489,17 +490,17 @@ class StockScreenState extends State<StockScreen>
                   "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
                   "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
             ),
-            BlockAttribute(
+            AttributeBlock(
               attribute: "VPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.vpa}".replaceAll(',', '.').replaceAll('nan', '0'),
+              value: widget.stock.vpa,
               description:
                   "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
             ),
-            BlockAttribute(
+            AttributeBlock(
               attribute: "LPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.lpa}".replaceAll(',', '.').replaceAll('nan', '0'),
+              value: widget.stock.lpa,
               description:
                   "O LPA é o valor do lucro total dividido pelo número de ações.",
             ),
@@ -543,10 +544,10 @@ class StockScreenState extends State<StockScreen>
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 FutureText(
-                  text: widget.stock.indicator,
-                  style: widget.stock.condition
-                      ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
-                      : const TextStyle(color: Colors.redAccent, fontSize: 20),
+                    text: widget.stock.indicator,
+                    style: widget.stock.condition
+                        ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
+                        : const TextStyle(color: Colors.redAccent, fontSize: 20),
                 ),
               ],
             ),
@@ -561,7 +562,7 @@ class StockScreenState extends State<StockScreen>
 class AttributeBlock extends StatelessWidget {
   final String attribute;
   final TextStyle style;
-  final Future<String> value;
+  final Future<String?> value;
   final String description;
 
   const AttributeBlock(
@@ -696,17 +697,17 @@ class BlockAttribute extends StatelessWidget {
 class FutureText<String> extends StatelessWidget {
   const FutureText({super.key, required this.text, required this.style});
 
-  final Future<String> text;
+  final Future<String?> text;
   final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: text,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          children = <Widget>[Text('${snapshot.data}', style: style)];
+          children = <Widget>[Text('${snapshot.data}'.replaceAll(',', '.').replaceAll('nan', '0') , style: style)];
         } else if (snapshot.hasError) {
           children = <Widget>[
             Text(
@@ -769,7 +770,8 @@ class FutureIcon<String> extends StatelessWidget {
               color: Colors.white60,
             )
           ];
-        } else {
+        }
+        else {
           children = <Widget>[
             const SizedBox(
               width: 10,

@@ -7,9 +7,12 @@ import 'dynamoDB.dart';
 
 class Stock {
   late String _ticker, _type;
-  late Future<String> _price,  _indicator; // <- mais lerdo
-  late String? _vpa, _name, _pvp, _dy, _roe, _pl, _lpa;
+  late Future<String> _price; // <- mais lerdo
+  late String? _name, _pvp, _dy, _roe, _pl;
+  late Future<String> _indicator;
+  late Future<String?> _lpa, _vpa;
   late bool _condition;
+  late Future<double> _grahamPrice;
 
 
   late AssetImage _logo;
@@ -17,57 +20,50 @@ class Stock {
 
   Stock(String ticker) {
     _condition = false;
-    _indicator = Future<String>.value("Indisponível");
     _ticker = ticker;
     _type = "Ação";
     loadData();
   }
 
-
-
   void loadData()  {
     _price = dataBase.getPriceFromTicker(_ticker);
-    //_vpa =  dataBase.getAttributeFromTicker(ticker, 27, "", "");
-    //_lpa =  dataBase.getAttributeFromTicker(ticker, 28, "", "");
-    //_name = dataBase.getNameFromTicker(_ticker);
-    //_pvp = dataBase.getPvpFromTicker(_ticker);
-    //_dy = dataBase.getDyFromTicker(_ticker);
-    //_roe = dataBase.getRoeFromTicker(_ticker);
-    //_pl = dataBase.getPLFromTicker(_ticker);
+    _indicator = Future<String>.value("Indisponível");
     loadAttributes();
     loadLogo();
-    graham();
   }
 
   void loadAttributes() async{
     Map<String, AttributeValue> attributes = await Dynamo.getItem(_ticker);
-    _vpa = attributes['VPA']?.s;
-    _lpa = attributes['LPA']?.s;
+    _vpa = Future<String?>.value(attributes['VPA']?.s);
+    _lpa = Future<String?>.value(attributes['LPA']?.s);
     _name = attributes['NAME']?.s;
     _pvp = attributes['P/VP']?.s;
     _roe = attributes['ROE']?.s;
     _dy = attributes['DY']?.s;
     _pl = attributes['P/L']?.s;
+    grahamPrice();
   }
 
   void loadLogo(){
     _logo = AssetImage('assets/images/stocksIcons/${_ticker.substring(0,4)}.jpg');
   }
 
-  void graham() async {
-    double lpa = await dataBase.getNumberFromTicker(_ticker, 28);
-    double vpa = await dataBase.getNumberFromTicker(_ticker, 27);
+  void grahamPrice() async {
+    String? lpaString = await _lpa;
+    double lpa = double.parse(lpaString!.replaceAll(',', '.'));
+    String? vpaString = await _vpa;
+    double vpa = double.parse(vpaString!.replaceAll(',', '.'));
     double result = sqrt((lpa * vpa * 22.5));
-    double? price = await Api.priceAsNumber("${ticker}F.SA");
-    if(result > price){
+    _grahamPrice = Future<double>.value(result);
+    _indicator = Future<String>.value("R\$ ${result.toStringAsFixed(2)}");
+    double? price = await Api.priceAsNumber("${_ticker}F.SA");
+    double graham = await _grahamPrice;
+    if(graham > price){
       _condition = true;
     }
-    if(result.toString() == "NaN" || (vpa < 0 && lpa < 0)){
+    if(lpa < 0 || vpa < 0){
       _indicator = Future<String>.value("Indisponível");
       _condition = false;
-    }
-    else{
-      _indicator = Future<String>.value("R\$${result.toStringAsFixed(2)}");
     }
   }
 
@@ -75,7 +71,7 @@ class Stock {
 
   String? get name => _name;
 
-  String? get vpa => _vpa;
+  Future<String?> get vpa => _vpa;
 
   bool get condition => _condition;
 

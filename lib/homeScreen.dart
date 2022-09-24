@@ -210,7 +210,7 @@ class FutureText<String> extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          children = <Widget>[Text('${snapshot.data}', style: style)];
+          children = <Widget>[Text('${snapshot.data}'.replaceAll(',', '.'), style: style)];
         } else {
           children = <Widget>[
             const SizedBox(

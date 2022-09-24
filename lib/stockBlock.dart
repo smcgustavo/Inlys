@@ -43,40 +43,6 @@ class StockBlockState extends State<StockBlock> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                /*
-                FutureBuilder(
-                  future: widget.stock.name,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<String> snapshot) {
-                    List<Widget> children;
-                    if (snapshot.hasData) {
-                      children = <Widget>[
-                        Text(
-                          '${snapshot.data}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                        )
-                      ];
-                    } else {
-                      children = <Widget>[
-                        const SizedBox(
-                          width: 10,
-                          height: 10,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ];
-                    }
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: children,
-                      ),
-                    );
-                  },
-                ),*/ // <Aqui
                 Text(
                     "${widget.stock.name}",
                     style: const TextStyle(
@@ -117,7 +83,7 @@ class StockBlockState extends State<StockBlock> {
                           if (snapshot.hasData) {
                             children = <Widget>[
                               Text(
-                                '${snapshot.data}',
+                                '${snapshot.data}'.replaceAll(',', '.'),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
