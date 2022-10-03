@@ -1,9 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:inlys/stock.dart';
-import 'package:inlys/yahooApi.dart';
-import 'package:inlys/wallet.dart';
-import 'series.dart';
+import 'package:inlys/BackEnd/stock.dart';
+import 'package:inlys/BackEnd/yahooApi.dart';
+import 'package:inlys/BackEnd/wallet.dart';
+import '../BackEnd/series.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inlys/walletScreen.dart';
+import 'package:inlys/Widgets/walletScreen.dart';
 import 'addStockScreen.dart';
-import 'package:inlys/yahooApi.dart';
+import 'package:inlys/BackEnd/yahooApi.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.allStocks});
-  final List<String> allStocks;
+  const HomeScreen({super.key});
   @override
   State<StatefulWidget> createState() => HomeScreenState();
 }
@@ -98,7 +97,7 @@ class HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(10),
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => WalletScreen(allStocks: widget.allStocks,))
+                              MaterialPageRoute(builder: (context) => const WalletScreen())
                           );
                         },
                         child: otherPage("Sua Carteira", Icons.wallet))
@@ -109,7 +108,7 @@ class HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(10),
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SearchStock(allStocks: widget.allStocks))
+                              MaterialPageRoute(builder: (context) => const SearchStock())
                           );
                         },
                         child: otherPage("Todas as Ações", Icons.search))
@@ -169,13 +168,7 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [/*
-                Text(text,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24
-                  ),
-                ),*/
+              children: [
                 Icon(
                   icon,
                   color: Colors.white,
@@ -198,7 +191,7 @@ class HomeScreenState extends State<HomeScreen> {
 }
 
 class FutureText<String> extends StatelessWidget {
-  const FutureText({Key? key, required this.text, required this.style});
+  const FutureText({super.key, required this.text, required this.style});
 
   final Future<String> text;
   final TextStyle style;
@@ -234,7 +227,7 @@ class FutureText<String> extends StatelessWidget {
 }
 
 class FutureIcon<String> extends StatelessWidget {
-  const FutureIcon({Key? key, required this.color});
+  const FutureIcon({super.key, required this.color});
 
   final Future<Color> color;
 

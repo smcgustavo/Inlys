@@ -25,7 +25,7 @@ class Api {
     StockQuote quote2 = await info.getStockPriceChange();
     String? string = quote2.regularMarketChangePercent?.toStringAsFixed(size);
     string = string?.replaceAll(".", ",");
-    string = "${string}%";
+    string = "$string%";
     return string;
   }
   static Future<double?> changeAsNumber(String ticker, String prefix) async {
@@ -51,8 +51,8 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 5 - 1]) * 100).toStringAsFixed(size);
-    return "${result}%";
+    String result = (((aux![aux.length - 1] - aux[aux.length - 5 - 1]) / aux[aux.length - 5 - 1]) * 100).toStringAsFixed(size);
+    return "$result%";
   }
 
   static Future<double?> changeWeekAsNumber(String ticker, String prefix) async {
@@ -62,7 +62,7 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    double result = ((aux![aux.length - 1] - aux![aux.length - 5 - 1]) / aux![aux.length - 5 - 1]) * 100;
+    double result = ((aux![aux.length - 1] - aux[aux.length - 5 - 1]) / aux[aux.length - 5 - 1]) * 100;
     return result;
   }
 
@@ -82,7 +82,7 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(size);
+    String result = (((aux![aux.length - 1] - aux[0]) / aux[0]) * 100).toStringAsFixed(size);
     return "$result%";
   }
 
@@ -93,7 +93,7 @@ class Api {
         period: StockRange.oneMonth
     );
     List<num>? aux = chart.chartQuotes?.close;
-    double result = ((aux![aux.length - 1] - aux![0]) / aux![0]) * 100;
+    double result = ((aux![aux.length - 1] - aux[0]) / aux[0]) * 100;
     return result;
   }
 
@@ -113,8 +113,8 @@ class Api {
         period: StockRange.oneYear
     );
     List<num>? aux = chart.chartQuotes?.close;
-    String result = (((aux![aux.length - 1] - aux![0]) / aux![0]) * 100).toStringAsFixed(size);
-    return "${result}%";
+    String result = (((aux![aux.length - 1] - aux[0]) / aux[0]) * 100).toStringAsFixed(size);
+    return "$result%";
   }
 
   static Future<double?> changeYearAsNumber(String ticker, String prefix) async {
@@ -124,7 +124,7 @@ class Api {
         period: StockRange.oneYear
     );
     List<num>? aux = chart.chartQuotes?.close;
-    double result = ((aux![aux.length - 1] - aux![0]) / aux![0]) * 100;
+    double result = ((aux![aux.length - 1] - aux[0]) / aux[0]) * 100;
     return result;
   }
 

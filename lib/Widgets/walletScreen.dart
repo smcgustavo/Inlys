@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:inlys/stockBlock.dart';
-import 'package:inlys/wallet.dart';
-import 'package:inlys/addStockScreen.dart';
-import 'package:inlys/stock.dart';
-import 'package:inlys/StockScreen.dart';
+import 'package:inlys/Widgets/stockBlock.dart';
+import 'package:inlys/BackEnd/wallet.dart';
+import 'package:inlys/Widgets/addStockScreen.dart';
+import 'package:inlys/BackEnd/stock.dart';
+import 'package:inlys/Widgets/StockScreen.dart';
 
 class WalletScreen extends StatefulWidget {
-  WalletScreen({Key? key, required this.allStocks}) : super(key: key);
-  List<String> allStocks;
+  const WalletScreen({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => WalletScreenState();
 }
@@ -17,7 +16,6 @@ class WalletScreenState extends State<WalletScreen>
 
   List<Stock> stocks = Wallet.getWallet();
 
-  @override
   void didPop(){
     setState((){
       stocks = Wallet.getWallet();
@@ -26,7 +24,6 @@ class WalletScreenState extends State<WalletScreen>
 
   @override
   Widget build(BuildContext context) {
-    SearchStock(allStocks: widget.allStocks);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(30, 30, 30, 1),
@@ -98,7 +95,7 @@ class WalletScreenState extends State<WalletScreen>
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SearchStock(allStocks: widget.allStocks),
+                builder: (context) => const SearchStock(),
               )).then((_) => setState(() {}));
         },
         backgroundColor: Colors.black87,

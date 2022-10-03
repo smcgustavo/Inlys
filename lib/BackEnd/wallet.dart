@@ -1,4 +1,4 @@
-import 'package:inlys/stock.dart';
+import 'package:inlys/BackEnd/stock.dart';
 import 'package:get_storage/get_storage.dart';
 
 class Wallet {

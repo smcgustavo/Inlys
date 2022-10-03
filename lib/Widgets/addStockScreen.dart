@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:inlys/stock.dart';
-import 'package:inlys/StockScreen.dart';
+import 'package:inlys/BackEnd/stock.dart';
+import 'package:inlys/Widgets/StockScreen.dart';
+import 'package:inlys/BackEnd/stocksList.dart';
 
 class SearchStock extends StatefulWidget {
-  SearchStock({super.key, required this.allStocks});
-  List<String> allStocks;
+  const SearchStock({super.key});
   @override
-  State<StatefulWidget> createState() => SearchStockState(stocks: allStocks);
+  State<StatefulWidget> createState() => SearchStockState();
 }
 
 class SearchStockState extends State<SearchStock> {
-  SearchStockState({required this.stocks});
-  List<String> stocks;
+  List<String> stocks = allStocks;
   final controller = TextEditingController();
 
   @override
@@ -101,7 +100,7 @@ class SearchStockState extends State<SearchStock> {
   void searchStock(String query) {
     List<String> result = [];
     final input = query.toUpperCase();
-    for (var stock in widget.allStocks) {
+    for (var stock in allStocks) {
       if (stock.contains(input)) {
         result.add(stock.toUpperCase());
       }

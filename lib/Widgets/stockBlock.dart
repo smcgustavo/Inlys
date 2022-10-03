@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inlys/stock.dart';
-import 'package:inlys/StockScreen.dart';
-import 'package:inlys/yahooApi.dart';
+import 'package:inlys/BackEnd/stock.dart';
+import 'package:inlys/Widgets/StockScreen.dart';
+import 'package:inlys/BackEnd/yahooApi.dart';
 
 class StockBlock extends StatefulWidget {
   const StockBlock({super.key, required this.stock});
@@ -49,7 +49,7 @@ class StockBlockState extends State<StockBlock> {
                       color: Colors.white,
                     ),
                 ),
-                Container(
+                SizedBox(
                   width: 230,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

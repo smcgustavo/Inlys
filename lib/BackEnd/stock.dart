@@ -2,7 +2,7 @@ import 'package:aws_dynamodb_api/dynamodb-2012-08-10.dart';
 import 'package:flutter/material.dart';
 import 'csvManager.dart';
 import 'dart:math';
-import 'package:inlys/yahooApi.dart';
+import 'package:inlys/BackEnd/yahooApi.dart';
 import 'dynamoDB.dart';
 
 class Stock {
