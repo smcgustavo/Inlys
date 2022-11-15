@@ -31,6 +31,33 @@ class HomeScreenState extends State<HomeScreen> {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => const WalletScreen())
+                          );
+                        },
+                        child: otherPage("Carteira", Icons.wallet))
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => const SearchStock())
+                          );
+                        },
+                        child: otherPage("Busca", Icons.search))
+                ),
+              ],
+            ),
             const Padding(
               padding: EdgeInsets.only(left: 35, top: 20),
               child: Align(
@@ -88,32 +115,33 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => const WalletScreen())
-                          );
-                        },
-                        child: otherPage("Sua Carteira", Icons.wallet))
+            const Padding(
+              padding: EdgeInsets.only(left: 35, top: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Commodities:", style: TextStyle(color: Colors.white, fontSize: 28),)
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10, bottom: 10),
+              child: Container(
+                width: 350,
+                height: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20)
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => const SearchStock())
-                          );
-                        },
-                        child: otherPage("Todas as Ações", Icons.search))
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(5),
+                  children: [
+                    futureIndicator("Ouro", Api.price("GC=F", "") , Api.change("GC=F", "", 3), "GC=F"),
+                    futureIndicator("Petróleo", Api.price("CL=F", ""), Api.change("CL=F", "", 3), "CL=F"),
+                    futureIndicator("Milho", Api.price("ZC=F", ""), Api.change("ZC=F", "", 3), "ZC=F"),
+                    futureIndicator("Gás Natural", Api.price("NG=F", ""), Api.change("NG=F", "", 3), "NG=F"),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -160,19 +188,26 @@ class HomeScreenState extends State<HomeScreen> {
     return  ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-            height: 80,
-            width: 80,
+            height: 60,
+            width: 160,
             decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Text(
+                    text,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20
+                  ),
+                ),
                 Icon(
                   icon,
                   color: Colors.white,
-                  size: 40,
+                  size: 30,
                 )
               ],
             ),
