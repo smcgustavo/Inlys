@@ -9,7 +9,7 @@ import 'package:intl/intl.dart' show NumberFormat;
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key, required this.stock});
-  final Stock stock;
+  final String stock;
 
   @override
   State<StatefulWidget> createState() => StockScreenState();
@@ -28,6 +28,7 @@ class StockScreenState extends State<StockScreen>
 
   @override
   Widget build(BuildContext context) {
+    Stock stock = Stock(widget.stock);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
       body: Padding(
@@ -65,7 +66,7 @@ class StockScreenState extends State<StockScreen>
                           child: Padding(
                             padding: const EdgeInsets.all(0),
                             child: Image(
-                              image: widget.stock.logo,
+                              image: stock.logo,
                             ),
                           ),
                         ),
@@ -77,7 +78,7 @@ class StockScreenState extends State<StockScreen>
                               Center(
                                 child:
                                 Text(
-                                  "${widget.stock.name}",
+                                  stock.name,
                                   style: const TextStyle(
                                       fontSize: 24, color: Colors.white),
                                 ),
@@ -97,7 +98,7 @@ class StockScreenState extends State<StockScreen>
                                     width: 8,
                                   ),
                                   Text(
-                                    widget.stock.ticker,
+                                    stock.ticker,
                                     style: const TextStyle(
                                       color: Colors.white38,
                                     ),
@@ -116,7 +117,7 @@ class StockScreenState extends State<StockScreen>
                                     width: 8,
                                   ),
                                   Text(
-                                    widget.stock.type,
+                                    stock.type,
                                     style: const TextStyle(
                                       color: Colors.white38,
                                     ),
@@ -124,7 +125,7 @@ class StockScreenState extends State<StockScreen>
                                   Container(
                                     child: (() {
                                       if (Wallet.stocksString
-                                          .contains(widget.stock.ticker)) {
+                                          .contains(stock.ticker)) {
                                         return IconButton(
                                             onPressed: () {
                                               ScaffoldMessenger.of(context).showSnackBar(
@@ -136,7 +137,7 @@ class StockScreenState extends State<StockScreen>
                                               );
                                               setState(() {
                                                 Wallet.removeStock(
-                                                    widget.stock.ticker);
+                                                    stock.ticker);
                                               });
                                             },
                                             icon: const Icon(
@@ -155,7 +156,7 @@ class StockScreenState extends State<StockScreen>
                                             );
                                             setState(() {
                                               Wallet.addStock(
-                                                  widget.stock.ticker);
+                                                  stock.ticker);
                                             });
                                           },
                                           icon: const Icon(
@@ -175,9 +176,9 @@ class StockScreenState extends State<StockScreen>
                 ),
               ),
             ),
-            block("Fundamentos", fundamentals(), 400),
-            block("Variações", variations(widget.stock), 255),
-            block("Gráfico", stockGraph(), 490),
+            block("Fundamentos", fundamentals(stock), 400),
+            block("Variações", variations(stock), 255),
+            block("Gráfico", stockGraph(stock), 490),
             const SizedBox(height: 20,)
           ],
         ),
@@ -284,7 +285,7 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget stockGraph() {
+  Widget stockGraph(Stock stock) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
       child: Center(
@@ -381,7 +382,7 @@ class StockScreenState extends State<StockScreen>
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
-              child: Graph(),
+              child: graph(stock),
             )
           ],
         ),
@@ -389,9 +390,9 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget Graph() {
+  Widget graph(Stock stock) {
     return FutureBuilder(
-      future: Api.historicalSeries("${widget.stock.ticker}.SA", months),
+      future: Api.historicalSeries("${stock.ticker}.SA", months),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
@@ -447,7 +448,7 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget fundamentals() {
+  Widget fundamentals(Stock stock) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Scrollbar(
@@ -455,52 +456,52 @@ class StockScreenState extends State<StockScreen>
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(top: 10, bottom: 10),
           children: <Widget>[
-            grahamIndicator(),
+            grahamIndicator(stock),
             AttributeBlock(
               attribute: "Preço: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: Api.price("${widget.stock.ticker}.SA", "R\$"),
+              value: Api.price("${stock.ticker}.SA", "R\$"),
               description: "Preço atual de cada ação.",
             ),
             BlockAttribute(
               attribute: "P/VP: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.pvp}".replaceAll(',', '.').replaceAll('nan', '0'),
+              value: stock.pvp.replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "Valor da ação dividido pelo valor patrimonial por ação. Bom indicador de sobrecompra e sobrevenda.",
             ),
             BlockAttribute(
               attribute: "DY: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.dy}%".replaceAll(',', '.').replaceAll('nan', '0'),
+              value: "${stock.dy}%".replaceAll(',', '.').replaceAll('NaN', '0'),
               description:
                   "Porcentagem do valor da ação distribuído em divivendos anualmente.",
             ),
             BlockAttribute(
               attribute: "ROE: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.roe}".replaceAll(',', '.').replaceAll('nan', '0'),
+              value: stock.roe.replaceAll(',', '.').replaceAll('nan', '0'),
               description: "Retorno sobre o patrimônio líquido anual.",
             ),
             BlockAttribute(
               attribute: "P/L: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: "${widget.stock.pl}".replaceAll(',', '.').replaceAll('nan', '0'),
+              value: stock.pl.replaceAll(',', '.').replaceAll('nan', '0'),
               description:
                   "P/L é o preço sobre o lucro, um pl alto indica mais anos para se obter o retorno e um pl baixo o contrário.\n"
                   "Ao mesmo tempo que um pl alto indica que investidores pagam alto por aquela empresa e vice e versa.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "VPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.vpa,
+              value: stock.vpa,
               description:
                   "O VPA é o cálculo do valor patrimonial dividido pelo número de ações.",
             ),
-            AttributeBlock(
+            BlockAttribute(
               attribute: "LPA: ",
               style: const TextStyle(fontSize: 20, color: Colors.white),
-              value: widget.stock.lpa,
+              value: stock.lpa,
               description:
                   "O LPA é o valor do lucro total dividido pelo número de ações.",
             ),
@@ -510,7 +511,7 @@ class StockScreenState extends State<StockScreen>
     );
   }
 
-  Widget grahamIndicator() {
+  Widget grahamIndicator(Stock stock) {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
       child: Container(
@@ -544,8 +545,8 @@ class StockScreenState extends State<StockScreen>
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 FutureText(
-                    text: widget.stock.indicator,
-                    style: widget.stock.condition
+                    text: stock.indicator,
+                    style: stock.condition
                         ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
                         : const TextStyle(color: Colors.redAccent, fontSize: 20),
                 ),

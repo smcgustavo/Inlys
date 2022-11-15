@@ -45,4 +45,7 @@ class Wallet {
   static List<Stock> getWallet(){
     return favoriteStocks;
   }
+  static List<String> getWalletString(){
+    return stocksString;
+  }
 }

@@ -84,8 +84,7 @@ class SearchStockState extends State<SearchStock> {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final stock = Stock(stocks[index]);
-                    return listItem(stock);
+                    return listItem(stocks[index]);
                   },
                   itemCount: stocks.length,
                 );
@@ -108,8 +107,7 @@ class SearchStockState extends State<SearchStock> {
     setState(() => stocks = result);
   }
 
-  Widget listItem(Stock stock) {
-
+  Widget listItem(String stockString) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ClipRRect(
@@ -121,14 +119,14 @@ class SearchStockState extends State<SearchStock> {
                   borderRadius: BorderRadius.circular(20)),
               title: Center(
                 child: Text(
-                  stock.ticker,
+                  stockString,
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => StockScreen(stock: stock),
+                    builder: (context) => StockScreen(stock: stockString),
                   )),
             ),
           )),

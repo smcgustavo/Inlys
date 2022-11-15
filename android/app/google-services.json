@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "881613590494",
+    "project_id": "alys-2a93d",
+    "storage_bucket": "alys-2a93d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881613590494:android:5737fcad01e1cbf52c174f",
+        "android_client_info": {
+          "package_name": "com.alys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881613590494-9mfuda1a56utk3u4in8g9cd1a9bamsbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPNMDcLQnnbajE5S5ELuTD-WjA4eGEmSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881613590494-9mfuda1a56utk3u4in8g9cd1a9bamsbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

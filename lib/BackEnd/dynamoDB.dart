@@ -8,6 +8,7 @@ class Dynamo{
         accessKey: 'AKIAQ3HQPWGHROZLBX37',
       ));
   static Future<Map<String, AttributeValue>> getItem(String ticker) async {
+    print("Consulta!");
     GetItemOutput aux = await service.getItem(
         key: {
           "ticker" : AttributeValue(

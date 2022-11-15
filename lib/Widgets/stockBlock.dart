@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inlys/BackEnd/stock.dart';
 import 'package:inlys/Widgets/StockScreen.dart';
 import 'package:inlys/BackEnd/yahooApi.dart';
+import 'package:inlys/BackEnd/csvManager.dart';
 
 class StockBlock extends StatefulWidget {
   const StockBlock({super.key, required this.stock});
-  final Stock stock;
+  final String stock;
 
   @override
   State<StatefulWidget> createState() => StockBlockState();
@@ -15,7 +15,7 @@ class StockBlockState extends State<StockBlock> {
 
   @override
   Widget build(BuildContext context) {
-    Future<String> price = Api.price("${widget.stock.ticker}F.SA", "R\$");
+    Future<String> price = Api.price("${widget.stock}F.SA", "R\$");
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
@@ -35,7 +35,9 @@ class StockBlockState extends State<StockBlock> {
                   child: Padding(
                     padding: const EdgeInsets.all(7),
                     child: Center(
-                      child: Image(image: widget.stock.logo),
+                      child: Image(
+                          image: AssetImage('assets/images/stocksIcons/${widget.stock.substring(0,4)}.jpg')
+                      ),
                     ),
                   )),
             ),
@@ -43,11 +45,12 @@ class StockBlockState extends State<StockBlock> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                    "${widget.stock.name}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
+                FutureText(
+                    text: DataManager.getNameFromTicker(widget.stock),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14
+                  ),
                 ),
                 SizedBox(
                   width: 230,
@@ -62,7 +65,7 @@ class StockBlockState extends State<StockBlock> {
                       ),
 
                       Text(
-                        widget.stock.ticker,
+                        widget.stock,
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -118,7 +121,7 @@ class StockBlockState extends State<StockBlock> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           FutureText(
-                            text: Api.change("${widget.stock.ticker}.SA", "", 2),
+                            text: Api.change("${widget.stock}.SA", "", 2),
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -126,7 +129,7 @@ class StockBlockState extends State<StockBlock> {
                           const SizedBox(
                             width: 4,
                           ),
-                          FutureIcon(color: Api.color("${widget.stock.ticker}.SA"))
+                          FutureIcon(color: Api.color("${widget.stock}.SA"))
                         ],
                       ),
                     ],

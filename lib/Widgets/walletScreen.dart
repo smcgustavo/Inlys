@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:inlys/Widgets/stockBlock.dart';
 import 'package:inlys/BackEnd/wallet.dart';
 import 'package:inlys/Widgets/addStockScreen.dart';
-import 'package:inlys/BackEnd/stock.dart';
 import 'package:inlys/Widgets/StockScreen.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -14,11 +13,11 @@ class WalletScreen extends StatefulWidget {
 class WalletScreenState extends State<WalletScreen>
     with WidgetsBindingObserver {
 
-  List<Stock> stocks = Wallet.getWallet();
+  List<String> stocks = Wallet.getWalletString();
 
   void didPop(){
     setState((){
-      stocks = Wallet.getWallet();
+      stocks = Wallet.getWalletString();
     });
   }
 
@@ -75,7 +74,7 @@ class WalletScreenState extends State<WalletScreen>
                                 MaterialPageRoute(
                                     builder: (context) => StockScreen(
                                       key: widget.key,
-                                      stock: stocks[index],
+                                      stock: stocks[index],//stocks[index],
                                     )
                                 )
                             ).then((_) => setState(() {}));
