@@ -32,7 +32,7 @@ class HomeScreenState extends State<HomeScreen> {
           physics: const BouncingScrollPhysics(),
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -188,8 +188,8 @@ class HomeScreenState extends State<HomeScreen> {
     return  ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-            height: 60,
-            width: 160,
+            height: 70,
+            width: 150,
             decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(10)

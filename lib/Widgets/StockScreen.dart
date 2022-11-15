@@ -540,16 +540,10 @@ class StockScreenState extends State<StockScreen>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text(
-                  "Índice de Graham:",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                const Text("Índice de Graham:",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                FutureText(
-                    text: stock.indicator,
-                    style: stock.condition
-                        ? const TextStyle(color: Colors.greenAccent, fontSize: 20)
-                        : const TextStyle(color: Colors.redAccent, fontSize: 20),
-                ),
+                FutureGraham(graham: stock.grahamPrice())
               ],
             ),
           ),
@@ -695,6 +689,10 @@ class BlockAttribute extends StatelessWidget {
   }
 }
 
+
+
+
+
 class FutureText<String> extends StatelessWidget {
   const FutureText({super.key, required this.text, required this.style});
 
@@ -737,7 +735,6 @@ class FutureText<String> extends StatelessWidget {
     );
   }
 }
-
 class FutureIcon<String> extends StatelessWidget {
   const FutureIcon({super.key, required this.color});
   final Future<Color> color;
@@ -764,6 +761,52 @@ class FutureIcon<String> extends StatelessWidget {
               )
             ];
           }
+        } else if (snapshot.hasError) {
+          children = <Widget>[
+            const Icon(
+              Icons.error,
+              color: Colors.white60,
+            )
+          ];
+        }
+        else {
+          children = <Widget>[
+            const SizedBox(
+              width: 10,
+              height: 10,
+              child: CircularProgressIndicator(
+                color: Colors.white38,
+              ),
+            ),
+          ];
+        }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class FutureGraham<String> extends StatelessWidget {
+  const FutureGraham({super.key, required this.graham});
+  final Future<Text> graham;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: graham,
+      builder: (BuildContext context, AsyncSnapshot<Text> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          children = [
+            SizedBox(
+              child: snapshot.data,
+            )
+          ];
         } else if (snapshot.hasError) {
           children = <Widget>[
             const Icon(
